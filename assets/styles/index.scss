@@ -1,0 +1,40 @@
+// Apply a natural box layout model to all elements
+// but allowing components to change
+// http://www.paulirish.com/2012/box-sizing-border-box-ftw/
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+
+canvas {
+    border: 3px;
+
+    padding: 0;
+    margin: auto;
+    display: block;
+    background-size:contain;
+
+
+}
+
+//Allows my JS to set this stuff across the canvas
+button {
+    position: absolute;
+}
+
+input {
+    position: absolute;
+}
+//..
+
+.content{
+    width: 300px; margin: 0 auto
+}
