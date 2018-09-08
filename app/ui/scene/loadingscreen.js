@@ -1,6 +1,6 @@
 import game from "index";
 
-import UIObjectEnum from "ui/custom/object/uiobjectenum";
+import AssetsEnum from "../../world/assets/assetsenum";
 import CustomText from "ui/custom/customtext";
 import TileType from '../../world/tile/tiletype';
 import Screen from "./screen";
@@ -17,9 +17,9 @@ export default class LoadingScreen extends Screen {
 
     open() {
         //UI
-        for (var name in UIObjectEnum.list) {
+        for (var name in AssetsEnum.list) {
 
-            var obj = UIObjectEnum.list[name];
+            var obj = AssetsEnum.list[name];
             this.loader.add(name, obj.path);
         }
 
@@ -35,8 +35,8 @@ export default class LoadingScreen extends Screen {
             //Assign loaded sprites back to our enums
 
             //UI
-            for (var name in UIObjectEnum.list) {
-                UIObjectEnum.list[name].texture = loader.resources[name].texture;
+            for (var name in AssetsEnum.list) {
+                AssetsEnum.list[name].texture = loader.resources[name].texture;
             }
             //TILES
             //..

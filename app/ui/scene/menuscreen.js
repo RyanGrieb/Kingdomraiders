@@ -16,7 +16,7 @@ export default class MenuScreen extends Screen {
     open() {
 
         game.getUI.uiObjects.push(new Button("btnPlay", "Play", (window.innerWidth / 2) - 200 / 2, (window.innerHeight / 2) + 100, 200, 50, 200, 50));
-        game.getUI.uiObjects.push(new CustomSprite("TITLEIMAGE", (window.innerWidth / 2) - (500 / 2), 175, 500, 200));
+        game.getUI.uiObjects.push(new CustomSprite("TITLE_IMAGE", (window.innerWidth / 2) - (500 / 2), 175, 500, 200));
 
         this.setLoggedOut();
         // this.add.image(400, 300, 'sky');

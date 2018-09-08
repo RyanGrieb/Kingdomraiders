@@ -28,14 +28,13 @@ export default class Player {
 
     spawnToGame() {
         //Should be changed when we go into character select
-        this.className = "PLAYER";
+        this.className = "DEFAULT_PLAYER";
         //this.x = 128;
         //this.y = 32;
         this.w = 42;
         this.h = 42;
 
         this.sprite = new CustomSprite(this.className, this.spawnX, this.spawnY, this.w, this.h);
-        this.sprite.customSprite.setDepth(1);
 
         this.inGame = true;
     }

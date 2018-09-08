@@ -41,7 +41,7 @@ export default class TextBox extends UIObject {
         if (this.selected && this.selectGraphic != null)
             return;
 
-        this.selectGraphic = new CustomSprite("TEXTBOXHIGHLIGHT", (this.x + this.customText.width) + 2, this.y + (10 / 2), 0.7, this.h - 10);
+        this.selectGraphic = new CustomSprite("TEXTBOX_HIGHLIGHT", (this.x + this.customText.width) + 2, this.y + (10 / 2), 0.7, this.h - 10);
         //this.selectGraphic.fillStyle(0x000000, 1);
         //this.selectGraphic.fillRect((this.x + this.customText.width) + 4, this.y + (10 / 2), 0.7, this.h - 10);
     }

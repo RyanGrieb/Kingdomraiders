@@ -2,7 +2,7 @@ import UIObject from "./object/uiobject";
 import CustomText from "./customtext";
 
 import game from "index";
-import UIObjectEnum from "./object/uiobjectenum";
+import AssetEnum from "../../world/assets/assetsenum";
 
 export default class Button extends UIObject {
 
@@ -11,7 +11,7 @@ export default class Button extends UIObject {
         this.text = text;
         //BUTTON IMAGE (not custom, you know why)
         this.texture = "BUTTON";
-        this.buttonSprite = new PIXI.Sprite(UIObjectEnum.getUIObjectFromName("BUTTON").texture);
+        this.buttonSprite = new PIXI.Sprite(AssetEnum.getUIObjectFromName("BUTTON").texture);
         this.buttonSprite.x = x;
         this.buttonSprite.y = y;
         this.buttonSprite.width = w;
@@ -37,7 +37,7 @@ export default class Button extends UIObject {
 
     setTexture(name) {
         this.texture = name;
-        this.buttonSprite.texture = UIObjectEnum.getUIObjectFromName(name).texture;
+        this.buttonSprite.texture = AssetEnum.getUIObjectFromName(name).texture;
         // this.buttonSprite.setTexture(name, 0, false);
     }
 

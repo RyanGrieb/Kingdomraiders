@@ -16,7 +16,7 @@ export default class GameScreen extends Screen {
         console.log("Game Screen!");
 
         game.getPlayer.spawnToGame();
-        //Phaser.Game.prototype.getTileGrid = new TileGrid();
+        //PIXI.Application.prototype.getTileGrid = new TileGrid();
 
         //game.getTileGrid.tileMap.push(new Tile(TileType.list.GRASS, 32, 32));
         //this.add.image(400, 300, 'star');

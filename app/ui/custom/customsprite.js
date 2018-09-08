@@ -1,6 +1,6 @@
 import game from "index";
 import UIObject from "./object/uiobject";
-import UIObjectEnum from "./object/uiobjectenum";
+import AssetEnum from "../../world/assets/assetsenum";
 
 export default class CustomSprite extends UIObject {
 
@@ -8,7 +8,7 @@ export default class CustomSprite extends UIObject {
         super(null, x, y, w, h);
 
         //Sprite
-        this.customSprite = new PIXI.Sprite(UIObjectEnum.getUIObjectFromName(spriteName).texture);
+        this.customSprite = new PIXI.Sprite(AssetEnum.getUIObjectFromName(spriteName).texture);
         this.customSprite.x = x;
         this.customSprite.y = y;
         this.customSprite.width = w;
