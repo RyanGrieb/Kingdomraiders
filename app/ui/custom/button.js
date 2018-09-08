@@ -11,7 +11,7 @@ export default class Button extends UIObject {
         this.text = text;
         //BUTTON IMAGE (not custom, you know why)
         this.texture = "BUTTON";
-        this.buttonSprite = new PIXI.Sprite(AssetEnum.getUIObjectFromName("BUTTON").texture);
+        this.buttonSprite = new PIXI.Sprite(AssetEnum.getObjectFromName("BUTTON").texture);
         this.buttonSprite.x = x;
         this.buttonSprite.y = y;
         this.buttonSprite.width = w;
@@ -37,7 +37,7 @@ export default class Button extends UIObject {
 
     setTexture(name) {
         this.texture = name;
-        this.buttonSprite.texture = AssetEnum.getUIObjectFromName(name).texture;
+        this.buttonSprite.texture = AssetEnum.getObjectFromName(name).texture;
         // this.buttonSprite.setTexture(name, 0, false);
     }
 

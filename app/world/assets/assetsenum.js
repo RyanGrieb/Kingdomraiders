@@ -20,7 +20,7 @@ const AssetsEnum = {
 
     },
 
-    getUIObjectFromName(inputtedName) {
+    getObjectFromName(inputtedName) {
         for (var name in AssetsEnum.list) {
             var obj = AssetsEnum.list[name];
 

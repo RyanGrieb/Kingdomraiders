@@ -8,7 +8,7 @@ export default class CustomSprite extends UIObject {
         super(null, x, y, w, h);
 
         //Sprite
-        this.customSprite = new PIXI.Sprite(AssetEnum.getUIObjectFromName(spriteName).texture);
+        this.customSprite = new PIXI.Sprite(AssetEnum.getObjectFromName(spriteName).texture);
         this.customSprite.x = x;
         this.customSprite.y = y;
         this.customSprite.width = w;
@@ -23,8 +23,8 @@ export default class CustomSprite extends UIObject {
     }
 
     setVelocity(x, y) {
-        this.customSprite.x += x;
-        this.customSprite.y += y;
+        this.x += x;
+        this.y += y;
     }
 
     setInteractive() {

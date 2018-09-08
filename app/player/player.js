@@ -60,13 +60,13 @@ export default class Player {
         if (this.sprite == null)
             return this.spawnX;
 
-        return this.sprite.customSprite.x;
+        return this.sprite.x;
     }
 
     get getY() {
         if (this.sprite == null)
             return this.spawnY;
 
-        return this.sprite.customSprite.y;
+        return this.sprite.y;
     }
 }

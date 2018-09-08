@@ -16,6 +16,7 @@ var game;
 
 function initGame() {
     //Apply settings here..
+    PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
     game = new PIXI.Application(window.innerWidth, window.innerHeight, { backgroundColor: 0x1099bb });
     document.body.appendChild(game.view);

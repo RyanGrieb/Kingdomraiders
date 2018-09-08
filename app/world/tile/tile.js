@@ -1,11 +1,24 @@
 import game from "index";
 
+import AssetEnum from "../../world/assets/assetsenum";
+
 export default class Tile {
 
     constructor(tileType, x, y) {
         this.texture = tileType.name;
-        this.sprite = game.createInstance.add.sprite(x, y, this.texture);
-        this.sprite.setOrigin(0, 0);
-        this.sprite.setDisplaySize(32, 32);
+        this.x = x;
+        this.y = y;
+
+        this.sprite = new PIXI.Sprite(AssetEnum.getObjectFromName(tileType.name).texture);
+        this.sprite.x = x;
+        this.sprite.y = y;
+
+        game.stage.addChild(this.sprite);
+
+    }
+
+    setCameraPivot(x, y) {
+        this.sprite.x -= game.getPlayer.getX - x;
+        this.sprite.y -= game.getPlayer.getY - y;
     }
 }
