@@ -7,11 +7,15 @@ const HEIGHT = window.innerHeight;
 
 export default class TileGrid {
     constructor() {
+        //Tilegrid container for PIXIJS performance optimization
+        this.container = new PIXI.Container();
+        game.stage.addChild(this.container);
+
         this.tileMap = [];
 
         this.minBorder = {};
         this.maxBorder = {};
-        for (var i = 0; i < 1; i++)
+        for (var i = 0; i < 8; i++)
             this.requestMapFromLocation((game.getPlayer.getX / 32) + (i * (30)), game.getPlayer.getY / 32);
         //this.initMap(game.getPlayer.x + game.getPlayer.w / 2, game.getPlayer.y + game.getPlayer.h / 2);
     }
@@ -51,6 +55,12 @@ export default class TileGrid {
         //TODO: do something with the toplayer..
 
         this.tileMap.push(tileChunk);
+    }
+
+    update() {
+        //Offset map w/ camera..
+        for (var i = 0; i < this.tileMap.length; i++)
+            this.tileMap[i].update();
     }
 
     get getScaledChunkSize() {

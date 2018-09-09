@@ -4,7 +4,7 @@ import AssetEnum from "../../world/assets/assetsenum";
 
 export default class Tile {
 
-    constructor(tileType, x, y) {
+    constructor(container, tileType, x, y) {
         this.texture = tileType.name;
         this.x = x;
         this.y = y;
@@ -13,7 +13,10 @@ export default class Tile {
         this.sprite.x = x;
         this.sprite.y = y;
 
-        game.stage.addChild(this.sprite);
+        //Sprite layer
+        //this.sprite.parentGroup = game.getTileGrid.tileGroup;
+
+        container.addChild(this.sprite);
 
     }
 

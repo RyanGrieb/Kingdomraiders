@@ -6,6 +6,7 @@ import TileType from '../../world/tile/tiletype';
 import TileGrid from '../../world/tile/tilegrid';
 import CustomText from '../custom/customtext';
 import Camera from "../camera/camera";
+import FPSOverlay from "../fpsoverlay/fpsoverlay";
 
 export default class GameScreen extends Screen {
 
@@ -17,28 +18,27 @@ export default class GameScreen extends Screen {
         this.camera = new Camera();
 
         game.getPlayer.spawnToGame();
-        this.testTile = new Tile(TileType.list.GRASS, 0, 0);
-        this.testTile2 = new Tile(TileType.list.GRASS, game.getPlayer.spawnX, game.getPlayer.spawnY);
-        //PIXI.Application.prototype.getTileGrid = new TileGrid();
+        PIXI.Application.prototype.getTileGrid = new TileGrid();
 
         //game.getTileGrid.tileMap.push(new Tile(TileType.list.GRASS, 32, 32));
         //this.add.image(400, 300, 'star');
+
+
+        this.fpsOverlay = new FPSOverlay();
     }
 
     close() {
 
     }
 
+
     update() {
-        console.log(this.testTile.x + "||" + game.getPlayer.getX);
         this.camera.update();
         game.getPlayer.update();
-        this.testTile.setCameraPivot(this.camera.pivot.x, this.camera.pivot.y);
-        //this.testTile2.setCameraPivot(this.camera.pivot.x, this.camera.pivot.y);
-        //game.getTileGrid.update();
-        //this.cameras.main.startFollow(game.getPlayer.getSprite.baseSprite);
+        game.getTileGrid.update();
 
-        // console.log(game.loop.actualFps);
+        //FPS TEST
+        this.fpsOverlay.update();
     }
 
     get getCamera() {

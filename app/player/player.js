@@ -35,6 +35,10 @@ export default class Player {
         this.h = 42;
 
         this.sprite = new CustomSprite(this.className, this.spawnX, this.spawnY, this.w, this.h);
+        //Sprite layer
+        var group = new PIXI.display.Group(1, false);
+        game.stage.addChild(new PIXI.display.Layer(group));
+        this.sprite.customSprite.parentGroup = group;
 
         this.inGame = true;
     }

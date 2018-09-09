@@ -13,6 +13,7 @@ export default class CustomSprite extends UIObject {
         this.customSprite.y = y;
         this.customSprite.width = w;
         this.customSprite.height = h;
+
         game.stage.addChild(this.customSprite);
 
     }
