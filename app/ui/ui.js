@@ -13,17 +13,6 @@ export default class UserInterface {
 
         //Fix Browser resize offset.
         $(window).resize(() => this.onResize());
-
-        //Sprites z-axis...
-        this.addLayers();
-    }
-
-    //Layers
-    addLayers() {
-        //this.sortedLayer = new PIXI.display.Layer();
-        //this.sortedLayer.group.enableSort = true;
-        //this.sortedLayer.updateOrder = true;
-        //game.stage.addChild(new PIXI.display.Layer(this.sortedLayer));
     }
 
     //Objects

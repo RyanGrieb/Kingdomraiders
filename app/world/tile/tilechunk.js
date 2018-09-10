@@ -5,6 +5,12 @@ import TileType from "./tiletype";
 
 export default class TileChunk {
     constructor(chunk, x, y) {
+        //TODO: USE RENDER TEXTURE
+        this.renderer = PIXI.autoDetectRenderer(30 * 32, 30 * 32, { view: canvas, ratio: 1 });
+        this.renderTexture = PIXI.RenderTexture.create(30 * 32, 30 * 32);
+
+        this.container = new PIXI.Container();
+        game.getTileGrid.container.addChild(this.container);
 
         this.tiles = [];
         this.x = x;
@@ -23,18 +29,21 @@ export default class TileChunk {
             }
 
             if (i % 2 == 0)
-                this.tiles[i] = new Tile(game.getTileGrid.container, TileType.list.GRASS, this.x + (x * 32), this.y + (y * 32) + 32);
+                this.tiles[i] = new Tile(this, TileType.list.GRASS, this.x + (x * 32), this.y + (y * 32) + 32);
             else
-                this.tiles[i] = new Tile(game.getTileGrid.container, TileType.list.FLOOR, this.x + (x * 32), this.y + (y * 32) + 32);
+                this.tiles[i] = new Tile(this, TileType.list.FLOOR, this.x + (x * 32), this.y + (y * 32) + 32);
 
             x++;
         }
     }
 
     update() {
-        var camera = game.getUI.getCurrentScreen.getCamera;
+
         //Updates the tiles to be offset from the camera.
+        var camera = game.getUI.getCurrentScreen.getCamera;
         for (var i = 0; i < this.tiles.length; i++)
             this.tiles[i].setCameraPivot(camera.pivot.x, camera.pivot.y);
+
+        //Determines which portions of the chunk should be rendered.
     }
 }

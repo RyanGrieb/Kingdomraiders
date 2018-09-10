@@ -14,12 +14,8 @@ export default class FPSOverlay {
 
     update() {
 
-        var thisLoop = new Date();
-        this.fps = 1000 / (thisLoop - this.lastLoop);
-        this.lastLoop = thisLoop;
-
         if (this.delay % 10 == 0) {
-            this.fpsDisplay.setText("FPS: " + parseInt(this.fps));
+            this.fpsDisplay.setText("FPS: " + parseInt(game.ticker.FPS));
             this.delay = 0;
         }
         this.delay++;

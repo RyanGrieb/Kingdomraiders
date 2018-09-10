@@ -15,7 +15,7 @@ export default class TileGrid {
 
         this.minBorder = {};
         this.maxBorder = {};
-        for (var i = 0; i < 8; i++)
+        for (var i = 0; i < 1; i++)
             this.requestMapFromLocation((game.getPlayer.getX / 32) + (i * (30)), game.getPlayer.getY / 32);
         //this.initMap(game.getPlayer.x + game.getPlayer.w / 2, game.getPlayer.y + game.getPlayer.h / 2);
     }
