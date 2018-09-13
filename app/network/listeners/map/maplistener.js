@@ -14,7 +14,7 @@ export default class MapListener {
     }
 
     handleChunkRequest(json) {
-        console.log("recived chunks:" + json.chunk);
+       // console.log("recived chunks:" + json.chunk);
         game.getTileGrid.receiveChunk(json);
     }
 }

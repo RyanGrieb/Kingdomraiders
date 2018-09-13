@@ -27,14 +27,14 @@ export default class TileChunk {
 
         //21 is playerspite size, remember.. (+21 or - idk.. probally -)
         this.combinedSprite.x = this.x + (this.camera.position.x - game.getPlayer.getX) - 21;
-        this.combinedSprite.y = this.y + (this.camera.position.y - game.getPlayer.getY) + 21;
+        this.combinedSprite.y = this.y + (this.camera.position.y - game.getPlayer.getY) - 21;
 
         //For debugging purposes
         this.combinedSprite.interactive = true;
         this.combinedSprite.buttonMode = true;
 
         this.combinedSprite.on('pointerover', () => {
-            this.combinedSprite.tint = Math.random() * 0xFFFFFF;
+           this.combinedSprite.tint = Math.random() * 0xFFFFFF;
         });
         //..
 

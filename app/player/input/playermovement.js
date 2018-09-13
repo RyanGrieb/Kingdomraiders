@@ -131,6 +131,7 @@ export default class PlayerMovement {
                 this.velocity.y = this.heldKeys[i].y;
         }
 
+        //Set player velocity based off held keys
         game.getPlayer.sprite.setVelocity(this.velocity.x, this.velocity.y);
     }
 

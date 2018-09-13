@@ -51,6 +51,10 @@ export default class KeyboardInput {
             game.getTileGrid.requestMapFromLocation(game.getPlayer.getX, game.getPlayer.getY);
         }
 
+        if (e.key == "f") {
+            game.getTileGrid.stopChunkRenderer = true;
+        }
+
     }
 
     onKeyJustReleased(e) {
