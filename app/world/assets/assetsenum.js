@@ -13,8 +13,9 @@ const AssetsEnum = {
         DEFAULT_PLAYER: { path: "assets/images/player/player.png" },
 
         //TILE
-        GRASS: { path: "assets/images/tile/grass.png" },
-        FLOOR: { path: "assets/images/tile/floor.png" },
+        TILE_ERROR: { path: "assets/images/tile/error.png" },
+        TILE_GRASS: { path: "assets/images/tile/grass.png" },
+        TILE_FLOOR: { path: "assets/images/tile/floor.png" },
 
 
 

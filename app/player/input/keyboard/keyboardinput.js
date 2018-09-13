@@ -45,6 +45,12 @@ export default class KeyboardInput {
         if (game.getUI.getCurrentScreen.name === "GameScreen") {
             game.getPlayer.movement.handleInput(e);
         }
+
+        //Debug
+        if (e.key == "Enter") {
+            game.getTileGrid.requestMapFromLocation(game.getPlayer.getX, game.getPlayer.getY);
+        }
+
     }
 
     onKeyJustReleased(e) {

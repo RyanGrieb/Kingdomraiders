@@ -9,15 +9,14 @@ export default class Tile {
         this.x = x;
         this.y = y;
 
-        this.sprite = new PIXI.Sprite(AssetEnum.getObjectFromName(tileType.name).texture);
+        this.sprite = new PIXI.Sprite(AssetEnum.getObjectFromName("TILE_" + tileType.name).texture);
         this.sprite.x = x;
         this.sprite.y = y;
 
         //Sprite layer
         //this.sprite.parentGroup = game.getTileGrid.tileGroup;
 
-        chunk.renderer.render(this.sprite, chunk.renderTexture);
-        //chunk.container.addChild(this.sprite);
+        chunk.container.addChild(this.sprite);
 
     }
 

@@ -5,18 +5,46 @@ import TileType from "./tiletype";
 
 export default class TileChunk {
     constructor(chunk, x, y) {
-        //TODO: USE RENDER TEXTURE
-        this.renderer = PIXI.autoDetectRenderer(30 * 32, 30 * 32, { view: canvas, ratio: 1 });
-        this.renderTexture = PIXI.RenderTexture.create(30 * 32, 30 * 32);
 
+        //Misc helper variables
+        this.camera = game.getUI.getCurrentScreen.getCamera;
+
+        //Start of the main body
         this.container = new PIXI.Container();
-        game.getTileGrid.container.addChild(this.container);
 
         this.tiles = [];
         this.x = x;
         this.y = y;
 
         this.initTiles(chunk);
+
+
+        //Now merge everything into an individual sprite
+        var renderer = game.renderer;
+        var texture = renderer.generateTexture(this.container);
+
+        this.combinedSprite = new PIXI.Sprite(texture);
+
+        //21 is playerspite size, remember.. (+21 or - idk.. probally -)
+        this.combinedSprite.x = this.x + (this.camera.position.x - game.getPlayer.getX) - 21;
+        this.combinedSprite.y = this.y + (this.camera.position.y - game.getPlayer.getY) + 21;
+
+        //For debugging purposes
+        this.combinedSprite.interactive = true;
+        this.combinedSprite.buttonMode = true;
+
+        this.combinedSprite.on('pointerover', () => {
+            this.combinedSprite.tint = Math.random() * 0xFFFFFF;
+        });
+        //..
+
+        game.stage.addChild(this.combinedSprite);
+
+        //..
+    }
+
+    onMouseOut() {
+        this.combinedSprite.tint = 0xFFFFFF;
     }
 
     initTiles(chunk) {
@@ -28,22 +56,25 @@ export default class TileChunk {
                 y--;
             }
 
-            if (i % 2 == 0)
-                this.tiles[i] = new Tile(this, TileType.list.GRASS, this.x + (x * 32), this.y + (y * 32) + 32);
-            else
-                this.tiles[i] = new Tile(this, TileType.list.FLOOR, this.x + (x * 32), this.y + (y * 32) + 32);
+            //Don't create a tile that is not there
+            // if (chunk[i] == -1) {
+            //     x++;
+            //      continue;
+            // }
+
+            this.tiles[i] = new Tile(this, TileType.getTileFromID(chunk[i]), this.x + (x * 32), this.y + (y * 32) + 32);
 
             x++;
         }
     }
 
+    setCameraPivot(x, y) {
+        this.combinedSprite.x -= game.getPlayer.getX - x;
+        this.combinedSprite.y -= game.getPlayer.getY - y;
+    }
+
     update() {
-
         //Updates the tiles to be offset from the camera.
-        var camera = game.getUI.getCurrentScreen.getCamera;
-        for (var i = 0; i < this.tiles.length; i++)
-            this.tiles[i].setCameraPivot(camera.pivot.x, camera.pivot.y);
-
-        //Determines which portions of the chunk should be rendered.
+        this.setCameraPivot(this.camera.pivot.x, this.camera.pivot.y);
     }
 }

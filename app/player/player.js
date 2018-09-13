@@ -34,11 +34,15 @@ export default class Player {
         this.w = 42;
         this.h = 42;
 
-        this.sprite = new CustomSprite(this.className, this.spawnX, this.spawnY, this.w, this.h);
+        this.sprite = new CustomSprite(this.className, (window.innerWidth / 2) - (21), (window.innerHeight / 2) - (21), this.w, this.h);
+        //Updates the camera offset..
+        this.sprite.setPosition(this.spawnX, this.spawnY);
+
         //Sprite layer
         var group = new PIXI.display.Group(1, false);
         game.stage.addChild(new PIXI.display.Layer(group));
         this.sprite.customSprite.parentGroup = group;
+
 
         this.inGame = true;
     }

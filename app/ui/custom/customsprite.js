@@ -19,8 +19,8 @@ export default class CustomSprite extends UIObject {
     }
 
     setPosition(x, y) {
-        this.customSprite.x = x;
-        this.customSprite.y = y;
+        this.x = x;
+        this.y = y;
     }
 
     setVelocity(x, y) {

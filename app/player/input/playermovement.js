@@ -23,14 +23,13 @@ export default class PlayerMovement {
         if (game.getPlayer.sprite != null) {
             var camera = game.getUI.getCurrentScreen.getCamera;
 
+            //Incorrect.
             game.getPlayer.sprite.setPosition(x, y);
         }
         else {
             //Player origin
-            //returns 32,42???
-            //Set camera pivot maybe???
-            Player.prototype.spawnX = (window.innerWidth / 2) - (21);
-            Player.prototype.spawnY = (window.innerHeight / 2) - (21);
+            Player.prototype.spawnX = x;
+            Player.prototype.spawnY = y;
         }
     }
 

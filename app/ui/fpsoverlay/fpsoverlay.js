@@ -9,6 +9,7 @@ export default class FPSOverlay {
         this.fps = 0;
 
         this.fpsDisplay = (new CustomText("txtFPSInfo", "FPS: 0", 35, 25, 100, 100));
+        this.positionDisplay = (new CustomText("txtFPSInfo", "X: " + game.getPlayer.getX + ", Y: " + game.getPlayer.getY, 200, 25, 100, 100));
     }
 
 
@@ -19,6 +20,8 @@ export default class FPSOverlay {
             this.delay = 0;
         }
         this.delay++;
+
+        this.positionDisplay.setText("X: " + game.getPlayer.getX + ", Y: " + game.getPlayer.getY);
     }
 
 }

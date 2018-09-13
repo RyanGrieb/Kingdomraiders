@@ -15,12 +15,12 @@ export default class TileGrid {
 
         this.minBorder = {};
         this.maxBorder = {};
-        for (var i = 0; i < 1; i++)
-            this.requestMapFromLocation((game.getPlayer.getX / 32) + (i * (30)), game.getPlayer.getY / 32);
-        //this.initMap(game.getPlayer.x + game.getPlayer.w / 2, game.getPlayer.y + game.getPlayer.h / 2);
+
+        this.initMap(game.getPlayer.getX + game.getPlayer.w / 2, game.getPlayer.getY + game.getPlayer.h / 2);
     }
 
     initMap(x, y) {
+
         for (var targetX = (x - WIDTH / 2) - this.getChunkSize; targetX < x + (WIDTH / 2)
             + this.getChunkSize; targetX += this.getChunkSize)
             for (var targetY = ((y - HEIGHT / 2) - this.getChunkSize); targetY < y + (HEIGHT / 2)
@@ -35,12 +35,17 @@ export default class TileGrid {
         this.maxBorder.y = y + (HEIGHT / 2) + this.getChunkSize;
     }
 
+
+    renderChunks() {
+
+    }
+
     requestMapFromLocation(x, y) {
 
         var msg = {
             type: "ChunkRequest",
-            x: x,
-            y: y,
+            x: x / 32,
+            y: y / 32,
         };
 
         game.getNetwork.sendMessage(JSON.stringify(msg));
