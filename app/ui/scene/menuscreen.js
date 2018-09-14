@@ -15,8 +15,8 @@ export default class MenuScreen extends Screen {
 
     open() {
 
-        game.getUI.uiObjects.push(new Button("btnPlay", "Play", (window.innerWidth / 2) - 200 / 2, (window.innerHeight / 2) + 100, 200, 50, 200, 50));
-        game.getUI.uiObjects.push(new CustomSprite("TITLE_IMAGE", (window.innerWidth / 2) - (500 / 2), 175, 500, 200));
+        game.getUI.uiObjects.push(new Button("btnPlay", "Play", (game.WIDTH / 2) - 200 / 2, (game.HEIGHT / 2) + 100, 200, 50, 200, 50));
+        game.getUI.uiObjects.push(new CustomSprite("TITLE_IMAGE", (game.WIDTH / 2) - (500 / 2), 175, 500, 200));
 
         this.setLoggedOut();
         // this.add.image(400, 300, 'sky');
@@ -38,19 +38,19 @@ export default class MenuScreen extends Screen {
 
         //Hacked way to center the login info window to the right side.
         var loggedInInfo = new CustomText("txtLoggedInInfo", "Logged in as " + game.getPlayer.playerProfile.name, -1, 25, 130, 35);
-        loggedInInfo.x = ((window.innerWidth - 100) - loggedInInfo.customText.width) + (loggedInInfo.customText.width * 0.5);
+        loggedInInfo.x = ((game.WIDTH - 100) - loggedInInfo.customText.width) + (loggedInInfo.customText.width * 0.5);
         loggedInInfo.kill();
         loggedInInfo.generateText();
         game.getUI.uiObjects.push(loggedInInfo);
 
-        game.getUI.uiObjects.push(new Button("btnSignOut", "Sign Out", window.innerWidth - (95), 25 - (30 / 2), 90, 30, 115, 30));
+        game.getUI.uiObjects.push(new Button("btnSignOut", "Sign Out", game.WIDTH - (95), 25 - (30 / 2), 90, 30, 115, 30));
     }
 
     setLoggedOut() {
 
 
-        game.getUI.uiObjects.push(new Button("btnLogin", "Login", window.innerWidth - 200, 25, 90, 30, 115, 30));
-        game.getUI.uiObjects.push(new Button("btnRegister", "Register", window.innerWidth - 105, 25, 90, 30, 115, 30));
+        game.getUI.uiObjects.push(new Button("btnLogin", "Login", game.WIDTH - 200, 25, 90, 30, 115, 30));
+        game.getUI.uiObjects.push(new Button("btnRegister", "Register", game.WIDTH - 105, 25, 90, 30, 115, 30));
     }
 
 }

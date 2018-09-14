@@ -15,7 +15,7 @@ export default class Camera {
 
         this.pivot = {};
 
-        this.position.set(window.innerWidth / 2, window.innerHeight / 2);
+        this.position.set(game.WIDTH / 2, game.HEIGHT / 2);
         this.pivot.x = game.getPlayer.getX;
         this.pivot.y = game.getPlayer.getY;
 

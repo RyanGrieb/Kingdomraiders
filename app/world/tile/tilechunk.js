@@ -34,7 +34,7 @@ export default class TileChunk {
         this.combinedSprite.buttonMode = true;
 
         this.combinedSprite.on('pointerover', () => {
-           this.combinedSprite.tint = Math.random() * 0xFFFFFF;
+            this.combinedSprite.tint = Math.random() * 0xFFFFFF;
         });
         //..
 
@@ -71,6 +71,30 @@ export default class TileChunk {
     setCameraPivot(x, y) {
         this.combinedSprite.x -= game.getPlayer.getX - x;
         this.combinedSprite.y -= game.getPlayer.getY - y;
+    }
+
+    get outsideScreen() {
+        //Moving right
+        if (game.getPlayer.getX > this.x + (game.getTileGrid.getChunkSize * 2))
+            return true;
+
+        //Moving left
+        if ((game.getTileGrid.getChunkSize) < this.x - game.getPlayer.getX)
+            return true;
+
+        //Moving up
+        if ((game.getTileGrid.getChunkSize) < this.y - game.getPlayer.getY)
+            return true;
+
+        //Moving down
+        if (game.getPlayer.getY > this.y + (game.getTileGrid.getChunkSize * 2))
+            return true;
+
+        return false;
+    }
+
+    kill() {
+        this.combinedSprite.destroy();
     }
 
     update() {

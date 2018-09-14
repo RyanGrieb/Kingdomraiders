@@ -51,6 +51,12 @@ export default class KeyboardInput {
             game.getTileGrid.requestMapFromLocation(game.getPlayer.getX, game.getPlayer.getY);
         }
 
+        if (e.key == "r") {
+            for (var i = 0; i < game.getTileGrid.tileMap.length; i++) {
+                console.log(game.getTileGrid.tileMap[i].x + "," + game.getTileGrid.tileMap[i].y);
+            }
+        }
+
         if (e.key == "f") {
             game.getTileGrid.stopChunkRenderer = true;
         }

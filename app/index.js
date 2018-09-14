@@ -4,6 +4,7 @@
 
 // Load application styles
 import "styles/index.scss";
+import * as $ from "jquery";
 import * as PIXI from "pixi.js";
 import "pixi-layers";
 
@@ -35,6 +36,9 @@ function initGame() {
 
 function initConfigurations() {
     //Our configurations..
+
+    PIXI.Application.prototype.WIDTH = $("body").innerWidth();
+    PIXI.Application.prototype.HEIGHT = $("body").innerHeight();
 
     PIXI.Application.prototype.getUI = new UserInterface();
     PIXI.Application.prototype.getPlayer = new Player();
