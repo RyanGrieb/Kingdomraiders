@@ -13,6 +13,7 @@ export default class Camera {
             }
         }
 
+        //Pivot offset.
         this.pivot = {};
 
         this.position.set(game.WIDTH / 2, game.HEIGHT / 2);
@@ -20,13 +21,24 @@ export default class Camera {
         this.pivot.y = game.getPlayer.getY;
 
 
+        //Rotation
+        this.baseRotation = 2;
+        this.rotation = 0;
+        this.previousRotation = 0;
+    }
+
+    setRotation(left, right) {
+        if (left)
+            this.rotation += this.baseRotation;
+
+        if (right)
+            this.rotation -= this.baseRotation;
     }
 
     update() {
         var targetPivotX = game.getPlayer.getX;
         var targetPivotY = game.getPlayer.getY;
 
-        // or you can just assign targetpivot to pivot
         this.pivot.x = (targetPivotX - this.pivot.x) * 1 + this.pivot.x;
         this.pivot.y = (targetPivotY - this.pivot.y) * 1 + this.pivot.y;
     }

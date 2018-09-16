@@ -17,7 +17,10 @@ const AssetsEnum = {
         TILE_GRASS: { path: "assets/images/tile/grass.png" },
         TILE_FLOOR: { path: "assets/images/tile/floor.png" },
 
-
+        //ENTITY
+        
+        //Monster
+        MONSTER_DEMON: { path: "assets/images/monster/demon.png" },
 
     },
 

@@ -15,6 +15,7 @@ export default class TileChunk {
         this.tiles = [];
         this.x = x;
         this.y = y;
+        this.rotation = 0;
 
         this.initTiles(chunk);
 
@@ -68,9 +69,53 @@ export default class TileChunk {
         }
     }
 
-    setCameraPivot(x, y) {
-        this.combinedSprite.x -= game.getPlayer.getX - x;
-        this.combinedSprite.y -= game.getPlayer.getY - y;
+    setCameraPivot(rotation, x, y) {
+        // this.combinedSprite.x -= game.getPlayer.getX - x;
+        // this.combinedSprite.y -= game.getPlayer.getY - y;
+
+        //Move the sprite based on camera location
+        var differenceInDistanceX = game.getPlayer.getX - x;
+        var differenceInDistanceY = game.getPlayer.getY - y;
+
+        var radians = (Math.PI / 180) * (this.rotation);
+
+        //Sprite rotatation offset
+        var cos = Math.cos(radians);
+        var sin = Math.sin(radians);
+
+
+        var camPosOffsetX = (cos * differenceInDistanceX) - (sin * differenceInDistanceY);
+        var camPosOffsetY = (cos * differenceInDistanceY) + (sin * differenceInDistanceX);
+
+        //For some reason, the x axis is moving 
+
+        this.combinedSprite.x -= camPosOffsetX;
+        this.combinedSprite.y -= camPosOffsetY;
+        //..
+
+
+
+        //Sprite Rotation (Rotate the sprite around the player)
+        this.combinedSprite.rotation = (Math.PI / 180) * (rotation);
+
+        //Sprite rotation offset
+        if (this.rotation != rotation) {
+            var radians = (Math.PI / 180) * (this.rotation - rotation);
+
+            //Sprite rotatation offset
+            var cos = Math.cos(radians);
+            var sin = Math.sin(radians);
+            var newX = (cos * (this.combinedSprite.x - this.camera.position.x)) + (sin * (this.combinedSprite.y - this.camera.position.y)) + this.camera.position.x;
+            var newY = (cos * (this.combinedSprite.y - this.camera.position.y)) - (sin * (this.combinedSprite.x - this.camera.position.x)) + this.camera.position.y;
+
+            this.combinedSprite.x = newX;
+            this.combinedSprite.y = newY;
+
+
+            this.rotation = rotation;
+        }
+
+        //..
     }
 
     get outsideScreen() {
@@ -99,6 +144,6 @@ export default class TileChunk {
 
     update() {
         //Updates the tiles to be offset from the camera.
-        this.setCameraPivot(this.camera.pivot.x, this.camera.pivot.y);
+        this.setCameraPivot(this.camera.rotation, this.camera.pivot.x, this.camera.pivot.y);
     }
 }

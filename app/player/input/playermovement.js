@@ -16,6 +16,12 @@ export default class PlayerMovement {
             x: 0,
             y: 0
         }
+
+        //Camera rotation
+        this.cameraRotation = {
+            left: false,
+            right: false
+        }
     }
 
     updatePosition(x, y) {
@@ -36,6 +42,9 @@ export default class PlayerMovement {
 
     handleInput(e) {
         switch (e.keyCode) {
+
+            //Movement
+
             //D
             case 68:
                 for (var i = 0; i < this.heldKeys.length; i++)
@@ -69,11 +78,31 @@ export default class PlayerMovement {
                 this.heldKeys.push({ key: "W", y: -5 });
                 break;
 
+            //Camera rotation
+
+            //Q
+            case 81:
+                for (var i = 0; i < this.heldKeys.length; i++)
+                    if (this.heldKeys[i].key === "Q")
+                        return;
+                this.heldKeys.push({ key: "Q", left: true });
+                break;
+
+            case 69:
+                for (var i = 0; i < this.heldKeys.length; i++)
+                    if (this.heldKeys[i].key === "E")
+                        return;
+                this.heldKeys.push({ key: "E", right: true });
+                break;
+
         }
     }
 
     handleInputRelease(e) {
         switch (e.keyCode) {
+
+            //Movement
+
             //D
             case 68:
                 for (var i = 0; i < this.heldKeys.length; i++)
@@ -115,6 +144,28 @@ export default class PlayerMovement {
                         this.heldKeys.splice(i, 1);
                     }
                 break;
+
+            //Camera rotation
+
+            //Q
+            case 81:
+                for (var i = 0; i < this.heldKeys.length; i++)
+                    if (this.heldKeys[i].key === "Q") {
+
+                        this.cameraRotation.left = false;
+                        this.heldKeys.splice(i, 1);
+                    }
+                break;
+
+            //E
+            case 69:
+                for (var i = 0; i < this.heldKeys.length; i++)
+                    if (this.heldKeys[i].key === "E") {
+
+                        this.cameraRotation.right = false;
+                        this.heldKeys.splice(i, 1);
+                    }
+                break;
         }
     }
 
@@ -123,16 +174,34 @@ export default class PlayerMovement {
             return;
 
         for (var i = 0; i < this.heldKeys.length; i++) {
+            var heldKey = this.heldKeys[i].key;
 
-            if (this.heldKeys[i].x != null)
-                this.velocity.x = this.heldKeys[i].x;
+            //Movement
+            if (heldKey == "W" || heldKey == "A" || heldKey == "S" || heldKey == "D") {
 
-            if (this.heldKeys[i].y != null)
-                this.velocity.y = this.heldKeys[i].y;
+                if (this.heldKeys[i].x != null)
+                    this.velocity.x = this.heldKeys[i].x;
+
+                if (this.heldKeys[i].y != null)
+                    this.velocity.y = this.heldKeys[i].y;
+            }
+
+            //Camera rotation
+            if (heldKey == "Q" || heldKey == "E") {
+
+                if (this.heldKeys[i].left != null)
+                    this.cameraRotation.left = this.heldKeys[i].left;
+
+                if (this.heldKeys[i].right != null)
+                    this.cameraRotation.right = this.heldKeys[i].right;
+            }
         }
 
         //Set player velocity based off held keys
         game.getPlayer.sprite.setVelocity(this.velocity.x, this.velocity.y);
+
+        //Set camera rotation
+        game.getUI.getCurrentScreen.camera.setRotation(this.cameraRotation.left, this.cameraRotation.right);
     }
 
     handleTilePass() {

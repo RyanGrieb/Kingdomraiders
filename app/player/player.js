@@ -68,13 +68,21 @@ export default class Player {
         if (this.sprite == null)
             return this.spawnX;
 
-        return this.sprite.x;
+        return this.sprite.getFakeX;
     }
 
     get getY() {
         if (this.sprite == null)
             return this.spawnY;
 
-        return this.sprite.y;
+        return this.sprite.getFakeY;
+    }
+
+    get getFakeX() {
+        return this.sprite.getFakeX;
+    }
+
+    get getFakeY() {
+        return this.sprite.getFakeY;
     }
 }

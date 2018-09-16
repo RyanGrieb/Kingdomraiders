@@ -7,6 +7,9 @@ import TileGrid from '../../world/tile/tilegrid';
 import CustomText from '../custom/customtext';
 import Camera from "../camera/camera";
 import FPSOverlay from "../fpsoverlay/fpsoverlay";
+import EntityMap from "../../world/entity/entitymap";
+import Monster from "../../world/entity/monster/monster";
+import MonsterType from "../../world/entity/monster/monstertype";
 
 export default class GameScreen extends Screen {
 
@@ -18,8 +21,11 @@ export default class GameScreen extends Screen {
         this.camera = new Camera();
 
         game.getPlayer.spawnToGame();
-        PIXI.Application.prototype.getTileGrid = new TileGrid();
 
+        PIXI.Application.prototype.getTileGrid = new TileGrid();
+        PIXI.Application.prototype.getEntityMap = new EntityMap();
+
+        game.getEntityMap.entityMap.push(new Monster(MonsterType.list.DEMON, 1700, 1600, 128, 128));
         //game.getTileGrid.tileMap.push(new Tile(TileType.list.GRASS, 32, 32));
         //this.add.image(400, 300, 'star');
 
@@ -36,6 +42,7 @@ export default class GameScreen extends Screen {
         this.camera.update();
         game.getPlayer.update();
         game.getTileGrid.update();
+        game.getEntityMap.update();
 
         //FPS TEST
         this.fpsOverlay.update();

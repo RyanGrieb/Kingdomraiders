@@ -52,7 +52,6 @@ export default class TileGrid {
 
             // Right
             if (this.previousChunk.x - currentChunk.x < 0) {
-
                 for (var targetY = this.previousChunk.y - this.getChunkSize;
                     targetY <= this.previousChunk.y + this.getChunkSize;
                     targetY += this.getChunkSize)
@@ -62,7 +61,6 @@ export default class TileGrid {
 
             // Left
             if (this.previousChunk.x - currentChunk.x > 0) {
-                //console.log("left: " + this.previousChunk.x + "||" + currentChunk.x);
                 for (var targetY = this.previousChunk.y - this.getChunkSize;
                     targetY <= this.previousChunk.y + this.getChunkSize;
                     targetY += this.getChunkSize)
