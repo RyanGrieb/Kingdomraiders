@@ -14,6 +14,8 @@ export default class Monster extends Entity {
         this.sprite.y = this.y + (this.camera.position.y - game.getPlayer.getY) - 21;
         this.sprite.width = w;
         this.sprite.height = h;
+        this.sprite.anchor.x = 0.5;
+        this.sprite.anchor.y = 0.5;
 
         this.sprite.parentGroup = game.getEntityMap.group;
 

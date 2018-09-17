@@ -19,7 +19,7 @@ export default class Entity {
         var differenceInDistanceX = game.getPlayer.getX - x;
         var differenceInDistanceY = game.getPlayer.getY - y;
 
-        var radians = (Math.PI / 180) * (rotation);
+        var radians = (Math.PI / 180) * (this.rotation);
 
         //Sprite rotatation offset
         var cos = Math.cos(radians);
@@ -39,7 +39,7 @@ export default class Entity {
         //Camera rotation (Moves the sprite's around the player)
 
         //Sprite Rotation
-        this.sprite.rotation = (Math.PI / 180) * (rotation);
+        //this.sprite.rotation = (Math.PI / 180) * (rotation);
 
         //Sprite rotation offset
         if (this.rotation != rotation) {

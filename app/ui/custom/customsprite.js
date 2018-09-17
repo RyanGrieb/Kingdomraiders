@@ -40,6 +40,7 @@ export default class CustomSprite extends UIObject {
         //Fake x,y for camera rotation offset.
         var rotation = game.getUI.getCurrentScreen.camera.rotation;
         var radians = (Math.PI / 180) * rotation;
+        
         //Sprite rotatation offset
         var cos = Math.cos(radians);
         var sin = Math.sin(radians);
