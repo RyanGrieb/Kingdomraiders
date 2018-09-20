@@ -1,6 +1,8 @@
 import game from "../../..";
 import LoginWindow from "../../../ui/window/types/loginwindow";
 import RegisterWindow from "../../../ui/window/types/registerwindow";
+import EscapeWindow from "../../../ui/window/types/escapewindow";
+import MenuScreen from "../../../ui/scene/menuscreen";
 
 export default class ButtonInput {
     constructor() {
@@ -9,6 +11,7 @@ export default class ButtonInput {
 
             list: {
 
+                //Menu Screen Buttons
                 btnPlay: {
                     action: () => {
                         if (!game.getPlayer.isLoggedIn) {
@@ -45,7 +48,15 @@ export default class ButtonInput {
                     action: () => {
                         game.getUI.getWindowByName("RegisterWindow").requestToRegister();
                     }
-                }
+                },
+
+                //Game Screen Buttons
+                btnMainMenu: {
+                    action: () => {
+                        game.getUI.toggleWindow(new EscapeWindow());
+                        game.getUI.setScreen(new MenuScreen());
+                    }
+                },
             }
 
         }

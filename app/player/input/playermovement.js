@@ -208,6 +208,10 @@ export default class PlayerMovement {
 
     }
 
+    clearKeys() {
+        this.heldKeys = [];
+    }
+
     update() {
         if (game.getPlayer.inGame)
             this.handleMovement();

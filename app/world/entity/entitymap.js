@@ -8,6 +8,13 @@ export default class EntityMap {
         game.stage.addChild(new PIXI.display.Layer(this.group));
     }
 
+    clearObjects() {
+        for (var i = 0; i < this.entityMap.length; i++)
+            this.entityMap[i].kill();
+
+        this.entityMap = [];
+    }
+
     update() {
         for (var i = 0; i < this.entityMap.length; i++)
             this.entityMap[i].update();

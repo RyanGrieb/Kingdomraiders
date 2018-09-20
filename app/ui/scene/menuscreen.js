@@ -5,6 +5,7 @@ import CustomSprite from "ui/custom/customsprite";
 import TextBox from '../custom/textbox';
 import CustomText from '../custom/customtext';
 import Screen from './screen';
+import MenuOverlay from "../overlay/menuoverlay";
 
 
 export default class MenuScreen extends Screen {
@@ -14,6 +15,7 @@ export default class MenuScreen extends Screen {
     }
 
     open() {
+        this.menuOverlay = new MenuOverlay();
 
         game.getUI.uiObjects.push(new Button("btnPlay", "Play", (game.WIDTH / 2) - 200 / 2, (game.HEIGHT / 2) + 100, 200, 50, 200, 50));
         game.getUI.uiObjects.push(new CustomSprite("TITLE_IMAGE", (game.WIDTH / 2) - (500 / 2), 175, 500, 200));
@@ -25,11 +27,15 @@ export default class MenuScreen extends Screen {
     }
 
     close() {
+        game.getUI.clearObjects();
 
+        this.menuOverlay.clearObjects();
     }
 
     update() {
         game.getPlayer.update();
+
+        this.menuOverlay.update();
     }
 
     setLoggedIn() {

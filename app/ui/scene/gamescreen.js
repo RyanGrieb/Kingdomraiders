@@ -6,7 +6,7 @@ import TileType from '../../world/tile/tiletype';
 import TileGrid from '../../world/tile/tilegrid';
 import CustomText from '../custom/customtext';
 import Camera from "../camera/camera";
-import FPSOverlay from "../fpsoverlay/fpsoverlay";
+import FPSOverlay from "../overlay/fpsoverlay";
 import EntityMap from "../../world/entity/entitymap";
 import Monster from "../../world/entity/monster/monster";
 import MonsterType from "../../world/entity/monster/monstertype";
@@ -34,7 +34,12 @@ export default class GameScreen extends Screen {
     }
 
     close() {
+        this.fpsOverlay.clearObjects();
 
+        game.getPlayer.kill();
+        game.getUI.clearObjects();
+        game.getTileGrid.clearObjects();
+        game.getEntityMap.clearObjects();
     }
 
 

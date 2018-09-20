@@ -2,6 +2,7 @@ import TextBox from "ui/custom/textbox";
 
 import game from "index";
 import LoginWindow from "../../../ui/window/types/loginwindow";
+import EscapeWindow from "../../../ui/window/types/escapewindow";
 
 export default class KeyboardInput {
     constructor() {
@@ -43,7 +44,13 @@ export default class KeyboardInput {
         }
 
         if (game.getUI.getCurrentScreen.name === "GameScreen") {
+            //Player input keys
             game.getPlayer.movement.handleInput(e);
+
+            //Other game keys
+            if (e.key == "Escape") {
+                game.getUI.toggleWindow(new EscapeWindow());
+            }
         }
 
         //Debug

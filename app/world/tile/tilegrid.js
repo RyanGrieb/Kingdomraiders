@@ -52,38 +52,56 @@ export default class TileGrid {
 
             // Right
             if (this.previousChunk.x - currentChunk.x < 0) {
-                for (var targetY = this.previousChunk.y - this.getChunkSize;
-                    targetY <= this.previousChunk.y + this.getChunkSize;
-                    targetY += this.getChunkSize)
+                for (var targetY = this.previousChunk.y - (this.getChunkSize * 2);
+                    targetY <= this.previousChunk.y + (this.getChunkSize * 2);
+                    targetY += this.getChunkSize) {
+                    if (this.getChunkFromLocation(currentChunk.x + (this.getChunkSize * 2), targetY) == null)
+                        this.requestMapFromLocation(currentChunk.x + (this.getChunkSize * 2), targetY);
+
                     if (this.getChunkFromLocation(currentChunk.x + this.getChunkSize, targetY) == null)
                         this.requestMapFromLocation(currentChunk.x + this.getChunkSize, targetY);
+                }
             }
 
             // Left
             if (this.previousChunk.x - currentChunk.x > 0) {
-                for (var targetY = this.previousChunk.y - this.getChunkSize;
-                    targetY <= this.previousChunk.y + this.getChunkSize;
-                    targetY += this.getChunkSize)
+                for (var targetY = this.previousChunk.y - (this.getChunkSize * 2);
+                    targetY <= this.previousChunk.y + (this.getChunkSize * 2);
+                    targetY += this.getChunkSize) {
+                    if (this.getChunkFromLocation(currentChunk.x - (this.getChunkSize * 2), targetY) == null)
+                        this.requestMapFromLocation(currentChunk.x - (this.getChunkSize * 2), targetY);
+
                     if (this.getChunkFromLocation(currentChunk.x - this.getChunkSize, targetY) == null)
                         this.requestMapFromLocation(currentChunk.x - this.getChunkSize, targetY);
+                }
+
             }
 
             // Top
             if (this.previousChunk.y - currentChunk.y > 0) {
-                for (var targetX = currentChunk.x - this.getChunkSize;
-                    targetX <= currentChunk.x + this.getChunkSize;
-                    targetX += this.getChunkSize)
+                for (var targetX = currentChunk.x - (this.getChunkSize * 2);
+                    targetX <= currentChunk.x + (this.getChunkSize * 2);
+                    targetX += this.getChunkSize) {
+                    //Renders 2 chunks ahead (since we reduced chunksizes from 30 to 15.)
+                    if (this.getChunkFromLocation(targetX, currentChunk.y - (this.getChunkSize * 2)) == null)
+                        this.requestMapFromLocation(targetX, currentChunk.y - (this.getChunkSize * 2));
+
                     if (this.getChunkFromLocation(targetX, currentChunk.y - this.getChunkSize) == null)
                         this.requestMapFromLocation(targetX, currentChunk.y - this.getChunkSize);
+                }
             }
 
             // Down
             if (this.previousChunk.y - currentChunk.y < 0) {
-                for (var targetX = currentChunk.x - this.getChunkSize;
-                    targetX <= currentChunk.x + this.getChunkSize;
-                    targetX += this.getChunkSize)
+                for (var targetX = currentChunk.x - (this.getChunkSize * 2);
+                    targetX <= currentChunk.x + (this.getChunkSize * 2);
+                    targetX += this.getChunkSize) {
+                    if (this.getChunkFromLocation(targetX, currentChunk.y + (this.getChunkSize * 2)) == null)
+                        this.requestMapFromLocation(targetX, currentChunk.y + (this.getChunkSize * 2));
+
                     if (this.getChunkFromLocation(targetX, currentChunk.y + this.getChunkSize) == null)
                         this.requestMapFromLocation(targetX, currentChunk.y + this.getChunkSize);
+                }
             }
 
             this.previousChunk = currentChunk;
@@ -103,14 +121,21 @@ export default class TileGrid {
         //console.log("requested chunk at: " + x + "," + y);
     }
 
-    receiveChunk(json) {
-        var chunk = [];
+    async receiveChunk(json) {
+        setTimeout(() => {
 
-        chunk = String(json.chunk).split(",");
-        var tileChunk = new TileChunk(chunk, json.x * 32, json.y * 32);
-        //TODO: do something with the toplayer..
 
-        this.tileMap.push(tileChunk);
+            var chunk = [];
+
+            chunk = String(json.chunk).split(",");
+            var tileChunk = new TileChunk(chunk, json.x * 32, json.y * 32);
+            //TODO: do something with the toplayer..
+
+            //Do this w/ asynchronus delay.
+            this.tileMap.push(tileChunk)
+
+            //was 75 20
+        }, Math.floor(Math.random() * 210) + 15);
     }
 
     getChunkFromLocation(x, y) {
@@ -119,6 +144,13 @@ export default class TileGrid {
                 if (y >= this.tileMap[i].y && y < this.tileMap[i].y + (this.getChunkSize))
                     return this.tileMap[i];
         }
+    }
+
+    clearObjects() {
+        for (var i = 0; i < this.tileMap.length; i++)
+            this.tileMap[i].kill();
+
+        this.tileMap = [];
     }
 
     update() {
@@ -138,7 +170,7 @@ export default class TileGrid {
     }
 
     get getScaledChunkSize() {
-        return 30;
+        return 15;
     }
 
     get getChunkSize() {

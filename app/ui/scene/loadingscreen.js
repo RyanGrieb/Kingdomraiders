@@ -48,7 +48,7 @@ export default class LoadingScreen extends Screen {
     }
 
     close() {
-
+        game.getUI.clearObjects();
     }
 
     update() {

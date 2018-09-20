@@ -15,6 +15,7 @@ const AssetsEnum = {
         //TILE
         TILE_ERROR: { path: "assets/images/tile/error.png" },
         TILE_GRASS: { path: "assets/images/tile/grass.png" },
+        TILE_GRASS2: { path: "assets/images/tile/grass2.png" },
         TILE_FLOOR: { path: "assets/images/tile/floor.png" },
 
         //ENTITY

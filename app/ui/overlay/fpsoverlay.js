@@ -11,8 +11,15 @@ export default class FPSOverlay {
         this.fpsDisplay = (new CustomText("txtFPSInfo", "FPS: 0", 35, 25, 100, 100));
         this.positionDisplay = (new CustomText("txtFPSInfo", "X: " + parseInt(game.getPlayer.getX) + ", Y: " +
             parseInt(game.getPlayer.getY), 200, 25, 100, 100));
+
+        this.loadedChunks = (new CustomText("loadedChunkInfo", "Loaded Chunks: 0", 70, 55, 100, 100));
     }
 
+    clearObjects() {
+        this.fpsDisplay.kill();
+        this.positionDisplay.kill();
+        this.loadedChunks.kill();
+    }
 
     update() {
 
@@ -23,6 +30,7 @@ export default class FPSOverlay {
         this.delay++;
 
         this.positionDisplay.setText("X: " + parseInt(game.getPlayer.getX) + ", Y: " + parseInt(game.getPlayer.getY));
+        this.loadedChunks.setText("Loaded Chunks: " + game.getTileGrid.tileMap.length);
     }
 
 }

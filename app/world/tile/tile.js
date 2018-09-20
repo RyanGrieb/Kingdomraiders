@@ -4,7 +4,7 @@ import AssetEnum from "../../world/assets/assetsenum";
 
 export default class Tile {
 
-    constructor(chunk, tileType, x, y) {
+    constructor(container, tileType, x, y) {
         this.texture = tileType.name;
         this.x = x;
         this.y = y;
@@ -16,12 +16,16 @@ export default class Tile {
         //Sprite layer
         //this.sprite.parentGroup = game.getTileGrid.tileGroup;
 
-        chunk.container.addChild(this.sprite);
+        container.addChild(this.sprite);
 
     }
 
     setCameraPivot(x, y) {
         this.sprite.x -= game.getPlayer.getX - x;
         this.sprite.y -= game.getPlayer.getY - y;
+    }
+
+    kill() {
+        this.sprite.destroy();
     }
 }

@@ -47,9 +47,16 @@ export default class Player {
         this.inGame = true;
     }
 
+    kill() {
+        this.sprite.customSprite.destroy();
+        this.movement.clearKeys();
+    }
+
     update() {
         this.input.update();
-        this.movement.update();
+
+        if (game.getUI.getCurrentScreen.name === "GameScreen")
+            this.movement.update();
     }
 
     get isLoggedIn() {

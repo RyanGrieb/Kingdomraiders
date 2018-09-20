@@ -7,6 +7,7 @@ import "styles/index.scss";
 import * as $ from "jquery";
 import * as PIXI from "pixi.js";
 import "pixi-layers";
+import '@babel/polyfill';
 
 import UserInterface from "./ui/ui";
 import Player from "./player/player";

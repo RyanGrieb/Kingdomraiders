@@ -5,6 +5,7 @@ const TileType = {
     //TODO: add other attributes
     list: {
         GRASS: { name: "GRASS" },
+        GRASS2: { name: "GRASS2" },
         FLOOR: { name: "FLOOR" },
 
 
@@ -14,7 +15,7 @@ const TileType = {
     },
 
     getTileFromID(id) {
-        if (id == -1) return this.list.ERROR;
+        if (id == -1) return this.list.GRASS2;
         return this.list[Object.keys(this.list)[id]];
     }
 

@@ -32,7 +32,6 @@ export default class TileChunk {
 
         //For debugging purposes
         this.combinedSprite.interactive = true;
-        this.combinedSprite.buttonMode = true;
 
         this.combinedSprite.on('pointerover', () => {
             this.combinedSprite.tint = Math.random() * 0xFFFFFF;
@@ -52,7 +51,7 @@ export default class TileChunk {
         var x = 0;
         var y = 0;
         for (var i = 0; i < chunk.length; i++) {
-            if (i % 30 == 0) {
+            if (i % 15 == 0) {
                 x = 0;
                 y--;
             }
@@ -63,15 +62,14 @@ export default class TileChunk {
             //      continue;
             // }
 
-            this.tiles[i] = new Tile(this, TileType.getTileFromID(chunk[i]), this.x + (x * 32), this.y + (y * 32) + 32);
+            //TODO: make the tile use this.container instead.
+            this.tiles[i] = new Tile(this.container, TileType.getTileFromID(chunk[i]), this.x + (x * 32), this.y + (y * 32) + 32);
 
             x++;
         }
     }
 
     setCameraPivot(rotation, x, y) {
-        // this.combinedSprite.x -= game.getPlayer.getX - x;
-        // this.combinedSprite.y -= game.getPlayer.getY - y;
 
         //Move the sprite based on camera location
         var differenceInDistanceX = game.getPlayer.getX - x;
@@ -120,19 +118,19 @@ export default class TileChunk {
 
     get outsideScreen() {
         //Moving right
-        if (game.getPlayer.getX > this.x + (game.getTileGrid.getChunkSize * 2))
+        if (game.getPlayer.getX > this.x + (game.getTileGrid.getChunkSize * 3))
             return true;
 
         //Moving left
-        if ((game.getTileGrid.getChunkSize) < this.x - game.getPlayer.getX)
+        if ((game.getTileGrid.getChunkSize) < (this.x - game.getPlayer.getX) / 2)
             return true;
 
         //Moving up
-        if ((game.getTileGrid.getChunkSize) < this.y - game.getPlayer.getY)
+        if ((game.getTileGrid.getChunkSize) < (this.y - game.getPlayer.getY) / 2)
             return true;
 
         //Moving down
-        if (game.getPlayer.getY > this.y + (game.getTileGrid.getChunkSize * 2))
+        if (game.getPlayer.getY > this.y + (game.getTileGrid.getChunkSize * 3))
             return true;
 
         return false;

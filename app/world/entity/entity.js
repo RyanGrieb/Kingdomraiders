@@ -62,7 +62,7 @@ export default class Entity {
     }
 
     kill() {
-
+        this.sprite.destroy();
     }
 
     update() {
