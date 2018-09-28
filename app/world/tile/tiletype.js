@@ -15,7 +15,7 @@ const TileType = {
     },
 
     getTileFromID(id) {
-        if (id == -1) return this.list.GRASS2;
+        if (id == -1) return this.list.ERROR;
         return this.list[Object.keys(this.list)[id]];
     }
 

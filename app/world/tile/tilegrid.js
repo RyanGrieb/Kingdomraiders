@@ -20,10 +20,9 @@ export default class TileGrid {
 
 
     initMap(x, y) {
-
         for (var targetX = (x - game.WIDTH / 2) - this.getChunkSize; targetX < x + (game.WIDTH / 2)
             + this.getChunkSize; targetX += this.getChunkSize)
-            for (var targetY = ((y - game.HEIGHT / 2) - this.getChunkSize); targetY <= y + (game.HEIGHT / 2)
+            for (var targetY = ((y - game.HEIGHT / 2) - (this.getChunkSize * 2)); targetY <= y + (game.HEIGHT / 2)
                 + this.getChunkSize; targetY += this.getChunkSize)
                 this.requestMapFromLocation(targetX, targetY);
     }

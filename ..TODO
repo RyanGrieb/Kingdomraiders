@@ -1,2 +1,8 @@
+Bugs:
+
 - Fix textbox glitching when user presses spacebar
-- Find out why I need to flip a chunk vertically when sending it over a JSONpacket.
+- Fix slight stuttering, might be caused by not deleting chunks async.
+
+Features:
+
+- Loading bar

@@ -2,10 +2,11 @@ import game from "index";
 
 export default class Entity {
 
-    constructor(x, y, w, h) {
+    constructor(entityType, x, y, w, h) {
         //Misc helper variables
         this.camera = game.getUI.getCurrentScreen.getCamera;
 
+        this.entityType = entityType;
         this.x = x;
         this.y = y;
         this.w = w;
@@ -59,6 +60,11 @@ export default class Entity {
         //..
 
         this.rotation = rotation;
+    }
+
+    setVelocity(x, y) {
+        this.sprite.x += x;
+        this.sprite.y += y;
     }
 
     kill() {

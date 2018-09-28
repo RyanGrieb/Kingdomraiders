@@ -1,0 +1,19 @@
+figure out what's cusing the stuttering:
+
+-not tilegrid....
+-
+
++ if it is, delete chunks async?
+
+---------
+PLAYER MOVEMENT:
+
+make async delay when sending move packets to server to test how we handle lag.
+
+!!!!!!!!!!!!!!
+to fix the mpplayer difference in location, send a mpplayerstop packet to the server
+w/ the players final location, we then send that to the other players online 
+to prevent any offset locations.
+
+***The problem is with when pressing a & d we never release the a key, causing the server
+to get slightly cofused...

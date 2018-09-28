@@ -34,7 +34,7 @@ export default class MenuOverlay {
             this.tileMap[i].sprite.x -= 1;
 
             //Remove out of bounds tiles
-            if (this.tileMap[i].sprite.x < -32) {
+            if (this.tileMap[i].sprite.x < -64) {
                 this.tileMap[i].kill();
                 this.tileMap.splice(i, 1);
             }

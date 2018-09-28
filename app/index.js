@@ -4,6 +4,8 @@
 
 // Load application styles
 import "styles/index.scss";
+
+//Universal imports
 import * as $ from "jquery";
 import * as PIXI from "pixi.js";
 import "pixi-layers";

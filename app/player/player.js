@@ -20,10 +20,7 @@ export default class Player {
 
     joinGame() {
         //Send packet requesting to join game
-        var msg = {
-            type: "JoinGame",
-        };
-        game.getNetwork.sendMessage(JSON.stringify(msg));
+        game.getNetwork.sendMessage(JSON.stringify({ type: "JoinGame" }));
     }
 
     spawnToGame() {
@@ -34,7 +31,7 @@ export default class Player {
         this.w = 42;
         this.h = 42;
 
-        this.sprite = new CustomSprite(this.className, (window.innerWidth / 2) - (21), (window.innerHeight / 2) - (21), this.w, this.h);
+        this.sprite = new CustomSprite(this.className, (game.WIDTH / 2) - (21), (game.HEIGHT / 2) - (21), this.w, this.h);
         //Updates the camera offset..
         this.sprite.setPosition(this.spawnX, this.spawnY);
 
@@ -82,14 +79,6 @@ export default class Player {
         if (this.sprite == null)
             return this.spawnY;
 
-        return this.sprite.getFakeY;
-    }
-
-    get getFakeX() {
-        return this.sprite.getFakeX;
-    }
-
-    get getFakeY() {
         return this.sprite.getFakeY;
     }
 }

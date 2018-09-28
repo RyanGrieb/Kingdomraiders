@@ -5,7 +5,7 @@ import AssetEnum from "../../assets/assetsenum";
 
 export default class Monster extends Entity {
     constructor(monsterType, x, y, w, h) {
-        super(x, y, w, h);
+        super("MONSTER", x, y, w, h);
 
         this.sprite = new PIXI.Sprite(AssetEnum.getObjectFromName("MONSTER_" + monsterType.name).texture);
 

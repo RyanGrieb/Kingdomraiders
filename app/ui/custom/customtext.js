@@ -22,10 +22,10 @@ export default class CustomText extends UIObject {
     }
 
     setText(text) {
-        this.kill();
         this.text = text;
-
-        this.generateText();
+        this.customText.text = text;
+        this.customText.x = this.x - (this.customText.width / 2);
+        this.customText.y = this.y - (this.customText.height / 2);
     }
 
     generateText() {
