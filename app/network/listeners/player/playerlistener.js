@@ -34,12 +34,8 @@ export default class PlayerListener {
                 this.handleMPPositionUpdate(json);
                 break;
 
-            case "MPMovementStart":
-                this.handleMPMovementStart(json);
-                break;
-
-            case "MPMovementStop":
-                this.handleMPMovementStop(json);
+            case "MPMovementTarget":
+                this.handleMPMovementTarget(json);
                 break;
         }
     }
@@ -62,14 +58,12 @@ export default class PlayerListener {
     }
 
     handleMPPositionUpdate(json) {
+        //Set the exact position of the mpplayer.
         game.getEntityMap.getMPPlayerByID(json.id).setPosition(json.x, json.y);
     }
 
-    handleMPMovementStart(json) {
-        game.getEntityMap.getMPPlayerByID(json.id).startMovement(json);
-    }
-
-    handleMPMovementStop(json) {
-        game.getEntityMap.getMPPlayerByID(json.id).stopMovement(json);
+    handleMPMovementTarget(json) {
+        //Move the mpplayer to the target /w velocity.
+        game.getEntityMap.getMPPlayerByID(json.id).recivePosition(json);
     }
 }

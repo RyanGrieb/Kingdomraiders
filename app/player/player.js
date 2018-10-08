@@ -36,7 +36,7 @@ export default class Player {
         this.sprite.setPosition(this.spawnX, this.spawnY);
 
         //Sprite layer
-        var group = new PIXI.display.Group(1, false);
+        var group = new PIXI.display.Group(2, false);
         game.stage.addChild(new PIXI.display.Layer(group));
         this.sprite.customSprite.parentGroup = group;
 
@@ -45,6 +45,8 @@ export default class Player {
     }
 
     kill() {
+        this.inGame = false;
+
         this.sprite.customSprite.destroy();
         this.movement.clearKeys();
     }

@@ -1,5 +1,6 @@
 import game from "index";
 import Player from "../player";
+import { setInterval } from "timers";
 
 export default class PlayerMovement {
     constructor() {
@@ -22,6 +23,7 @@ export default class PlayerMovement {
             left: false,
             right: false
         }
+        setInterval(this.sendMovementUpdate, 100);
     }
 
     updatePosition(x, y) {
@@ -51,7 +53,6 @@ export default class PlayerMovement {
                     if (this.heldKeys[i].key === "D")
                         return;
 
-                this.sendMovementStartPacket("D");
                 this.heldKeys.push({ key: "D", x: 5 });
                 break;
 
@@ -61,7 +62,6 @@ export default class PlayerMovement {
                     if (this.heldKeys[i].key === "A")
                         return;
 
-                this.sendMovementStartPacket("A");
                 this.heldKeys.push({ key: "A", x: -5 });
                 break;
 
@@ -71,7 +71,6 @@ export default class PlayerMovement {
                     if (this.heldKeys[i].key === "S")
                         return;
 
-                this.sendMovementStartPacket("S");
                 this.heldKeys.push({ key: "S", y: 5 });
                 break;
 
@@ -81,7 +80,6 @@ export default class PlayerMovement {
                     if (this.heldKeys[i].key === "W")
                         return;
 
-                this.sendMovementStartPacket("W");
                 this.heldKeys.push({ key: "W", y: -5 });
                 break;
 
@@ -93,7 +91,6 @@ export default class PlayerMovement {
                     if (this.heldKeys[i].key === "Q")
                         return;
 
-                this.sendMovementStartPacket("Q");
                 this.heldKeys.push({ key: "Q", left: true });
                 break;
 
@@ -102,7 +99,6 @@ export default class PlayerMovement {
                     if (this.heldKeys[i].key === "E")
                         return;
 
-                this.sendMovementStartPacket("E");
                 this.heldKeys.push({ key: "E", right: true });
                 break;
 
@@ -119,7 +115,6 @@ export default class PlayerMovement {
                 for (var i = 0; i < this.heldKeys.length; i++)
                     if (this.heldKeys[i].key === "D") {
 
-                        this.sendMovementStopPacket("D");
                         this.velocity.x = 0;
                         this.heldKeys.splice(i, 1);
                     }
@@ -130,7 +125,6 @@ export default class PlayerMovement {
                 for (var i = 0; i < this.heldKeys.length; i++)
                     if (this.heldKeys[i].key === "A") {
 
-                        this.sendMovementStopPacket("A");
                         this.velocity.x = 0;
                         this.heldKeys.splice(i, 1);
                     }
@@ -141,7 +135,6 @@ export default class PlayerMovement {
                 for (var i = 0; i < this.heldKeys.length; i++)
                     if (this.heldKeys[i].key === "S") {
 
-                        this.sendMovementStopPacket("S");
                         this.velocity.y = 0;
                         this.heldKeys.splice(i, 1);
                     }
@@ -152,7 +145,6 @@ export default class PlayerMovement {
                 for (var i = 0; i < this.heldKeys.length; i++)
                     if (this.heldKeys[i].key === "W") {
 
-                        this.sendMovementStopPacket("W");
                         this.velocity.y = 0;
                         this.heldKeys.splice(i, 1);
                     }
@@ -165,7 +157,6 @@ export default class PlayerMovement {
                 for (var i = 0; i < this.heldKeys.length; i++)
                     if (this.heldKeys[i].key === "Q") {
 
-                        this.sendMovementStopPacket("Q");
                         this.cameraRotation.left = false;
                         this.heldKeys.splice(i, 1);
                     }
@@ -176,7 +167,6 @@ export default class PlayerMovement {
                 for (var i = 0; i < this.heldKeys.length; i++)
                     if (this.heldKeys[i].key === "E") {
 
-                        this.sendMovementStopPacket("E");
                         this.cameraRotation.right = false;
                         this.heldKeys.splice(i, 1);
                     }
@@ -204,56 +194,59 @@ export default class PlayerMovement {
             //Camera rotation
             if (heldKey == "Q" || heldKey == "E") {
 
-                if (this.heldKeys[i].left != null)
+                if (this.heldKeys[i].left != null) {
                     this.cameraRotation.left = this.heldKeys[i].left;
+                    this.cameraRotation.right = false;
+                }
 
-                if (this.heldKeys[i].right != null)
+                if (this.heldKeys[i].right != null) {
+                    this.cameraRotation.left = false;
                     this.cameraRotation.right = this.heldKeys[i].right;
+                }
             }
         }
 
         //Set player velocity based off held keys
-        game.getPlayer.sprite.setVelocity(this.velocity.x, this.velocity.y);
+
+        var distanceX = this.velocity.x;
+        var distanceY = this.velocity.y;
+        var hypotnuse = Math.sqrt(((this.velocity.x * this.velocity.x) + (this.velocity.y * this.velocity.y)));
+
+        //console.log(distanceX + "," + distanceY);
+
+        var distanceX = (distanceX / hypotnuse);
+        var distanceY = (distanceY / hypotnuse);
+
+
+        //Normalize like mpplayer.
+        if (hypotnuse !== 0)
+            game.getPlayer.sprite.setVelocity(distanceX * 5, distanceY * 5);
 
         //Set camera rotation
         game.getUI.getCurrentScreen.camera.setRotation(this.cameraRotation.left, this.cameraRotation.right);
     }
 
-    handleTilePass() {
+    sendMovementUpdate() {
+        if (game.getPlayer.inGame) {
+            var msg = {
+                type: "MovementUpdate",
+                x: game.getPlayer.getX,
+                y: game.getPlayer.getY,
+            };
 
+            game.getNetwork.sendMessage(JSON.stringify(msg));
+
+        }
     }
 
     clearKeys() {
         this.heldKeys = [];
     }
 
-    sendMovementStartPacket(key) {
-        //Server then compares difference in x,y values and updates everything.
-        var msg = {
-            type: "MovementStart",
-            key: key,
-        };
-
-        game.getNetwork.sendMessage(JSON.stringify(msg));
-    }
-
-    sendMovementStopPacket(key) {
-        var msg = {
-            type: "MovementStop",
-            key: key,
-            x: game.getPlayer.getX,
-            y: game.getPlayer.getY,
-        };
-
-        game.getNetwork.sendMessage(JSON.stringify(msg));
-    }
-
     update() {
-        if (game.getPlayer.inGame)
+        if (game.getPlayer.inGame) {
             this.handleMovement();
-
-        //Tile pass (after 32..)
-        this.handleTilePass();
+        }
     }
 
 }

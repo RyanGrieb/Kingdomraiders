@@ -34,7 +34,7 @@ export default class TileChunk {
         this.combinedSprite.interactive = true;
 
         this.combinedSprite.on('pointerover', () => {
-            this.combinedSprite.tint = Math.random() * 0xFFFFFF;
+           // this.combinedSprite.tint = Math.random() * 0xFFFFFF;
         });
         //..
 

@@ -17,7 +17,7 @@ export default class Monster extends Entity {
         this.sprite.anchor.x = 0.5;
         this.sprite.anchor.y = 0.5;
 
-        this.sprite.parentGroup = game.getEntityMap.group;
+        this.sprite.parentGroup = game.getEntityMap.monsterGroup;
 
         game.stage.addChild(this.sprite);
     }

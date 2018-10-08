@@ -7,6 +7,8 @@ export default class Entity {
         this.camera = game.getUI.getCurrentScreen.getCamera;
 
         this.entityType = entityType;
+
+        //Note: these this.x & y values are meant to display the true position of the entity /w out rotation offsets.
         this.x = x;
         this.y = y;
         this.w = w;
@@ -38,11 +40,6 @@ export default class Entity {
 
 
         //Camera rotation (Moves the sprite's around the player)
-
-        //Sprite Rotation
-        //this.sprite.rotation = (Math.PI / 180) * (rotation);
-
-        //Sprite rotation offset
         if (this.rotation != rotation) {
 
             var radians = (Math.PI / 180) * (this.rotation - rotation);
@@ -63,8 +60,24 @@ export default class Entity {
     }
 
     setVelocity(x, y) {
-        this.sprite.x += x;
-        this.sprite.y += y;
+        // console.log(x + "," + y);
+        this.x += x;
+        this.y += y;
+
+        //Fake x,y for camera rotation offset.
+        var rotation = game.getUI.getCurrentScreen.camera.rotation;
+        var radians = (Math.PI / 180) * rotation;
+
+        //Sprite rotatation offset
+        var cos = Math.cos(radians);
+        var sin = Math.sin(radians);
+
+        //Ofset the cos & sin
+        var testX = (y * sin) + (-(x * cos));
+        var testY = (y * cos) + (x * sin);
+
+        this.sprite.x -= testX;
+        this.sprite.y += testY;
     }
 
     kill() {

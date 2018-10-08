@@ -19,12 +19,16 @@ export default class FPSOverlay {
 
         this.loadedChunks = (new CustomText("loadedChunkInfo", "Loaded Chunks: 0", 70, 55, 100, 100));
         this.loadedChunks.customText.parentGroup = this.group;
+
+        this.rotationInfo = (new CustomText("rotationInfo", "Rotation: 0", 55, 80, 100, 100));
+        this.rotationInfo.customText.parentGroup = this.group;
     }
 
     clearObjects() {
         this.fpsDisplay.kill();
         this.positionDisplay.kill();
         this.loadedChunks.kill();
+        this.rotationInfo.kill();
     }
 
     update() {
@@ -37,6 +41,7 @@ export default class FPSOverlay {
 
         this.positionDisplay.setText("X: " + parseInt(game.getPlayer.getX) + ", Y: " + parseInt(game.getPlayer.getY));
         this.loadedChunks.setText("Loaded Chunks: " + game.getTileGrid.tileMap.length);
+        this.rotationInfo.setText("Rotation: " + game.getUI.getCurrentScreen.getCamera.rotation);
 
     }
 

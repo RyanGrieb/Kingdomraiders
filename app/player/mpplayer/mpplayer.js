@@ -22,7 +22,7 @@ export default class MPPlayer extends Entity {
         this.sprite.anchor.x = 0.5;
         this.sprite.anchor.y = 0.5;
 
-        this.sprite.parentGroup = game.getEntityMap.group;
+        this.sprite.parentGroup = game.getEntityMap.mpPlayerGroup;
 
         game.stage.addChild(this.sprite);
     }
@@ -35,10 +35,14 @@ export default class MPPlayer extends Entity {
     setPosition(x, y) {
         this.sprite.x = x + (this.camera.position.x - game.getPlayer.getX);
         this.sprite.y = y + (this.camera.position.y - game.getPlayer.getY);
+
+        //..
+        this.x = x;
+        this.y = y;
     }
 
-    startMovement(json) {
-        this.movement.startMovement(json);
+    recivePosition(json) {
+        this.movement.recivePosition(json);
     }
 
     stopMovement(json) {
