@@ -20,7 +20,6 @@ var sceneManager;
 var game;
 
 function initGame() {
-    console.log(window.innerWidth / 32);
 
     //Apply settings here..
     //Fixes blurry sprites & fonts
@@ -35,6 +34,8 @@ function initGame() {
     game.stage = new PIXI.display.Stage();
     game.stage.group.enableSort = true;
     //..
+
+    console.log("Welcome to Kingdomraiders!")
 }
 
 function initConfigurations() {

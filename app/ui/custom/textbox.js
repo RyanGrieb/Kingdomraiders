@@ -19,8 +19,8 @@ export default class TextBox extends UIObject {
         });
         this.customText.x = x;
         this.customText.y = y + 8;
+
         game.stage.addChild(this.customText);
-        //this.customText.setOrigin(0, -0.5);
     }
 
     select() {
@@ -42,8 +42,6 @@ export default class TextBox extends UIObject {
             return;
 
         this.selectGraphic = new CustomSprite("TEXTBOX_HIGHLIGHT", (this.x + this.customText.width) + 2, this.y + (10 / 2), 0.7, this.h - 10);
-        //this.selectGraphic.fillStyle(0x000000, 1);
-        //this.selectGraphic.fillRect((this.x + this.customText.width) + 4, this.y + (10 / 2), 0.7, this.h - 10);
     }
 
     unhighlight() {
@@ -75,10 +73,10 @@ export default class TextBox extends UIObject {
     }
 
     handleKeyinput(e) {
-
         //Check for speical keys
-        //console.log(e.keyCode);
+
         switch (e.keyCode) {
+
             //Backspace
             case 8:
                 this.customText.text = this.customText.text.substring(0, this.customText.text.length - 1);
@@ -127,6 +125,12 @@ export default class TextBox extends UIObject {
             case 112: case 113: case 114: case 115: case 116:
             case 117: case 118: case 119: case 120: case 121:
             case 122: case 123:
+                return;
+
+            //Space
+            case 32:
+                this.customText.text = this.customText.text + " ";
+                this.cycleHighlighter();
                 return;
         }
 

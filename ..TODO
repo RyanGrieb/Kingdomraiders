@@ -1,8 +1,9 @@
 Bugs:
 
-- Fix textbox glitching when user presses spacebar
 - Fix slight stuttering, might be caused by not deleting chunks async.
+- Spawning player at 0,0 causes chunks to be placed in incorrect locations.
+- Fix async loading when building.
 
 Features:
 
-- Loading bar
+- Add disconnected window.
