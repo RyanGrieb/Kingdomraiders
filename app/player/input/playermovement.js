@@ -12,6 +12,10 @@ export default class PlayerMovement {
             y: 0
         }
 
+        //Previous location sent by the packet
+        this.previousX = 0;
+        this.previousY = 0;
+
         //The Players current velocity..
         this.velocity = {
             x: 0,
@@ -23,6 +27,8 @@ export default class PlayerMovement {
             left: false,
             right: false
         }
+
+        //Update movement every 100ms.
         setInterval(this.sendMovementUpdate, 100);
     }
 
@@ -227,16 +233,19 @@ export default class PlayerMovement {
     }
 
     sendMovementUpdate() {
-        if (game.getPlayer.inGame) {
-            var msg = {
-                type: "MovementUpdate",
-                x: game.getPlayer.getX,
-                y: game.getPlayer.getY,
-            };
+        if (game.getPlayer.inGame)
+            if (game.getPlayer.getX !== this.previousX || game.getPlayer.getY !== this.previousY) {
 
-            game.getNetwork.sendMessage(JSON.stringify(msg));
+                var msg = {
+                    type: "MovementUpdate",
+                    x: game.getPlayer.getX,
+                    y: game.getPlayer.getY,
+                };
 
-        }
+                game.getNetwork.sendMessage(JSON.stringify(msg));
+                this.previousX = game.getPlayer.getX;
+                this.previousY = game.getPlayer.getY;
+            }
     }
 
     clearKeys() {

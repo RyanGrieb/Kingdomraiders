@@ -3,6 +3,7 @@ import LoginWindow from "../../../ui/window/types/loginwindow";
 import RegisterWindow from "../../../ui/window/types/registerwindow";
 import EscapeWindow from "../../../ui/window/types/escapewindow";
 import MenuScreen from "../../../ui/scene/menuscreen";
+import BuildWindow from "../../../ui/window/types/buildwindow";
 
 export default class ButtonInput {
     constructor() {
@@ -54,10 +55,16 @@ export default class ButtonInput {
                 btnMainMenu: {
                     action: () => {
                         game.getNetwork.sendMessage(JSON.stringify({ type: "LeaveGame", }));
-                        game.getUI.toggleWindow(new EscapeWindow());
                         game.getUI.setScreen(new MenuScreen());
                     }
                 },
+
+                btnBuild: {
+                    action: () => {
+                        game.getUI.toggleWindow(new EscapeWindow());
+                        game.getUI.toggleWindow(new BuildWindow());
+                    }
+                }
             }
 
         }

@@ -16,7 +16,10 @@ export default class Tile {
         //Sprite layer
         //this.sprite.parentGroup = game.getTileGrid.tileGroup;
 
-        container.addChild(this.sprite);
+        if (container !== undefined)
+            container.addChild(this.sprite);
+        else
+            game.stage.addChild(this.sprite);
 
     }
 

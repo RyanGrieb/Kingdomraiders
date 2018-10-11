@@ -2,8 +2,10 @@ import PlayerInput from "./input/playerinput";
 import PlayerMovement from "./input/playermovement";
 import PlayerProfile from "./profile/playerprofile";
 import CustomSprite from "../ui/custom/customsprite";
+import BuildMode from "./item/buildmode";
 
 import game from "index";
+
 
 export default class Player {
     constructor() {
@@ -11,8 +13,11 @@ export default class Player {
         this.input = new PlayerInput();
         this.movement = new PlayerMovement();
 
-        //Status Informatiion
+        //Status Information
         this.playerProfile = new PlayerProfile();
+
+        //Other player constructors
+        this.buildMode = new BuildMode();
 
         this.loggedIn = false;
         this.inGame = false;
@@ -49,13 +54,17 @@ export default class Player {
 
         this.sprite.customSprite.destroy();
         this.movement.clearKeys();
+        this.buildMode.buildEnabled = false;
     }
 
     update() {
         this.input.update();
 
-        if (game.getUI.getCurrentScreen.name === "GameScreen")
+        if (game.getUI.getCurrentScreen.name === "GameScreen") {
             this.movement.update();
+            this.buildMode.update();
+        }
+
     }
 
     get isLoggedIn() {
@@ -64,6 +73,10 @@ export default class Player {
 
     get getInput() {
         return this.input;
+    }
+
+    get getBuildMode() {
+        return this.buildMode;
     }
 
     get getSprite() {

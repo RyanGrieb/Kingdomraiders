@@ -11,7 +11,7 @@ export default class CustomSprite extends UIObject {
     //this.fakeX: the location the the sprite based off camera + rotation
 
     constructor(spriteName, x, y, w, h) {
-        super(null, x, y, w, h);
+        super(spriteName, x, y, w, h);
 
         //Sprite
         this.customSprite = new PIXI.Sprite(AssetEnum.getObjectFromName(spriteName).texture);

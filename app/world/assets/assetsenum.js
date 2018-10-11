@@ -17,9 +17,20 @@ const AssetsEnum = {
         TILE_GRASS: { path: "assets/images/tile/grass.png" },
         TILE_GRASS2: { path: "assets/images/tile/grass2.png" },
         TILE_FLOOR: { path: "assets/images/tile/floor.png" },
+        TILE_PATH: { path: "assets/images/tile/path.png" },
+        TILE_LIGHTPATH: { path: "assets/images/tile/lightpath.png" },
+
+        TILE_WALLBOTTOM: { path: "assets/images/tile/wallbottom.png" },
+        TILE_WALLBOTTOMLEFT: { path: "assets/images/tile/wallbottomleft.png" },
+        TILE_WALLBOTTOMRIGHT: { path: "assets/images/tile/wallbottomright.png" },
+        TILE_WALLLEFT: { path: "assets/images/tile/wallleft.png" },
+        TILE_WALLRIGHT: { path: "assets/images/tile/wallright.png" },
+        TILE_WALLTOP: { path: "assets/images/tile/walltop.png" },
+        TILE_WALLTOPLEFT: { path: "assets/images/tile/walltopleft.png" },
+        TILE_WALLTOPRIGHT: { path: "assets/images/tile/walltopright.png" },
 
         //ENTITY
-        
+
         //Monster
         MONSTER_DEMON: { path: "assets/images/monster/demon.png" },
 

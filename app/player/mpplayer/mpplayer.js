@@ -3,6 +3,7 @@ import game from "index";
 import Entity from "../../world/entity/entity";
 import AssetsEnum from "../../world/assets/assetsenum";
 import MPPlayerMovement from "./mpplayermovement";
+import CustomText from "../../ui/custom/customtext";
 
 export default class MPPlayer extends Entity {
 
@@ -22,7 +23,10 @@ export default class MPPlayer extends Entity {
         this.sprite.anchor.x = 0.5;
         this.sprite.anchor.y = 0.5;
 
+        this.nametag = new CustomText("mpnametag_" + this.name, this.name, this.sprite.x, this.sprite.y, 100, 125);
+
         this.sprite.parentGroup = game.getEntityMap.mpPlayerGroup;
+        this.nametag.customText.parentGroup = game.getEntityMap.mpPlayerGroup;
 
         game.stage.addChild(this.sprite);
     }
@@ -49,11 +53,29 @@ export default class MPPlayer extends Entity {
         this.movement.stopMovement(json);
     }
 
+    setVelocity(x, y) {
+        super.setVelocity(x, y);
+    }
+
+    updateNametag() {
+        this.nametag.customText.x = (this.sprite.x);
+        this.nametag.customText.y = (this.sprite.y - 42);
+
+        //center 
+        this.nametag.customText.x = this.nametag.customText.x - (this.nametag.customText.width / 2);
+    }
+
+    kill() {
+        super.kill();
+
+        this.nametag.kill();
+    }
+
     update() {
         super.update();
 
         this.movement.update();
-        // console.log((this.sprite.x + (game.getPlayer.getX - this.camera.position.x)) + "," + (this.sprite.y + (game.getPlayer.getX - this.camera.position.y)));
+        this.updateNametag();
     }
 
 

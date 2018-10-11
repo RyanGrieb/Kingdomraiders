@@ -10,6 +10,7 @@ export default class MouseInput {
 
         //On mouse clck, call..
         $("body").mousedown(() => this.onMouseClick());
+        $("body").mouseup(() => this.onMouseRelease());
     }
 
     onButtonHover() {
@@ -61,6 +62,16 @@ export default class MouseInput {
         }
     }
 
+    enableBuild() {
+        if (game.getUI.isWindowOpen("BuildWindow"))
+            game.getPlayer.getBuildMode.buildEnabled = true;
+    }
+
+    disableBuild() {
+        if (game.getUI.isWindowOpen("BuildWindow"))
+            game.getPlayer.getBuildMode.buildEnabled = false;
+    }
+
     update() {
         this.onButtonHover();
         this.onTextboxHover();
@@ -68,7 +79,15 @@ export default class MouseInput {
 
 
     onMouseClick(e) {
+        //Menu
         this.onTextboxClick();
+
+        //In-Game
+        this.enableBuild();
+    }
+
+    onMouseRelease(e) {
+        this.disableBuild();
     }
 
 }

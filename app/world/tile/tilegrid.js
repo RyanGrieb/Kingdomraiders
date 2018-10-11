@@ -123,6 +123,9 @@ export default class TileGrid {
     async receiveChunk(json) {
         setTimeout(() => {
 
+            //If an existing chunk is already here.. replace it. (!!!!!!!! BUGGY!)
+            //if (this.getChunkFromLocation(json.x * 32, json.y * 32) !== undefined)
+            //  this.removeChunk(this.getChunkFromLocation(json.x * 32, json.y * 32));
 
             var chunk = [];
 
@@ -137,12 +140,28 @@ export default class TileGrid {
         }, Math.floor(Math.random() * 210) + 15);
     }
 
+    updateChunk(json) {
+        var chunk = this.getChunkFromLocation(json.x, json.y);
+        if (chunk === undefined)
+            return;
+
+        this.requestMapFromLocation(chunk.x, chunk.y);
+    }
+
     getChunkFromLocation(x, y) {
         for (var i = 0; i < this.tileMap.length; i++) {
             if (x >= this.tileMap[i].x && x < this.tileMap[i].x + (this.getChunkSize))
                 if (y >= this.tileMap[i].y && y < this.tileMap[i].y + (this.getChunkSize))
                     return this.tileMap[i];
         }
+    }
+
+    removeChunk(chunk) {
+        for (var i = 0; i < this.tileMap.length; i++)
+            if (this.tileMap[i] === chunk) {
+                this.tileMap[i].kill();
+                this.tileMap.splice(i, 1);
+            }
     }
 
     clearObjects() {

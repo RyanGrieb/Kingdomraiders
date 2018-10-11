@@ -10,11 +10,18 @@ export default class MapListener {
             case "ChunkRequest":
                 this.handleChunkRequest(json);
                 break;
+
+            case "ChunkUpdate":
+                this.handleChunkUpdate(json);
+                break;
         }
     }
 
     handleChunkRequest(json) {
-       // console.log("recived chunks:" + json.chunk);
         game.getTileGrid.receiveChunk(json);
+    }
+
+    handleChunkUpdate(json) {
+        game.getTileGrid.updateChunk(json);
     }
 }

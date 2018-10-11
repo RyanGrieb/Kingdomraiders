@@ -22,6 +22,13 @@ export default class UserInterface {
             this.uiObjects[i].kill();
 
         this.uiObjects = [];
+
+        //Also close any windows
+        for (var i = 0; i < this.windowObjects.length; i++)
+            this.windowObjects[i].close();
+
+        this.windowObjects = [];
+
     }
 
     removeObject(name) {
@@ -72,6 +79,15 @@ export default class UserInterface {
             if (this.windowObjects[i].name === windowName)
                 return windowName;
         }
+    }
+
+    isAnyWindowOpenExcept(windowName) {
+        for (var i = 0; i < this.windowObjects.length; i++) {
+            if (this.windowObjects[i].name !== windowName)
+                return true;
+        }
+
+        return false;
     }
 
     //Screens

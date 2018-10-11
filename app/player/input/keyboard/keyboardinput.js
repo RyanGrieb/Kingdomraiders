@@ -48,9 +48,19 @@ export default class KeyboardInput {
             game.getPlayer.movement.handleInput(e);
 
             //Other game keys
-            if (e.key == "Escape") {
+            if (e.key === "Escape") {
                 game.getUI.toggleWindow(new EscapeWindow());
             }
+
+            //Build mode
+            if (e.key === "ArrowRight")
+                if (game.getUI.getWindowByName("BuildWindow") !== undefined)
+                    game.getUI.getWindowByName("BuildWindow").nextTile();
+
+            if (e.key === "ArrowLeft")
+                if (game.getUI.getWindowByName("BuildWindow") !== undefined)
+                    game.getUI.getWindowByName("BuildWindow").previousTile();
+            //..
         }
 
         //Debug

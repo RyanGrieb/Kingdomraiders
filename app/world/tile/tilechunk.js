@@ -31,11 +31,11 @@ export default class TileChunk {
         this.combinedSprite.y = this.y + (this.camera.position.y - game.getPlayer.getY) - 21;
 
         //For debugging purposes
-        this.combinedSprite.interactive = true;
-
-        this.combinedSprite.on('pointerover', () => {
-           // this.combinedSprite.tint = Math.random() * 0xFFFFFF;
-        });
+        /* this.combinedSprite.interactive = true;
+ 
+         this.combinedSprite.on('pointerover', () => {
+             this.combinedSprite.tint = Math.random() * 0xFFFFFF;
+         });*/
         //..
 
         game.stage.addChild(this.combinedSprite);
@@ -47,6 +47,10 @@ export default class TileChunk {
         this.combinedSprite.tint = 0xFFFFFF;
     }
 
+    mergeChunkSprites() {
+
+    }
+
     initTiles(chunk) {
         var x = 0;
         var y = 0;
@@ -56,17 +60,35 @@ export default class TileChunk {
                 y--;
             }
 
-            //Don't create a tile that is not there
-            // if (chunk[i] == -1) {
-            //     x++;
-            //      continue;
-            // }
-
-            //TODO: make the tile use this.container instead.
             this.tiles[i] = new Tile(this.container, TileType.getTileFromID(chunk[i]), this.x + (x * 32), this.y + (y * 32) + 32);
 
             x++;
         }
+    }
+
+    replaceTiles(chunk) {
+        for (var i = 0; i < this.tiles.length; i++)
+            this.tiles[i].kill();
+        this.tiles = [];
+        game.stage.removeChild(this.combinedSprite);
+
+        this.initTiles(chunk);
+
+        var texture = game.renderer.generateTexture(this.container);
+        var x = this.combinedSprite.x;
+        var y = this.combinedSprite.y;
+        this.combinedSprite = new PIXI.Sprite(texture);
+
+        //Now merge everything into an individual sprite
+        var renderer = game.renderer;
+        var texture = renderer.generateTexture(this.container);
+
+        this.combinedSprite = new PIXI.Sprite(texture);
+
+        //21 is playerspite size, remember.. (+21 or - idk.. probally -)
+        this.combinedSprite.x = this.x + (this.camera.position.x - game.getPlayer.getX) - 21;
+        this.combinedSprite.y = this.y + (this.camera.position.y - game.getPlayer.getY) - 21;
+        game.stage.addChild(this.combinedSprite);
     }
 
     setCameraPivot(rotation, x, y) {

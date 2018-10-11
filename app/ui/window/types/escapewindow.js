@@ -35,6 +35,11 @@ export default class EscapeWindow extends CustomWindow {
         btnSettings.buttonText.customText.parentGroup = this.group;
         this.addUI(btnSettings);
 
+        var btnSettings = new Button("btnBuild", "Build", (game.WIDTH / 2) - (125 / 2), (game.HEIGHT / 3) + 150, 125, 35, 100, 100);
+        btnSettings.buttonSprite.parentGroup = this.group;
+        btnSettings.buttonText.customText.parentGroup = this.group;
+        this.addUI(btnSettings);
+
         //var body = new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (300 / 2), (game.HEIGHT / 3), 300, 300);
         //body.customSprite.parentGroup = this.group;
         // this.addUI(body);
