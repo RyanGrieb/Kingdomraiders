@@ -11,13 +11,13 @@ const TileType = {
         PATH: { name: "PATH", collision: false },
         LIGHTPATH: { name: "LIGHTPATH", collision: false },
 
-        TREE: { name: "TREE", replace: true, rotate: true, collision: undefined, width: 32, height: 32, group: "bottomGroup" },
-        BIGTREE: { name: "BIGTREE", replace: true, rotate: true, collision: undefined, width: 128, height: 128, group: "monsterGroup" },
-        BIGTREE2: { name: "BIGTREE2", replace: true, rotate: true, collision: undefined, width: 128, height: 128, group: "monsterGroup" },
-        STATUE: { name: "STATUE", replace: true, rotate: true, collision: undefined, width: 64, height: 64, group: "monsterGroup" },
+        TREE: { name: "TREE", replace: true, rotate: true, collision: undefined, width: 32, height: 32, group: 3 },
+        BIGTREE: { name: "BIGTREE", replace: true, rotate: true, collision: undefined, width: 128, height: 128, group: 5 },
+        BIGTREE2: { name: "BIGTREE2", replace: true, rotate: true, collision: undefined, width: 128, height: 128, group: 5 },
+        STATUE: { name: "STATUE", replace: true, rotate: true, collision: undefined, width: 64, height: 64, group: 5 },
         
-        BRUSH: { name: "BRUSH", replace: true, rotate: false, collision: false, width: 32, height: 32, group: "bottomGroup" },
-        YELLOWFLOWER: { name: "YELLOWFLOWER", replace: true, rotate: false, collision: false, width: 32, height: 32, group: "bottomGroup" },
+        BRUSH: { name: "BRUSH", replace: true, rotate: false, collision: false, width: 32, height: 32, group: 3 },
+        YELLOWFLOWER: { name: "YELLOWFLOWER", replace: true, rotate: false, collision: false, width: 32, height: 32, group: 3 },
 
         WALLBOTTOM: { name: "WALLBOTTOM", collision: true },
         WALLBOTTOMLEFT: { name: "WALLBOTTOMLEFT", collision: true },

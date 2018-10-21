@@ -42,9 +42,7 @@ export default class Player {
         this.sprite.addCollision(5, 5, 32, 32);
 
         //Sprite layer
-        var group = new PIXI.display.Group(3, false);
-        game.stage.addChild(new PIXI.display.Layer(group));
-        this.sprite.customSprite.parentGroup = group;
+        this.sprite.customSprite.parentGroup = game.getUI.parentGroup.positive3;
 
 
         this.inGame = true;

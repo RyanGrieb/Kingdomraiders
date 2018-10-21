@@ -8,7 +8,7 @@ export default class UserInterface {
         this.windowObjects = [];
         this.currentScreen;
 
-        this.createLayers();
+        this.createParentGroups();
 
         //Universal update method
         game.ticker.add(() => this.update());
@@ -17,27 +17,37 @@ export default class UserInterface {
         $(window).resize(() => this.onResize());
     }
 
-    createLayers() {
-        this.negativeParentGroup3 = new PIXI.display.Group(-3, false);
-        game.stage.addChild(new PIXI.display.Layer(this.negativeParentGroup3));
+    createParentGroups() {
 
-        this.negativeParentGroup2 = new PIXI.display.Group(-2, false);
-        game.stage.addChild(new PIXI.display.Layer(this.negativeParentGroup2));
+        this.parentGroup = {
+            negative3: new PIXI.display.Group(-3, false),
+            negative2: new PIXI.display.Group(-2, false),
+            negative1: new PIXI.display.Group(-1, false),
+            positive1: new PIXI.display.Group(1, false),
+            positive2: new PIXI.display.Group(2, false),
+            positive3: new PIXI.display.Group(3, false),
+            positive4: new PIXI.display.Group(4, false),
 
-        this.negativeParentGroup1 = new PIXI.display.Group(-1, false);
-        game.stage.addChild(new PIXI.display.Layer(this.negativeParentGroup1));
 
-        this.parentGroup1 = new PIXI.display.Group(1, false);
-        game.stage.addChild(new PIXI.display.Layer(this.parentGroup1));
+        }
 
-        this.parentGroup2 = new PIXI.display.Group(2, false);
-        game.stage.addChild(new PIXI.display.Layer(this.parentGroup2));
+        for (var group in this.parentGroup) {
+            var parentObject = this.parentGroup[group];
+            game.stage.addChild(new PIXI.display.Layer(parentObject));
+        }
 
-        this.parentGroup3 = new PIXI.display.Group(3, false);
-        game.stage.addChild(new PIXI.display.Layer(this.parentGroup3));
+        // game.stage.addChild(new PIXI.display.Layer(this.parentGroup4));
+    }
 
-        this.parentGroup4 = new PIXI.display.Group(4, false);
-        game.stage.addChild(new PIXI.display.Layer(this.parentGroup4));
+    getParentGroupFromNumber(num) {
+        var i = 0;
+        for (var group in this.parentGroup) {
+            var parentObject = this.parentGroup[group];
+
+            if (i === num)
+                return parentObject;
+            i++;
+        }
     }
 
     //Objects

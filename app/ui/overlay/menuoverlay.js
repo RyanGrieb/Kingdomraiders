@@ -21,7 +21,7 @@ export default class MenuOverlay {
         for (var y = 0; y < game.HEIGHT; y += 32)
             for (var x = 0; x <= game.WIDTH + 32; x += 32) {
                 let tile = new Tile(this.container, TileType.getTileFromID(0), x, y);
-                tile.sprite.parentGroup = game.getUI.negativeParentGroup3;
+                tile.sprite.parentGroup = game.getUI.parentGroup.negative3;
                 this.tileMap.push(tile);
                 //Then push a toplayer tile ontop randomly.. //6-7
 
@@ -59,7 +59,7 @@ export default class MenuOverlay {
         if (this.isNextRowEmpty) {
             for (var y = 0; y < game.HEIGHT; y += 32) {
                 let tile = new Tile(this.container, TileType.getTileFromID(0), game.WIDTH + 32, y);
-                tile.sprite.parentGroup = game.getUI.negativeParentGroup3;
+                tile.sprite.parentGroup = game.getUI.parentGroup.negative3;
                 this.tileMap.push(tile);
                 //Then push a toplayer tile ontop randomly.. //6-7
 
@@ -78,7 +78,7 @@ export default class MenuOverlay {
     getRandomTopTile(x, y) {
         var randomNum = Math.floor((Math.random() * 10));
         let tileType = TileType.list.GRASS;
-        let parentGroup = game.getUI.negativeParentGroup1;
+        let parentGroup = game.getUI.parentGroup.negative1;
 
 
         if (randomNum < 2 && ((x - this.lastTreeLocation.x) > 162) || (y - this.lastTreeLocation.y) > 96) {
@@ -95,12 +95,12 @@ export default class MenuOverlay {
 
                 if (randomNum >= 5 && randomNum < 6) {
                     tileType = TileType.list.YELLOWFLOWER;
-                    parentGroup = game.getUI.negativeParentGroup2;
+                    parentGroup = game.getUI.parentGroup.negative2;
                 }
 
                 else {
                     tileType = TileType.list.BRUSH;
-                    parentGroup = game.getUI.negativeParentGroup2;
+                    parentGroup = game.getUI.parentGroup.negative2;
                 }
 
         let tile = new Tile(this.container, tileType, x, y);

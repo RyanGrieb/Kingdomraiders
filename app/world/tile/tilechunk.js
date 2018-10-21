@@ -73,7 +73,8 @@ export default class TileChunk {
 
                 var entity = new Entity({ name: "TILE_" + tileType.name }, this.x + (x * 32), this.y - (y * 32) - 32, tileType.width, tileType.height);
                 entity.allowRotate = tileType.rotate;
-                entity.sprite.parentGroup = game.getEntityMap.getGroupByName(tileType.group);
+                entity.sprite.parentGroup = game.getUI.getParentGroupFromNumber(tileType.group);
+                //entity.sprite.parentGroup = game.getUI.parentGroup.positive3;
                 this.topEntities.push(entity);
             }
             x++;

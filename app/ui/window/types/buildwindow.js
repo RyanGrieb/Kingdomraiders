@@ -15,18 +15,15 @@ export default class BuildWindow extends CustomWindow {
         super("BuildWindow");
 
         this.index = 0;
-
-        this.group = new PIXI.display.Group(4, false);
-        game.stage.addChild(new PIXI.display.Layer(this.group));
     }
 
     open() {
         var body = new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (400 / 2), (game.HEIGHT - 150), 400, 100);
-        body.customSprite.parentGroup = this.group;
+        body.customSprite.parentGroup = game.getUI.parentGroup.positive4;
         this.addUI(body);
 
         this.selectedTile = new CustomSprite("TILE_GRASS", (game.WIDTH / 2) - (64 / 2), (game.HEIGHT - 133), 64, 64);
-        this.selectedTile.customSprite.parentGroup = this.group;
+        this.selectedTile.customSprite.parentGroup = game.getUI.parentGroup.positive4;
         this.addUI(this.selectedTile);
     }
 
