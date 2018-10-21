@@ -44,7 +44,7 @@ export default class CustomText extends UIObject {
     }
 
     kill() {
-        this.customText.destroy();
+        this.customText.destroy({ texture: true, baseTexture: true });
     }
 
 }

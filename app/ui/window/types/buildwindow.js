@@ -16,7 +16,7 @@ export default class BuildWindow extends CustomWindow {
 
         this.index = 0;
 
-        this.group = new PIXI.display.Group(3, false);
+        this.group = new PIXI.display.Group(4, false);
         game.stage.addChild(new PIXI.display.Layer(this.group));
     }
 

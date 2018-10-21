@@ -2,10 +2,12 @@ import game from "index";
 
 import Tile from "./tile";
 import TileType from "./tiletype";
+import EntityType from "../entity/entitytype";
+import Entity from "../entity/entity";
 
 export default class TileChunk {
-    constructor(chunk, x, y) {
-
+    constructor(chunk, topChunk, x, y) {
+        //console.log(topChunk);
         //Misc helper variables
         this.camera = game.getUI.getCurrentScreen.getCamera;
 
@@ -13,11 +15,15 @@ export default class TileChunk {
         this.container = new PIXI.Container();
 
         this.tiles = [];
+        this.topEntities = [];
+
+
         this.x = x;
         this.y = y;
         this.rotation = 0;
 
-        this.initTiles(chunk);
+        this.initTiles(chunk, topChunk);
+
 
 
         //Now merge everything into an individual sprite
@@ -31,11 +37,11 @@ export default class TileChunk {
         this.combinedSprite.y = this.y + (this.camera.position.y - game.getPlayer.getY) - 21;
 
         //For debugging purposes
-        /* this.combinedSprite.interactive = true;
- 
-         this.combinedSprite.on('pointerover', () => {
-             this.combinedSprite.tint = Math.random() * 0xFFFFFF;
-         });*/
+        /*this.combinedSprite.interactive = true;
+
+        this.combinedSprite.on('pointerover', () => {
+            this.combinedSprite.tint = Math.random() * 0xFFFFFF;
+        });*/
         //..
 
         game.stage.addChild(this.combinedSprite);
@@ -51,7 +57,7 @@ export default class TileChunk {
 
     }
 
-    initTiles(chunk) {
+    initTiles(chunk, topChunk) {
         var x = 0;
         var y = 0;
         for (var i = 0; i < chunk.length; i++) {
@@ -60,8 +66,16 @@ export default class TileChunk {
                 y--;
             }
 
-            this.tiles[i] = new Tile(this.container, TileType.getTileFromID(chunk[i]), this.x + (x * 32), this.y + (y * 32) + 32);
+            this.tiles[i] = new Tile(this.container, TileType.getTileFromID(chunk[i]), this.x + (x * 32), this.y - (y * 32) - 32);
 
+            if (topChunk[i] != -1) {
+                var tileType = TileType.getTileFromID(topChunk[i]);
+
+                var entity = new Entity({ name: "TILE_" + tileType.name }, this.x + (x * 32), this.y - (y * 32) - 32, tileType.width, tileType.height);
+                entity.allowRotate = tileType.rotate;
+                entity.sprite.parentGroup = game.getEntityMap.getGroupByName(tileType.group);
+                this.topEntities.push(entity);
+            }
             x++;
         }
     }
@@ -138,6 +152,17 @@ export default class TileChunk {
         //..
     }
 
+
+    //Figure out why I need to subtract 64 to get the correct position
+    getTileFromLocation(x, y) {
+        for (var i = 0; i < this.tiles.length; i++) {
+            if (Math.abs(x - this.tiles[i].x) < 32 && Math.abs(y - this.tiles[i].y) < 32)
+                return this.tiles[i];
+        }
+
+        return undefined;
+    }
+
     get outsideScreen() {
         //Moving right
         if (game.getPlayer.getX > this.x + (game.getTileGrid.getChunkSize * 3))
@@ -159,11 +184,21 @@ export default class TileChunk {
     }
 
     kill() {
-        this.combinedSprite.destroy();
+        for (var i = 0; i < this.topEntities.length; i++)
+            this.topEntities[i].kill();
+
+        this.topEntities = [];
+        this.tiles = [];
+
+        this.combinedSprite.destroy({ texture: true, baseTexture: true });
+        this.container.destroy({ texture: true, baseTexture: true });
     }
 
     update() {
         //Updates the tiles to be offset from the camera.
         this.setCameraPivot(this.camera.rotation, this.camera.pivot.x, this.camera.pivot.y);
+
+        for (var i = 0; i < this.topEntities.length; i++)
+            this.topEntities[i].update();
     }
 }

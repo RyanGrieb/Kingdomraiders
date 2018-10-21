@@ -1,12 +1,14 @@
 import game from "index";
+import AssetsEnum from "../assets/assetsenum";
 
 export default class Entity {
 
-    constructor(entityType, x, y, w, h) {
+    constructor(type, x, y, w, h) {
         //Misc helper variables
         this.camera = game.getUI.getCurrentScreen.getCamera;
 
-        this.entityType = entityType;
+        //this.entityClass = entityClass;
+        this.type = type;
 
         //Note: these this.x & y values are meant to display the true position of the entity /w out rotation offsets.
         this.x = x;
@@ -14,6 +16,18 @@ export default class Entity {
         this.w = w;
         this.h = h;
 
+        this.sprite = new PIXI.Sprite(AssetsEnum.getObjectFromName(this.type.name).texture);
+
+        this.sprite.x = (this.x + (this.camera.position.x - game.getPlayer.getX) - 21) + (w / 2);
+        this.sprite.y = (this.y + (this.camera.position.y - game.getPlayer.getY) - 21) + (w / 2);
+        this.sprite.width = w;
+        this.sprite.height = h;
+        this.sprite.anchor.x = 0.5;
+        this.sprite.anchor.y = 0.5;
+
+        game.stage.addChild(this.sprite);
+
+        this.allowRotate = true;
         this.rotation = 0;
     }
 
@@ -52,6 +66,10 @@ export default class Entity {
 
             this.sprite.x = newX;
             this.sprite.y = newY;
+
+            if (!this.allowRotate)
+                this.sprite.rotation -= (radians);
+
         }
 
         //..
@@ -80,11 +98,21 @@ export default class Entity {
         this.sprite.y += testY;
     }
 
+    removeOutsideofScreen() {
+        //Should probally remove sprite... & from list..
+        if (Math.abs(game.getPlayer.getX - this.x) >= game.WIDTH
+            || Math.abs(game.getPlayer.getY - this.y) >= game.WIDTH)
+            this.sprite.visible = false;
+        else if (this.sprite.visible === false)
+            this.sprite.visible = true;
+    }
+
     kill() {
         this.sprite.destroy();
     }
 
     update() {
         this.setCameraPivot(this.camera.rotation, this.camera.pivot.x, this.camera.pivot.y);
+        this.removeOutsideofScreen();
     }
 }

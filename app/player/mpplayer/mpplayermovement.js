@@ -33,7 +33,9 @@ export default class MPPlayerMovement {
         distanceX = (distanceX / hypotnuse);
         distanceY = (distanceY / hypotnuse);
 
+        //TODO: CHECK FOR COLLISION VARS TO STOP MPPLAYER GITCH ON WALL
 
+        //Prevents overextension
         if (hypotnuse < -5 || hypotnuse > 5)
             this.mpPlayer.setVelocity(distanceX * 5, distanceY * 5);
 

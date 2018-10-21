@@ -1,16 +1,11 @@
 import game from "index";
-import Player from "../player";
+import Player from "../../player";
 import { setInterval } from "timers";
 
 export default class PlayerMovement {
     constructor() {
-        this.heldKeys = [];
 
-        //The last location the player passed a tile..
-        this.pastTilePass = {
-            x: 0,
-            y: 0
-        }
+        this.heldKeys = [];
 
         //Previous location sent by the packet
         this.previousX = 0;
@@ -130,7 +125,6 @@ export default class PlayerMovement {
             case 65:
                 for (var i = 0; i < this.heldKeys.length; i++)
                     if (this.heldKeys[i].key === "A") {
-
                         this.velocity.x = 0;
                         this.heldKeys.splice(i, 1);
                     }
@@ -213,20 +207,17 @@ export default class PlayerMovement {
         }
 
         //Set player velocity based off held keys
-
         var distanceX = this.velocity.x;
         var distanceY = this.velocity.y;
+
         var hypotnuse = Math.sqrt(((this.velocity.x * this.velocity.x) + (this.velocity.y * this.velocity.y)));
 
-        //console.log(distanceX + "," + distanceY);
-
-        var distanceX = (distanceX / hypotnuse);
-        var distanceY = (distanceY / hypotnuse);
-
+        distanceX = (distanceX / hypotnuse) * 5;
+        distanceY = (distanceY / hypotnuse) * 5;
 
         //Normalize like mpplayer.
         if (hypotnuse !== 0)
-            game.getPlayer.sprite.setVelocity(distanceX * 5, distanceY * 5);
+            game.getPlayer.sprite.setVelocity(distanceX, distanceY);
 
         //Set camera rotation
         game.getUI.getCurrentScreen.camera.setRotation(this.cameraRotation.left, this.cameraRotation.right);
@@ -254,6 +245,7 @@ export default class PlayerMovement {
 
     update() {
         if (game.getPlayer.inGame) {
+
             this.handleMovement();
         }
     }

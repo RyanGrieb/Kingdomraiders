@@ -37,6 +37,7 @@ export default class BuildMode {
             x: x,
             y: y,
             id: id,
+            replace: !Boolean(TileType.getTileFromID(id).replace),
         };
 
         game.getNetwork.sendMessage(JSON.stringify(msg));

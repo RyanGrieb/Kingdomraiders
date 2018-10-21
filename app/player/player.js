@@ -1,5 +1,5 @@
 import PlayerInput from "./input/playerinput";
-import PlayerMovement from "./input/playermovement";
+import PlayerMovement from "./input/movement/playermovement";
 import PlayerProfile from "./profile/playerprofile";
 import CustomSprite from "../ui/custom/customsprite";
 import BuildMode from "./item/buildmode";
@@ -39,9 +39,10 @@ export default class Player {
         this.sprite = new CustomSprite(this.className, (game.WIDTH / 2) - (21), (game.HEIGHT / 2) - (21), this.w, this.h);
         //Updates the camera offset..
         this.sprite.setPosition(this.spawnX, this.spawnY);
+        this.sprite.addCollision(5, 5, 32, 32);
 
         //Sprite layer
-        var group = new PIXI.display.Group(2, false);
+        var group = new PIXI.display.Group(3, false);
         game.stage.addChild(new PIXI.display.Layer(group));
         this.sprite.customSprite.parentGroup = group;
 

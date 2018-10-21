@@ -8,20 +8,12 @@ import CustomText from "../../ui/custom/customtext";
 export default class MPPlayer extends Entity {
 
     constructor(json) {
-        super("MPPLAYER", 0, 0, 42, 42);
+        super({ name: "DEFAULT_PLAYER" }, 0, 0, 42, 42);
 
         this.movement = new MPPlayerMovement(this);
 
         this.id = json.id;
         this.name = json.name;
-        this.sprite = new PIXI.Sprite(AssetsEnum.getObjectFromName("DEFAULT_PLAYER").texture);
-
-        this.sprite.x = 0 + (this.camera.position.x - game.getPlayer.getX);
-        this.sprite.y = 0 + (this.camera.position.y - game.getPlayer.getY);
-        this.sprite.width = 42;
-        this.sprite.height = 42;
-        this.sprite.anchor.x = 0.5;
-        this.sprite.anchor.y = 0.5;
 
         this.nametag = new CustomText("mpnametag_" + this.name, this.name, this.sprite.x, this.sprite.y, 100, 125);
 

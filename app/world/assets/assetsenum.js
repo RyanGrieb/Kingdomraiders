@@ -20,6 +20,14 @@ const AssetsEnum = {
         TILE_PATH: { path: "assets/images/tile/path.png" },
         TILE_LIGHTPATH: { path: "assets/images/tile/lightpath.png" },
 
+        TILE_TREE: { path: "assets/images/tile/tree.png" },
+        TILE_BIGTREE: { path: "assets/images/tile/treebig.png" },
+        TILE_BIGTREE2: { path: "assets/images/tile/treebig2.png" },
+        TILE_STATUE: { path: "assets/images/tile/statue.png" },
+        TILE_BRUSH: { path: "assets/images/tile/brush.png" },
+        TILE_YELLOWFLOWER: { path: "assets/images/tile/yellowflower.png" },
+
+
         TILE_WALLBOTTOM: { path: "assets/images/tile/wallbottom.png" },
         TILE_WALLBOTTOMLEFT: { path: "assets/images/tile/wallbottomleft.png" },
         TILE_WALLBOTTOMRIGHT: { path: "assets/images/tile/wallbottomright.png" },
@@ -30,6 +38,8 @@ const AssetsEnum = {
         TILE_WALLTOPRIGHT: { path: "assets/images/tile/walltopright.png" },
 
         //ENTITY
+        // ENTITY_TREE: { path: "assets/images/tile/tree.png" },
+        //ENTITY_BIGTREE: { path: "assets/images/tile/treebig.png" },
 
         //Monster
         MONSTER_DEMON: { path: "assets/images/monster/demon.png" },

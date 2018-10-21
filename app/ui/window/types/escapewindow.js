@@ -12,7 +12,7 @@ export default class EscapeWindow extends CustomWindow {
     constructor() {
         super("EscapeWindow");
 
-        this.group = new PIXI.display.Group(3, false);
+        this.group = new PIXI.display.Group(4, false);
         game.stage.addChild(new PIXI.display.Layer(this.group));
     }
 

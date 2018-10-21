@@ -10,34 +10,34 @@ export default class PlayerListener {
 
     handleMessage(message) {
         var json = JSON.parse(message.data);
-        switch (json.type) {
+            switch (json.type) {
 
-            //Client-based packets
-            case "JoinGame":
-                this.handleJoinResponse(json);
-                break;
+                //Client-based packets
+                case "JoinGame":
+                    this.handleJoinResponse(json);
+                    break;
 
-            case "PositionUpdate":
-                this.handlePositionUpdate(json);
-                break;
+                case "PositionUpdate":
+                    this.handlePositionUpdate(json);
+                    break;
 
-            //MPPlayer based packets
-            case "MPJoinGame":
-                this.handleMPJoinResponse(json);
-                break;
+                //MPPlayer based packets
+                case "MPJoinGame":
+                    this.handleMPJoinResponse(json);
+                    break;
 
-            case "MPLeaveGame":
-                this.handleMPLeaveResponse(json);
-                break;
+                case "MPLeaveGame":
+                    this.handleMPLeaveResponse(json);
+                    break;
 
-            case "MPPositionUpdate":
-                this.handleMPPositionUpdate(json);
-                break;
+                case "MPPositionUpdate":
+                    this.handleMPPositionUpdate(json);
+                    break;
 
-            case "MPMovementTarget":
-                this.handleMPMovementTarget(json);
-                break;
-        }
+                case "MPMovementTarget":
+                    this.handleMPMovementTarget(json);
+                    break;
+            }
     }
 
     handleJoinResponse(json) {
@@ -64,6 +64,7 @@ export default class PlayerListener {
 
     handleMPMovementTarget(json) {
         //Move the mpplayer to the target /w velocity.
+        if (game.getPlayer.inGame) //temp.. remove later.
         game.getEntityMap.getMPPlayerByID(json.id).recivePosition(json);
     }
 }

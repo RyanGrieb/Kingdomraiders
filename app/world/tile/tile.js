@@ -5,6 +5,7 @@ import AssetEnum from "../../world/assets/assetsenum";
 export default class Tile {
 
     constructor(container, tileType, x, y) {
+        this.tileType = tileType;
         this.texture = tileType.name;
         this.x = x;
         this.y = y;

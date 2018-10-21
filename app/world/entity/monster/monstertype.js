@@ -2,7 +2,7 @@ const MonsterType = {
 
     //TODO: add other attributes
     list: {
-        DEMON: { name: "DEMON" },
+        DEMON: { name: "MONSTER_DEMON" },
 
 
 
