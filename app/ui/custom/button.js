@@ -11,18 +11,18 @@ export default class Button extends UIObject {
         this.text = text;
         //BUTTON IMAGE (not custom, you know why)
         this.texture = "BUTTON";
-        this.buttonSprite = new PIXI.Sprite(AssetEnum.getObjectFromName("BUTTON").texture);
-        this.buttonSprite.x = x;
-        this.buttonSprite.y = y;
-        this.buttonSprite.width = w;
-        this.buttonSprite.height = h;
-        game.stage.addChild(this.buttonSprite);
-        //this.buttonSprite = game.createInstance.add.sprite(x, y, 'BUTTON');
-        //this.buttonSprite.setOrigin(0, 0);
-        //this.buttonSprite.setDisplaySize(w, h);
+        this.customSprite = new PIXI.Sprite(AssetEnum.getObjectFromName("BUTTON").texture);
+        this.customSprite.x = x;
+        this.customSprite.y = y;
+        this.customSprite.width = w;
+        this.customSprite.height = h;
+        game.stage.addChild(this.customSprite);
+        //this.customSprite = game.createInstance.add.sprite(x, y, 'BUTTON');
+        //this.customSprite.setOrigin(0, 0);
+        //this.customSprite.setDisplaySize(w, h);
 
-        this.buttonSprite.interactive = true;
-        this.buttonSprite.on("click", (event) => {
+        this.customSprite.interactive = true;
+        this.customSprite.on("click", (event) => {
             game.getPlayer.getInput.getButtonInput.checkButton(this.name);
         });
 
@@ -37,12 +37,12 @@ export default class Button extends UIObject {
 
     setTexture(name) {
         this.texture = name;
-        this.buttonSprite.texture = AssetEnum.getObjectFromName(name).texture;
-        // this.buttonSprite.setTexture(name, 0, false);
+        this.customSprite.texture = AssetEnum.getObjectFromName(name).texture;
+        // this.customSprite.setTexture(name, 0, false);
     }
 
     kill() {
-        this.buttonSprite.destroy();
+        this.customSprite.destroy();
         this.buttonText.kill();
     }
 

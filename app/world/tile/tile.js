@@ -14,6 +14,11 @@ export default class Tile {
         this.sprite.x = x;
         this.sprite.y = y;
 
+        if (tileType.width !== undefined) {
+            this.sprite.width = tileType.width;
+            this.sprite.height = tileType.height;
+        }
+
         //Sprite layer
         //this.sprite.parentGroup = game.getTileGrid.tileGroup;
 

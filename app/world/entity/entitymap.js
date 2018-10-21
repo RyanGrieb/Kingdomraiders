@@ -3,15 +3,6 @@ import game from "index";
 export default class EntityMap {
     constructor() {
         this.entityMap = [];
-
-        this.bottomGroup = new PIXI.display.Group(1, false);
-        game.stage.addChild(new PIXI.display.Layer(this.bottomGroup));
-
-        this.mpPlayerGroup = new PIXI.display.Group(2, false);
-        game.stage.addChild(new PIXI.display.Layer(this.mpPlayerGroup));
-
-        this.monsterGroup = new PIXI.display.Group(4, false);
-        game.stage.addChild(new PIXI.display.Layer(this.monsterGroup));
     }
 
     removeObject(obj) {

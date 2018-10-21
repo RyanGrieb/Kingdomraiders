@@ -8,6 +8,8 @@ export default class UserInterface {
         this.windowObjects = [];
         this.currentScreen;
 
+        this.createLayers();
+
         //Universal update method
         game.ticker.add(() => this.update());
 
@@ -15,7 +17,36 @@ export default class UserInterface {
         $(window).resize(() => this.onResize());
     }
 
+    createLayers() {
+        this.negativeParentGroup3 = new PIXI.display.Group(-3, false);
+        game.stage.addChild(new PIXI.display.Layer(this.negativeParentGroup3));
+
+        this.negativeParentGroup2 = new PIXI.display.Group(-2, false);
+        game.stage.addChild(new PIXI.display.Layer(this.negativeParentGroup2));
+
+        this.negativeParentGroup1 = new PIXI.display.Group(-1, false);
+        game.stage.addChild(new PIXI.display.Layer(this.negativeParentGroup1));
+
+        this.parentGroup1 = new PIXI.display.Group(1, false);
+        game.stage.addChild(new PIXI.display.Layer(this.parentGroup1));
+
+        this.parentGroup2 = new PIXI.display.Group(2, false);
+        game.stage.addChild(new PIXI.display.Layer(this.parentGroup2));
+
+        this.parentGroup3 = new PIXI.display.Group(3, false);
+        game.stage.addChild(new PIXI.display.Layer(this.parentGroup3));
+
+        this.parentGroup4 = new PIXI.display.Group(4, false);
+        game.stage.addChild(new PIXI.display.Layer(this.parentGroup4));
+    }
+
     //Objects
+
+    pushObject(obj) {
+        if (obj.customSprite !== undefined) {
+            obj.customSprite.parentGroup = this.parentGroup2;
+        }
+    }
 
     clearObjects() {
         for (var i = 0; i < this.uiObjects.length; i++)
