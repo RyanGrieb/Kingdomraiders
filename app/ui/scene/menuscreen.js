@@ -19,8 +19,12 @@ export default class MenuScreen extends Screen {
 
         game.getUI.uiObjects.push(new Button("btnPlay", "Play", (game.WIDTH / 2) - 200 / 2, (game.HEIGHT / 2) + 100, 200, 50, 200, 50));
         game.getUI.uiObjects.push(new CustomSprite("TITLE_IMAGE", (game.WIDTH / 2) - (500 / 2), 175, 500, 200));
+        game.getUI.uiObjects.push(new CustomText("txtAuthor", "By Ryan Grieb | KingdomRaiders 1.00", 125, game.HEIGHT - 15, 100, 20));
 
-        this.setLoggedOut();
+        if (!game.getPlayer.loggedIn)
+            this.setLoggedOut();
+        else
+            this.setLoggedIn();
         // this.add.image(400, 300, 'sky');
         //this.add.image(400, 300, 'star');
 
@@ -53,7 +57,8 @@ export default class MenuScreen extends Screen {
     }
 
     setLoggedOut() {
-
+        game.getUI.removeObject("txtLoggedInInfo");
+        game.getUI.removeObject("btnSignOut");
 
         game.getUI.uiObjects.push(new Button("btnLogin", "Login", game.WIDTH - 200, 25, 90, 30, 115, 30));
         game.getUI.uiObjects.push(new Button("btnRegister", "Register", game.WIDTH - 105, 25, 90, 30, 115, 30));

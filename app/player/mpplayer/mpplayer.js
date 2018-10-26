@@ -17,8 +17,8 @@ export default class MPPlayer extends Entity {
 
         this.nametag = new CustomText("mpnametag_" + this.name, this.name, this.sprite.x, this.sprite.y, 100, 125);
 
-        this.sprite.parentGroup = game.getEntityMap.mpPlayerGroup;
-        this.nametag.customText.parentGroup = game.getEntityMap.mpPlayerGroup;
+        this.sprite.parentGroup = game.getUI.parentGroup.positive2;
+        this.nametag.customText.parentGroup = game.getUI.parentGroup.positive2;
 
         game.stage.addChild(this.sprite);
     }

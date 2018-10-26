@@ -23,7 +23,7 @@ export default class RegisterWindow extends CustomWindow {
 
         this.addUI(new Button("btnRegisterAccount", "Register Account", (game.WIDTH / 2) - (178 / 2), (game.HEIGHT / 2) + 215, 178, 35, 115, 35));
 
-        this.addUI(new CustomText("txtInfoSignIn", "Register Account", (game.WIDTH / 2) - 78, (game.HEIGHT / 3.1), 130, 35));
+        this.addUI(new CustomText("txtInfoSignIn", "Register Account", (game.WIDTH / 2) - 78, (game.HEIGHT / 3.1), 123, 35));
 
         this.addUI(new CustomText("txtInfoUsername", "Username", (game.WIDTH / 2), (game.HEIGHT / 2) - 68, 130, 35));
         this.addUI(new CustomText("txtInfoEmail", "Email", (game.WIDTH / 2), (game.HEIGHT / 2) - 1, 130, 35));
@@ -39,7 +39,7 @@ export default class RegisterWindow extends CustomWindow {
             game.getUI.toggleWindow(new LoginWindow());
 
         //Highlight the 1st textbox.
-        game.getUI.uiObjects[5].select();
+        game.getUI.uiObjects[6].select();
     }
 
     close() {
@@ -47,27 +47,6 @@ export default class RegisterWindow extends CustomWindow {
 
         //Prevent mouse from staying in one state.
         document.querySelector('body').style.cursor = 'auto';
-    }
-
-
-    requestToRegister() {
-        var username = game.getUI.getObjectByName("txtUsername").getText;
-        var email = game.getUI.getObjectByName("txtEmail").getText;
-        var password = game.getUI.getObjectByName("txtPassword").getText;
-        var passwordAgain = game.getUI.getObjectByName("txtPasswordAgain").getText;
-
-        //TODO: same password check..
-
-        var msg = {
-            type: "RegisterRequest",
-            username: username,
-            email: email,
-            password: password,
-            response: "request",
-            date: Date.now()
-        };
-
-        game.getNetwork.sendMessage(JSON.stringify(msg));
     }
 
     handleResponse(error) {

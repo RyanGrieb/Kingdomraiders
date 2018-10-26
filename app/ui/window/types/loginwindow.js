@@ -36,7 +36,7 @@ export default class LoginWindow extends CustomWindow {
             game.getUI.toggleWindow(new RegisterWindow());
 
         //Highlight the 1st textbox.
-        game.getUI.uiObjects[5].select();
+        game.getUI.uiObjects[6].select();
     }
 
     close() {
@@ -44,21 +44,6 @@ export default class LoginWindow extends CustomWindow {
 
         //Prevent mouse from staying in one state.
         document.querySelector('body').style.cursor = 'auto';
-    }
-
-    requestToLogin() {
-        var email = game.getUI.getObjectByName("txtEmail").getText;
-        var password = game.getUI.getObjectByName("txtPassword").getText;
-
-        var msg = {
-            type: "LoginRequest",
-            email: email,
-            password: password,
-            response: "request",
-            date: Date.now()
-        };
-
-        game.getNetwork.sendMessage(JSON.stringify(msg));
     }
 
     handleResponse(error) {

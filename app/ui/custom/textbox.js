@@ -141,6 +141,9 @@ export default class TextBox extends UIObject {
         this.cycleHighlighter();
     }
 
+    get getText() {
+        return this.customText.text;
+    }
 
     kill() {
         this.unhighlight();
@@ -148,9 +151,33 @@ export default class TextBox extends UIObject {
         this.customText.destroy();
     }
 
+    static onHover() {
+        for (var i = 0; i < game.getUI.uiObjects.length; i++) {
+            if (game.getUI.uiObjects[i] instanceof TextBox) {
+                var textboxObj = game.getUI.uiObjects[i];
 
-    get getText() {
-        return this.customText.text;
+                if (textboxObj.mouseInside()) {
+                    document.querySelector('body').style.cursor = 'text';
+                    //Returns, fixes only 1 textbox being able to be selected
+                    return;
+                } else if (!textboxObj.mouseInside()) {
+                    document.querySelector('body').style.cursor = 'auto';
+                }
+            }
+        }
     }
 
+    static onClick() {
+        for (var i = 0; i < game.getUI.uiObjects.length; i++) {
+            if (game.getUI.uiObjects[i] instanceof TextBox) {
+                var textboxObj = game.getUI.uiObjects[i];
+
+                if (textboxObj.mouseInside()) {
+                    textboxObj.select();
+                } else if (!textboxObj.mouseInside()) {
+                    textboxObj.unselect();
+                }
+            }
+        }
+    }
 }

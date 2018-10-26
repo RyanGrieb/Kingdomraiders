@@ -33,6 +33,7 @@ export default class TileChunk {
         this.combinedSprite = new PIXI.Sprite(texture);
 
         //21 is playerspite size, remember.. (+21 or - idk.. probally -)
+        //!!!!!!!!!!BUG HERE THIS.CAMERA IS UNDEFINED SOMETIMES DURING LAG
         this.combinedSprite.x = this.x + (this.camera.position.x - game.getPlayer.getX) - 21;
         this.combinedSprite.y = this.y + (this.camera.position.y - game.getPlayer.getY) - 21;
 

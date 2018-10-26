@@ -10,34 +10,38 @@ export default class PlayerListener {
 
     handleMessage(message) {
         var json = JSON.parse(message.data);
-            switch (json.type) {
+        switch (json.type) {
 
-                //Client-based packets
-                case "JoinGame":
-                    this.handleJoinResponse(json);
-                    break;
+            //Client-based packets
+            case "JoinGame":
+                this.handleJoinResponse(json);
+                break;
 
-                case "PositionUpdate":
-                    this.handlePositionUpdate(json);
-                    break;
+            case "PositionUpdate":
+                this.handlePositionUpdate(json);
+                break;
 
-                //MPPlayer based packets
-                case "MPJoinGame":
-                    this.handleMPJoinResponse(json);
-                    break;
+            case "RequestInventory":
+                this.handleRequestInventory(json);
+                break;
 
-                case "MPLeaveGame":
-                    this.handleMPLeaveResponse(json);
-                    break;
+            //MPPlayer based packets
+            case "MPJoinGame":
+                this.handleMPJoinResponse(json);
+                break;
 
-                case "MPPositionUpdate":
-                    this.handleMPPositionUpdate(json);
-                    break;
+            case "MPLeaveGame":
+                this.handleMPLeaveResponse(json);
+                break;
 
-                case "MPMovementTarget":
-                    this.handleMPMovementTarget(json);
-                    break;
-            }
+            case "MPPositionUpdate":
+                this.handleMPPositionUpdate(json);
+                break;
+
+            case "MPMovementTarget":
+                this.handleMPMovementTarget(json);
+                break;
+        }
     }
 
     handleJoinResponse(json) {
@@ -46,6 +50,10 @@ export default class PlayerListener {
 
     handlePositionUpdate(json) {
         game.getPlayer.movement.updatePosition(json.x, json.y);
+    }
+
+    handleRequestInventory(json) {
+        game.getPlayer.inventory.updateInventory(json);
     }
 
     //MPPlayer based response
@@ -65,6 +73,6 @@ export default class PlayerListener {
     handleMPMovementTarget(json) {
         //Move the mpplayer to the target /w velocity.
         if (game.getPlayer.inGame) //temp.. remove later.
-        game.getEntityMap.getMPPlayerByID(json.id).recivePosition(json);
+            game.getEntityMap.getMPPlayerByID(json.id).recivePosition(json);
     }
 }

@@ -1,10 +1,9 @@
-figure out what's cusing the stuttering:
-
--not tilegrid....
--
-
-+ if it is, delete chunks async?
+Make bigtrees rotate from their stems not the top right.
 
 ---------
 MAKE GAME LOOK LIKE:
 http://pixeljoint.com/pixelart/86958.htm
+
+Bugs:
+
+Line 37 in tilechunk during lag, camera becomes undefined.

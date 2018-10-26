@@ -47,6 +47,10 @@ export default class KeyboardInput {
             //Player input keys
             game.getPlayer.movement.handleInput(e);
 
+            //Inventory
+            if (e.key === "c")
+                game.getPlayer.inventory.toggle();
+
             //Other game keys
             if (e.key === "Escape") {
                 game.getUI.toggleWindow(new EscapeWindow());

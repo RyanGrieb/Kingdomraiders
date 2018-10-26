@@ -26,6 +26,8 @@ export default class CustomWindow {
             //Since this whole object is removed, we can stop here..
             //this.attatchedUI[i].kill();
         }
+
+        this.attatchedUI = [];
     }
 
     addUI(uiObj) {

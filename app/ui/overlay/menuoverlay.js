@@ -25,7 +25,7 @@ export default class MenuOverlay {
                 this.tileMap.push(tile);
                 //Then push a toplayer tile ontop randomly.. //6-7
 
-                if (Math.floor((Math.random() * 100)) < 25) {
+                if (Math.floor((Math.random() * 100)) < 15) {
                     this.tileMap.push(this.getRandomTopTile(x, y));
                 }
 
@@ -63,10 +63,8 @@ export default class MenuOverlay {
                 this.tileMap.push(tile);
                 //Then push a toplayer tile ontop randomly.. //6-7
 
-                if (Math.floor((Math.random() * 100)) < 25) {
-
+                if (Math.floor((Math.random() * 100)) < 15) {
                     this.tileMap.push(this.getRandomTopTile(game.WIDTH + 32, y));
-
                 }
 
             }

@@ -31,6 +31,7 @@ export default class AccountListener {
 
         if (json.response === "accepted") {
             game.getPlayer.loggedIn = true;
+            game.getPlayer.playerProfile.name = json.name;
 
             game.getUI.getCurrentScreen.setLoggedIn();
             game.getUI.toggleWindow(new LoginWindow());

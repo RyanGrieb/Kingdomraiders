@@ -19,7 +19,7 @@ export default class LoadingScreen extends Screen {
     }
 
     open() {
-        //UI
+        //SPRITES
         for (var name in AssetsEnum.list) {
 
             var obj = AssetsEnum.list[name];
@@ -37,12 +37,13 @@ export default class LoadingScreen extends Screen {
 
             //Assign loaded sprites back to our enums
 
-            //UI
+            //SPRITES
             for (var name in AssetsEnum.list) {
-                AssetsEnum.list[name].texture = loader.resources[name].texture;
+                if (!name.startsWith("SOUND_"))
+                    AssetsEnum.list[name].texture = loader.resources[name].texture;
+                else
+                    AssetsEnum.list[name].sound = loader.resources[name];
             }
-            //TILES
-            //..
 
             game.getNetwork.connect();
             this.loadingtext.text = "Connecting...";

@@ -8,6 +8,7 @@ import "styles/index.scss";
 //Universal imports
 import * as $ from "jquery";
 import * as PIXI from "pixi.js";
+import "pixi-sound";
 import "pixi-layers";
 import '@babel/polyfill';
 
@@ -26,7 +27,7 @@ function initGame() {
     PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
 
     //..
-
+    
     game = new PIXI.Application(window.innerWidth, window.innerHeight, { backgroundColor: 0x1099bb });
     document.body.appendChild(game.view);
 

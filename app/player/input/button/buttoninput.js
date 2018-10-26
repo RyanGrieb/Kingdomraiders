@@ -19,35 +19,57 @@ export default class ButtonInput {
 
                             //If a window is already open
                             if (game.getUI.windowObjects.length >= 1)
-                                return;
+                                return false;
 
                             game.getUI.toggleWindow(new LoginWindow());
                         } else {
                             game.getPlayer.joinGame()
                         }
+
+                        return true;
                     }
                 },
                 btnLogin: {
                     action: () => {
                         game.getUI.toggleWindow(new LoginWindow());
+
+
+                        return true;
                     }
                 },
                 btnRegister: {
                     action: () => {
                         game.getUI.toggleWindow(new RegisterWindow());
+
+
+                        return true;
+                    }
+                },
+                btnSignOut: {
+                    action: () => {
+                        game.getPlayer.playerProfile.signOut();
+
+
+                        return true;
                     }
                 },
 
                 //Login Screen
                 btnSignIn: {
                     action: () => {
-                        game.getUI.getWindowByName("LoginWindow").requestToLogin();
+                        game.getPlayer.playerProfile.requestToLogin();
+                        //game.getUI.getWindowByName("LoginWindow").requestToLogin();
+
+                        return true;
                     }
                 },
                 //Register Screen
                 btnRegisterAccount: {
                     action: () => {
-                        game.getUI.getWindowByName("RegisterWindow").requestToRegister();
+                        game.getPlayer.playerProfile.requestToRegister();
+                        // game.getUI.getWindowByName("RegisterWindow").requestToRegister();
+
+                        return true;
                     }
                 },
 
@@ -56,6 +78,8 @@ export default class ButtonInput {
                     action: () => {
                         game.getNetwork.sendMessage(JSON.stringify({ type: "LeaveGame", }));
                         game.getUI.setScreen(new MenuScreen());
+
+                        return true;
                     }
                 },
 
@@ -63,6 +87,8 @@ export default class ButtonInput {
                     action: () => {
                         game.getUI.toggleWindow(new EscapeWindow());
                         game.getUI.toggleWindow(new BuildWindow());
+
+                        return true;
                     }
                 }
             }
@@ -73,8 +99,10 @@ export default class ButtonInput {
     checkButton(name) {
         for (var currName in this.ButtonActions.list) {
             if (name === currName)
-                this.ButtonActions.list[currName].action();
+                return this.ButtonActions.list[currName].action();
         }
+
+        return false;
     }
 
 }

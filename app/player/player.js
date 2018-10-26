@@ -5,6 +5,7 @@ import CustomSprite from "../ui/custom/customsprite";
 import BuildMode from "./item/buildmode";
 
 import game from "index";
+import Inventory from "./item/inventory";
 
 
 export default class Player {
@@ -29,6 +30,8 @@ export default class Player {
     }
 
     spawnToGame() {
+        this.inventory = new Inventory();
+
         //Should be changed when we go into character select
         this.className = "DEFAULT_PLAYER";
         //this.x = 128;
@@ -50,10 +53,11 @@ export default class Player {
 
     kill() {
         this.inGame = false;
+        this.buildMode.buildEnabled = false;
 
+        this.inventory.close();
         this.sprite.customSprite.destroy();
         this.movement.clearKeys();
-        this.buildMode.buildEnabled = false;
     }
 
     update() {
@@ -62,6 +66,7 @@ export default class Player {
         if (game.getUI.getCurrentScreen.name === "GameScreen") {
             this.movement.update();
             this.buildMode.update();
+            this.inventory.update();
         }
 
     }

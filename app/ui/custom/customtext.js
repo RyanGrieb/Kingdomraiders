@@ -22,15 +22,18 @@ export default class CustomText extends UIObject {
     }
 
     setText(text) {
+        var parentGroup = this.customText.parentGroup;
         this.text = text;
         this.customText.text = text;
         this.customText.x = this.x - (this.customText.width / 2);
         this.customText.y = this.y - (this.customText.height / 2);
+
+        this.customText.parentGroup = parentGroup;
     }
 
     generateText() {
         this.customText = new PIXI.Text(this.text, {
-            fontFamily: 'Georgia',
+            fontFamily: 'Trebuchet MS',
             fontSize: this.w / 7,
             fill: ['#ffffff'], // gradient
             wordWrap: true,

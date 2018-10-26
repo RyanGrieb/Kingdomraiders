@@ -27,7 +27,7 @@ export default class UserInterface {
             positive2: new PIXI.display.Group(2, false),
             positive3: new PIXI.display.Group(3, false),
             positive4: new PIXI.display.Group(4, false),
-
+            positive5: new PIXI.display.Group(5, false),
 
         }
 
@@ -106,6 +106,14 @@ export default class UserInterface {
         //Need to create a new Object
         this.windowObjects.push(window);
         window.open();
+    }
+
+    removeWindow(window) {
+        for (var i = 0; i < this.windowObjects.length; i++) {
+            if (this.windowObjects[i].name === window.name) {
+                this.windowObjects.splice(i, 1);
+            }
+        }
     }
 
     getWindowByName(windowName) {

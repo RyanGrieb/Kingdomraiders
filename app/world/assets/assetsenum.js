@@ -9,8 +9,21 @@ const AssetsEnum = {
         CHATBOX: { path: "assets/images/ui/chatbox.png" },
         TEXTBOX_HIGHLIGHT: { path: "assets/images/ui/txtboxhighlight.png" },
 
+        INVENTORY_OVERLAY: { path: "assets/images/ui/inventoryOverlay.png" },
+        INVENTORY_BACKGROUND: { path: "assets/images/ui/playerInventory.png" },
+        PLAYER_HEALTHBAR: { path: "assets/images/ui/healthbarBackground.png" },
+        PLAYER_MANABAR: { path: "assets/images/ui/manabar.png" },
+
+
         //PLAYER
         DEFAULT_PLAYER: { path: "assets/images/player/player.png" },
+
+        //ITEM
+        ITEM_BASIC_SWORD: { path: "assets/images/item/basicsword.png" },
+        ITEM_BASIC_CHESTPLATE: { path: "assets/images/item/basicchestplate.png" },
+        ITEM_BASIC_SHIELD: { path: "assets/images/item/basicshield.png" },
+        ITEM_BASIC_RING: { path: "assets/images/item/basicring.png" },
+        ITEM_BASIC_AMULET: { path: "assets/images/item/basicamulet.png" },
 
         //TILE
         TILE_ERROR: { path: "assets/images/tile/error.png" },
@@ -43,6 +56,9 @@ const AssetsEnum = {
 
         //Monster
         MONSTER_DEMON: { path: "assets/images/monster/demon.png" },
+
+        //SOUNDS
+        SOUND_BUTTONCLICK: { path: "assets/sound/buttonclick.mp3" },
 
     },
 

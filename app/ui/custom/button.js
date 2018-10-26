@@ -23,7 +23,9 @@ export default class Button extends UIObject {
 
         this.customSprite.interactive = true;
         this.customSprite.on("click", (event) => {
-            game.getPlayer.getInput.getButtonInput.checkButton(this.name);
+            var clicked = game.getPlayer.getInput.getButtonInput.checkButton(this.name);
+            if (clicked)
+                this.playSound();
         });
 
 
@@ -31,8 +33,10 @@ export default class Button extends UIObject {
         this.buttonText = new CustomText("txtBtn" + name, text, x + w / 2, y + h / 2, txtW, txtH);
     }
 
-    get getTexture() {
-        return this.texture;
+    playSound() {
+        const sound = PIXI.sound.Sound.from(AssetEnum.list.SOUND_BUTTONCLICK.sound);
+        sound.volume = 0.5;
+        sound.play();
     }
 
     setTexture(name) {
@@ -41,9 +45,35 @@ export default class Button extends UIObject {
         // this.customSprite.setTexture(name, 0, false);
     }
 
+    get getTexture() {
+        return this.texture;
+    }
+
     kill() {
         this.customSprite.destroy();
         this.buttonText.kill();
     }
 
+
+
+
+    //Not part of this who class, just here to organize properly.
+    static onHover() {
+        for (var i = 0; i < game.getUI.uiObjects.length; i++) {
+
+            if (game.getUI.uiObjects[i] instanceof Button) {
+                var buttonObj = game.getUI.uiObjects[i];
+
+                if (buttonObj.mouseInside() && buttonObj.getTexture !== "BUTTON2") {
+
+                    buttonObj.setTexture("BUTTON2");
+
+                } else if (!buttonObj.mouseInside() && buttonObj.getTexture === "BUTTON2") {
+
+                    buttonObj.setTexture("BUTTON");
+                }
+
+            }
+        }
+    }
 }
