@@ -26,7 +26,7 @@ export default class Inventory {
         game.getNetwork.sendMessage(JSON.stringify({ type: "RequestInventory" }));
     }
 
-    updateInventory(json) {
+    receiveInventoryUpdate(json) {
         //Recive the server request.
         var inventory = String(json.inventory).split(",");
 
@@ -38,6 +38,14 @@ export default class Inventory {
             this.setSlot(i, item);
         }
 
+    }
+
+    sendInventoryUpdate() {
+        var msg = {
+            type: "ModifyInventory",
+            inventory: this.getCurrentInventoryIDs(),
+        }
+        game.getNetwork.sendMessage(JSON.stringify(msg));
     }
 
     onMouseClick() {
@@ -93,6 +101,8 @@ export default class Inventory {
                         this.items[i].sprite.y = this.getSlotLocationY(i);
                     }
 
+
+                    this.sendInventoryUpdate();
                 }
     }
 
@@ -157,6 +167,16 @@ export default class Inventory {
         }
 
         return baseY;
+    }
+
+    getCurrentInventoryIDs() {
+        var itemIDs = [];
+        for (var i = 0; i < this.items.length; i++)
+            if (this.items[i] !== undefined) {
+                itemIDs.push(ItemType.getIDFromName(this.items[i].itemType.name));
+            } else
+                itemIDs.push(0);
+        return itemIDs;
     }
 
     openOverlay() {

@@ -53,7 +53,7 @@ export default class PlayerListener {
     }
 
     handleRequestInventory(json) {
-        game.getPlayer.inventory.updateInventory(json);
+        game.getPlayer.inventory.receiveInventoryUpdate(json);
     }
 
     //MPPlayer based response

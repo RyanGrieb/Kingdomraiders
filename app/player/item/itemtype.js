@@ -22,10 +22,13 @@ const ItemType = {
     },
 
     getIDFromName(name) {
-        var index = -1;
-        for (var tilename in this.list)
+        var index = 1;
+        for (var tilename in this.list) {
             if (name === tilename)
-                return ++index;
+                return index;
+            index++;
+        }
+
 
     }
 
