@@ -22,8 +22,8 @@ export default class Entity {
         this.sprite.y = (this.y + (this.camera.position.y - game.getPlayer.getY) - 21) + (w / 2);
         this.sprite.width = w;
         this.sprite.height = h;
-        this.sprite.anchor.x = 0.5;
-        this.sprite.anchor.y = 0.5;
+        this.sprite.anchor.x = (type.anchorX === undefined) ? 0.5 : type.anchorX;
+        this.sprite.anchor.y = (type.anchorY === undefined) ? 0.5 : type.anchorY;
 
         game.stage.addChild(this.sprite);
 

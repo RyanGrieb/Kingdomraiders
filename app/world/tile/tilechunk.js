@@ -69,15 +69,25 @@ export default class TileChunk {
 
             this.tiles[i] = new Tile(this.container, TileType.getTileFromID(chunk[i]), this.x + (x * 32), this.y - (y * 32) - 32);
 
+
+            //Adding top tile..
             if (topChunk[i] != -1) {
                 var tileType = TileType.getTileFromID(topChunk[i]);
+                
+                var entityType = {
+                    name: "TILE_" + tileType.name,
+                    anchorX: (tileType.anchorX === undefined) ? 0.5 : tileType.anchorX,
+                    anchorY: (tileType.anchorY === undefined) ? 0.5 : tileType.anchorY,
+                }
 
-                var entity = new Entity({ name: "TILE_" + tileType.name }, this.x + (x * 32), this.y - (y * 32) - 32, tileType.width, tileType.height);
+                var entity = new Entity(entityType, this.x + (x * 32), this.y - (y * 32) - 32, tileType.width, tileType.height);
                 entity.allowRotate = tileType.rotate;
                 entity.sprite.parentGroup = game.getUI.getParentGroupFromNumber(tileType.group);
                 //entity.sprite.parentGroup = game.getUI.parentGroup.positive3;
                 this.topEntities.push(entity);
             }
+
+
             x++;
         }
     }

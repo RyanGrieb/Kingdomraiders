@@ -7,7 +7,7 @@ export default class Monster extends Entity {
     constructor(type, x, y, w, h) {
         super(type, x, y, w, h);
 
-        this.sprite.parentGroup = game.getEntityMap.monsterGroup;
+        this.sprite.parentGroup = game.getUI.parentGroup.positive3;
     }
 
     update() {
