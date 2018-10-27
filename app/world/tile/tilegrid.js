@@ -169,8 +169,11 @@ export default class TileGrid {
                 this.tileMap[i].kill();
                 this.tileMap.splice(i, 1);
             }
+    }
 
-
+    async removeChunkFromIndex(index) {
+        this.tileMap[index].kill();
+        this.tileMap.splice(index, 1);
     }
 
     clearObjects() {
@@ -187,8 +190,7 @@ export default class TileGrid {
         //Handle removing chunks
         for (var i = 0; i < this.tileMap.length; i++)
             if (this.tileMap[i].outsideScreen) {
-                this.tileMap[i].kill();
-                this.tileMap.splice(i, 1);
+                this.removeChunkFromIndex(i);
             }
 
         //For offseting the map w/ camera

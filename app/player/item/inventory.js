@@ -224,6 +224,10 @@ export default class Inventory {
         lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
         this.openInventoryObjects.push(lblInvName);
 
+        var lblInvPlayer = new CustomSprite("DEFAULT_PLAYER", (game.WIDTH / 2 - 350 / 2) + 25, (game.HEIGHT / 2) - 120, 96, 96);
+        lblInvPlayer.customSprite.parentGroup = game.getUI.parentGroup.positive4;
+        this.openInventoryObjects.push(lblInvPlayer);
+
         //Display our items
         for (var i = 0; i < this.items.length; i++) {
 
@@ -266,6 +270,7 @@ export default class Inventory {
 
 
     update() {
-        this.dragItem();
+        if (this.windowOpen)
+            this.dragItem();
     }
 }

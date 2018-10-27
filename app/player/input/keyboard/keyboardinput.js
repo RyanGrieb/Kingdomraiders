@@ -17,10 +17,10 @@ export default class KeyboardInput {
     onEnter(e) {
         if (e.key === "Enter") {
             if (game.getUI.isWindowOpen("LoginWindow"))
-                game.getUI.getWindowByName("LoginWindow").requestToLogin();
+                game.getPlayer.playerProfile.requestToLogin();
 
             if (game.getUI.isWindowOpen("RegisterWindow"))
-                game.getUI.getWindowByName("RegisterWindow").requestToRegister();
+            game.getPlayer.playerProfile.requestToRegister();
 
         }
     }
@@ -69,7 +69,7 @@ export default class KeyboardInput {
 
         //Debug
         if (e.key == "Enter") {
-            game.getTileGrid.requestMapFromLocation(game.getPlayer.getX, game.getPlayer.getY);
+           // game.getTileGrid.requestMapFromLocation(game.getPlayer.getX, game.getPlayer.getY);
         }
 
         if (e.key == "r") {

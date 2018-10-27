@@ -29,9 +29,28 @@ export default class MPPlayer extends Entity {
     }
 
     setPosition(x, y) {
-        this.sprite.x = x + (this.camera.position.x - game.getPlayer.getX);
-        this.sprite.y = y + (this.camera.position.y - game.getPlayer.getY);
+        var rotation = this.camera.rotation;
+        var radians = (Math.PI / 180) * rotation;
 
+        //Sprite rotatation offset
+        var cos = Math.cos(radians);
+        var sin = Math.sin(radians);
+
+        //Rotate around point.
+
+
+        var unrotatedXOffset = x + (this.camera.position.x - game.getPlayer.getX);
+        var unrotatedYOffset = y + (this.camera.position.y - game.getPlayer.getY);
+
+
+        // console.log(this.camera.position.x + "|" + unrotatedXOffset);
+        //Compensates for player rotation.
+        var rotatedXOffset = this.camera.position.x + (cos * (unrotatedXOffset - this.camera.position.x) + sin * (unrotatedYOffset - this.camera.position.y));
+        var rotatedYOffset = this.camera.position.y + (sin * (unrotatedXOffset - this.camera.position.x) + cos * (unrotatedYOffset - this.camera.position.y))
+
+        this.sprite.x = rotatedXOffset;
+        this.sprite.y = rotatedYOffset;
+        //console.log(offsetX);
         //..
         this.x = x;
         this.y = y;

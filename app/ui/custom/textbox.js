@@ -79,6 +79,7 @@ export default class TextBox extends UIObject {
 
             //Backspace
             case 8:
+                e.preventDefault();
                 this.customText.text = this.customText.text.substring(0, this.customText.text.length - 1);
                 this.cycleHighlighter();
                 return;

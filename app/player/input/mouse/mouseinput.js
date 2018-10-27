@@ -29,7 +29,7 @@ export default class MouseInput {
         TextBox.onHover();
     }
 
-    onMouseClick(e) {
+    onMouseClick() {
         TextBox.onClick();
 
         if (game.getPlayer.inGame) {
@@ -39,7 +39,7 @@ export default class MouseInput {
         }
     }
 
-    onMouseRelease(e) {
+    onMouseRelease() {
         if (game.getPlayer.inGame) {
             game.getPlayer.inventory.onMouseRelease();
 
