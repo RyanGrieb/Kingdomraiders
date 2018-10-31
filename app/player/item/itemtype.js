@@ -1,14 +1,15 @@
 import game from "index";
+import ProjectileType from "../../world/entity/projectile/projectiletype";
 
 const ItemType = {
 
     //TODO: add other attributes
     list: {
-        BASIC_SWORD: { name: "BASIC_SWORD" },
-        BASIC_CHESTPLATE: { name: "BASIC_CHESTPLATE" },
-        BASIC_SHIELD: { name: "BASIC_SHIELD" },
-        BASIC_RING: { name: "BASIC_RING" },
-        BASIC_AMULET: { name: "BASIC_AMULET" },
+        BASIC_SWORD: { name: "BASIC_SWORD", displayName: "Basic Sword", projectile: ProjectileType.list.BASIC },
+        BASIC_CHESTPLATE: { name: "BASIC_CHESTPLATE", displayName: "Basic Chestplate" },
+        BASIC_SHIELD: { name: "BASIC_SHIELD", displayName: "Basic Shield" },
+        BASIC_RING: { name: "BASIC_RING", displayName: "Basic Ring" },
+        BASIC_AMULET: { name: "BASIC_AMULET", displayName: "Basic Amulet" },
 
 
         ERROR: { name: "ERROR" },

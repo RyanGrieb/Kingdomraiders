@@ -28,7 +28,12 @@ const TileType = {
         WALLTOPLEFT: { name: "WALLTOPLEFT", collision: true },
         WALLTOPRIGHT: { name: "WALLTOPRIGHT", collision: true },
 
-
+        WOODWALLBOTTOM: { name: "WOODWALLBOTTOM", collision: true },
+        WOODWALLBOTTOMLEFT: { name: "WOODWALLBOTTOMLEFT", replace: true, collision: true, width: 32, height: 32, group: 3 },
+        WOODWALLBOTTOMRIGHT: { name: "WOODWALLBOTTOMRIGHT", replace: true, collision: true, width: 32, height: 32, group: 3 },
+        WOODWALLTOPLEFT: { name: "WOODWALLTOPLEFT", replace: true, collision: true, width: 32, height: 32, group: 3 },
+        WOODWALLTOPRIGHT: { name: "WOODWALLTOPRIGHT", replace: true, collision: true, width: 32, height: 32, group: 3 },
+        WOODWALLSIDE: { name: "WOODWALLSIDE", collision: true},
 
 
         ERROR: { name: "ERROR" },

@@ -217,7 +217,7 @@ export default class PlayerMovement {
 
         //Normalize like mpplayer.
         if (hypotnuse !== 0)
-            game.getPlayer.sprite.setVelocity(distanceX, distanceY);
+            this.setVelocity(distanceX, distanceY);
 
         //Set camera rotation
         game.getUI.getCurrentScreen.camera.setRotation(this.cameraRotation.left, this.cameraRotation.right);
@@ -237,6 +237,62 @@ export default class PlayerMovement {
                 this.previousX = game.getPlayer.getX;
                 this.previousY = game.getPlayer.getY;
             }
+    }
+
+    setVelocity(x, y) {
+        //Fake x,y for camera rotation offset.
+        var rotation = game.getUI.getCurrentScreen.camera.rotation;
+        var radians = (Math.PI / 180) * rotation;
+
+        //Sprite rotatation offset
+        var cos = Math.cos(radians);
+        var sin = Math.sin(radians);
+
+        //Ofset the cos & sin
+        var offsetX = ((y * sin) + (x * cos));
+        var offsetY = ((y * cos) - (x * sin));
+
+
+        //Collision
+        var collider = game.getPlayer.sprite.collider;
+        var currentX = game.getPlayer.getX;
+        var currentY = game.getPlayer.getY;
+
+        var tilesUpDown = [];
+        var tilesLeftRight = [];
+
+        for (var i = 0; i < 4; i++) {
+            //Add all four corners of the collider.
+            var colliderXOffset = (i == 0 || i == 2) ? (collider.x) : (collider.x + collider.w);
+            var colliderYOffset = (i == 0 || i == 1) ? (collider.y) : (collider.y + collider.h);
+
+            if (game.getTileGrid.getChunkFromLocation(currentX, currentY) !== undefined) {
+
+                tilesUpDown.push(game.getTileGrid.getTileFromLocation(colliderXOffset, (colliderYOffset + offsetY)));
+                tilesLeftRight.push(game.getTileGrid.getTileFromLocation((colliderXOffset + offsetX), colliderYOffset));
+            }
+        }
+
+        for (var i = 0; i < tilesUpDown.length; i++)
+            if (tilesUpDown[i].tileType.collision) {
+                var tileY = tilesUpDown[i].y + 32;
+
+                offsetY = 0;
+            }
+
+        for (var i = 0; i < tilesLeftRight.length; i++)
+            if (tilesLeftRight[i].tileType.collision) {
+                //Find better way to tell which side of the tile we want
+                //!!!!!!! maybe a method tile.getXFromSide(,colliderY)??????!!!!!!!!!!!!!!!!!
+                var tileX = (offsetX < 0) ? tilesLeftRight[i].x + 32 : tilesLeftRight[i].x;
+
+                //Figure out why tilesUpDown gets called when we collide right.
+                // offsetX = tileX - collider.x;
+                offsetX = 0;
+
+            }
+
+        game.getPlayer.sprite.setVelocity(offsetX, offsetY);
     }
 
     clearKeys() {

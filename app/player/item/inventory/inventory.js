@@ -1,11 +1,12 @@
-import CustomWindow from "../../ui/window/customwindow";
-import CustomText from "../../ui/custom/customtext";
-import CustomSprite from "../../ui/custom/customsprite";
-import ItemType from "./itemtype";
+import CustomWindow from "../../../ui/window/customwindow";
+import CustomText from "../../../ui/custom/customtext";
+import CustomSprite from "../../../ui/custom/customsprite";
+import ItemType from "../itemtype";
 
 import game from "index";
-import Item from "./item";
+import Item from "../item";
 import { CONST } from "pixi.js";
+import Tooltip from "./tooltip";
 
 export default class Inventory {
     constructor() {
@@ -46,6 +47,38 @@ export default class Inventory {
             inventory: this.getCurrentInventoryIDs(),
         }
         game.getNetwork.sendMessage(JSON.stringify(msg));
+    }
+
+    //Tooltip.
+    onHover() {
+        var mouseX = game.renderer.plugins.interaction.mouse.global.x;
+        var mouseY = game.renderer.plugins.interaction.mouse.global.y;
+        var hoveredItem = undefined;
+
+        //If our mouse is inside an item...
+        for (var i = 0; i < this.items.length; i++)
+            if (this.items[i] !== undefined)
+                if (mouseX > this.items[i].sprite.x && mouseX < this.items[i].sprite.x + 32 && mouseY > this.items[i].sprite.y && mouseY < this.items[i].sprite.y + 32)
+                    hoveredItem = this.items[i];
+
+
+        //Create the tooltip for the first time.
+        if (this.tooltip === undefined) {
+
+            if (hoveredItem !== undefined) {
+                this.tooltip = new Tooltip(hoveredItem);
+
+            }
+        } else { //If tooltop exists modify or delete if needed..
+            if (hoveredItem !== undefined) {
+                this.tooltip.setPosition(mouseX + 15, mouseY + 15);
+            }
+            else {
+                this.tooltip.kill();
+                this.tooltip = undefined;
+            }
+
+        }
     }
 
     onMouseClick() {
@@ -179,6 +212,10 @@ export default class Inventory {
         return itemIDs;
     }
 
+    get getWeapon() {
+        return this.items[18];
+    }
+
     openOverlay() {
         var inventoryOverlay = new CustomSprite("INVENTORY_OVERLAY", game.WIDTH / 2 - 325 / 2, game.HEIGHT - 75, 325, 55)
         inventoryOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive4;
@@ -239,6 +276,9 @@ export default class Inventory {
     closeInventory() {
         this.windowOpen = false;
 
+        //Stops dragged items
+        this.onMouseRelease();
+
         for (var i = 0; i < this.openInventoryObjects.length; i++)
             this.openInventoryObjects[i].kill();
         this.openInventoryObjects = [];
@@ -247,8 +287,11 @@ export default class Inventory {
             if (this.items[i] !== undefined)
                 game.stage.removeChild(this.items[i].sprite);
 
-        //Stops dragged items
-        this.onMouseRelease();
+        //Remove our tooltip.
+        if (this.tooltip !== undefined) {
+            this.tooltip.kill();
+            this.tooltip = undefined;
+        }
     }
 
     //Includes the overlay.
@@ -270,7 +313,9 @@ export default class Inventory {
 
 
     update() {
-        if (this.windowOpen)
+        if (this.windowOpen) {
             this.dragItem();
+            this.onHover();
+        }
     }
 }

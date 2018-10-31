@@ -5,7 +5,7 @@ import CustomSprite from "../ui/custom/customsprite";
 import BuildMode from "./item/buildmode";
 
 import game from "index";
-import Inventory from "./item/inventory";
+import Inventory from "./item/inventory/inventory";
 
 
 export default class Player {
@@ -42,7 +42,7 @@ export default class Player {
         this.sprite = new CustomSprite(this.className, (game.WIDTH / 2) - (21), (game.HEIGHT / 2) - (21), this.w, this.h);
         //Updates the camera offset..
         this.sprite.setPosition(this.spawnX, this.spawnY);
-        this.sprite.addCollision(5, 5, 32, 32);
+        this.sprite.addCollision(8, 5, 27, 30);
 
         //Sprite layer
         this.sprite.customSprite.parentGroup = game.getUI.parentGroup.positive3;

@@ -54,8 +54,8 @@ export default class Entity {
 
 
         //Camera rotation (Moves the sprite's around the player)
+        
         if (this.rotation != rotation) {
-
             var radians = (Math.PI / 180) * (this.rotation - rotation);
 
             //Sprite rotatation offset

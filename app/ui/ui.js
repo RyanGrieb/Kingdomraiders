@@ -123,6 +123,10 @@ export default class UserInterface {
         }
     }
 
+    get isAllWindowsClosed() {
+        return (this.windowObjects <= 0);
+    }
+
     isWindowOpen(windowName) {
         for (var i = 0; i < this.windowObjects.length; i++) {
             if (this.windowObjects[i].name === windowName)

@@ -6,6 +6,7 @@ import TextBox from '../custom/textbox';
 import CustomText from '../custom/customtext';
 import Screen from './screen';
 import MenuOverlay from "../overlay/menuoverlay";
+import OutdatedWindow from "../window/types/outdatedwindow";
 
 
 export default class MenuScreen extends Screen {
@@ -25,9 +26,9 @@ export default class MenuScreen extends Screen {
             this.setLoggedOut();
         else
             this.setLoggedIn();
-        // this.add.image(400, 300, 'sky');
-        //this.add.image(400, 300, 'star');
 
+        //Check for bad browsers (i.e internet explorer)
+        OutdatedWindow.checkOutdated();
     }
 
     close() {

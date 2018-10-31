@@ -12,6 +12,8 @@ import Monster from "../../world/entity/monster/monster";
 import MonsterType from "../../world/entity/monster/monstertype";
 import Entity from "../../world/entity/entity";
 import EntityType from "../../world/entity/entitytype";
+import Projectile from "../../world/entity/projectile/projectile";
+import ProjectileType from "../../world/entity/projectile/projectiletype";
 
 export default class GameScreen extends Screen {
 
@@ -27,7 +29,8 @@ export default class GameScreen extends Screen {
         PIXI.Application.prototype.getTileGrid = new TileGrid();
         PIXI.Application.prototype.getEntityMap = new EntityMap();
 
-        game.getEntityMap.entityMap.push(new Monster(MonsterType.list.DEMON, 1400, 1472, 128, 128))
+        //game.getEntityMap.entityMap.push(new Monster(MonsterType.list.DEMON, 1400, 1472, 128, 128));
+        //game.getEntityMap.entityMap.push(new Projectile(ProjectileType.list.BASIC, 1600, 1600));
         //game.getTileGrid.tileMap.push(new Tile(TileType.list.GRASS, 32, 32));
         //this.add.image(400, 300, 'star');
 

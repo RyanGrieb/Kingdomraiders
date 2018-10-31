@@ -3,6 +3,7 @@ import TextBox from "ui/custom/textbox";
 
 import $ from "jquery";
 import game from "index";
+import Projectile from "../../../world/entity/projectile/projectile";
 
 
 export default class MouseInput {
@@ -24,7 +25,16 @@ export default class MouseInput {
             game.getPlayer.getBuildMode.buildEnabled = false;
     }
 
+    fireProjectile() {
+            game.getEntityMap.projectileManager.setCaster();
+    }
+
+    stopProjectile() {
+        game.getEntityMap.projectileManager.removeCaster();
+    }
+
     update() {
+        //UI
         Button.onHover();
         TextBox.onHover();
     }
@@ -36,6 +46,7 @@ export default class MouseInput {
             game.getPlayer.inventory.onMouseClick();
 
             this.enableBuild();
+            this.fireProjectile();
         }
     }
 
@@ -44,6 +55,7 @@ export default class MouseInput {
             game.getPlayer.inventory.onMouseRelease();
 
             this.disableBuild();
+            this.stopProjectile();
         }
     }
 

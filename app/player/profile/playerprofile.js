@@ -4,6 +4,14 @@ export default class PlayerProfile {
 
     constructor() {
         this.name = undefined;
+
+        //Will be updated by server.
+        this.stats = {
+            dex: 10,
+            speed: 5,
+            health: 100,
+            mana: 100,
+        }
     }
 
 

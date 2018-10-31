@@ -50,12 +50,20 @@ const AssetsEnum = {
         TILE_WALLTOPLEFT: { path: "assets/images/tile/walltopleft.png" },
         TILE_WALLTOPRIGHT: { path: "assets/images/tile/walltopright.png" },
 
+        TILE_WOODWALLBOTTOM: { path: "assets/images/tile/woodwallbottom.png" },
+        TILE_WOODWALLBOTTOMLEFT: { path: "assets/images/tile/woodwallbottomleft.png" },
+        TILE_WOODWALLBOTTOMRIGHT: { path: "assets/images/tile/woodwallbottomright.png" },
+        TILE_WOODWALLTOPLEFT: { path: "assets/images/tile/woodwalltopleft.png" },
+        TILE_WOODWALLTOPRIGHT: { path: "assets/images/tile/woodwalltopright.png" },
+        TILE_WOODWALLSIDE: {path: "assets/images/tile/woodwallside.png"},
         //ENTITY
-        // ENTITY_TREE: { path: "assets/images/tile/tree.png" },
-        //ENTITY_BIGTREE: { path: "assets/images/tile/treebig.png" },
 
         //Monster
         MONSTER_DEMON: { path: "assets/images/monster/demon.png" },
+
+        //Projectile
+        PROJECTILE_BASIC: {path: "assets/images/projectile/basic.png"},
+        PROJECTILE_BASIC2: {path: "assets/images/projectile/basic2.png"},
 
         //SOUNDS
         SOUND_BUTTONCLICK: { path: "assets/sound/buttonclick.mp3" },

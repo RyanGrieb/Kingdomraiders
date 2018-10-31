@@ -29,20 +29,25 @@ export default class MPPlayer extends Entity {
     }
 
     setPosition(x, y) {
-        var rotation = this.camera.rotation;
-        var radians = (Math.PI / 180) * rotation;
-
-        //Sprite rotatation offset
-        var cos = Math.cos(radians);
-        var sin = Math.sin(radians);
-        
         //Converts our x value to where we put it on our screen.
         var unrotatedXOffset = x + (this.camera.position.x - game.getPlayer.getX);
         var unrotatedYOffset = y + (this.camera.position.y - game.getPlayer.getY);
+        var rotatedXOffset = unrotatedXOffset;
+        var rotatedYOffset = unrotatedYOffset;
 
-        //Rotates the mpplayer around our camera to set the proper position.
-        var rotatedXOffset = this.camera.position.x + (cos * (unrotatedXOffset - this.camera.position.x) - sin * (unrotatedYOffset - this.camera.position.y));
-        var rotatedYOffset = this.camera.position.y + (sin * (unrotatedXOffset - this.camera.position.x) + cos * (unrotatedYOffset - this.camera.position.y))
+
+        //Sets our roation around the camera angle. (This is called before update() to prevent glitching due to delay)
+        if (this.rotation != this.camera.rotation) {
+            var radians = (Math.PI / 180) * (this.rotation - this.camera.rotation);
+
+            //Sprite rotatation offset
+            var cos = Math.cos(radians);
+            var sin = Math.sin(radians);
+            rotatedXOffset = this.camera.position.x + (cos * (unrotatedXOffset - this.camera.position.x) + sin * (unrotatedYOffset - this.camera.position.y));
+            rotatedYOffset = this.camera.position.y + (-sin * (unrotatedXOffset - this.camera.position.x) + cos * (unrotatedYOffset - this.camera.position.y))
+
+            this.rotation = this.camera.rotation;
+        }
 
         this.sprite.x = rotatedXOffset;
         this.sprite.y = rotatedYOffset;

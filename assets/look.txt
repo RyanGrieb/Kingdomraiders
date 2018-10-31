@@ -1,1 +1,4 @@
 http://pixeljoint.com/pixelart/86958.htm
+
+To count lines of code:
+sloc [option] <file>|<directory>.

@@ -1,8 +1,11 @@
 import game from "index";
+import ProjectileManager from "./projectile/projectilemanager";
 
 export default class EntityMap {
     constructor() {
         this.entityMap = [];
+
+        this.projectileManager = new ProjectileManager();
     }
 
     removeObject(obj) {
@@ -22,6 +25,9 @@ export default class EntityMap {
     update() {
         for (var i = 0; i < this.entityMap.length; i++)
             this.entityMap[i].update();
+
+            
+        this.projectileManager.update();
     }
 
     //Broad
@@ -37,19 +43,5 @@ export default class EntityMap {
             }
         }
     }
-
-    getGroupByName(name) {
-        switch (name) {
-            case "monsterGroup":
-                return this.monsterGroup;
-
-            case "mpPlayerGroup":
-                return this.mpPlayerGroup;
-
-            case "bottomGroup":
-                return this.bottomGroup;
-        }
-    }
-
 
 }
