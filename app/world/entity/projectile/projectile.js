@@ -18,14 +18,10 @@ export default class Projectile extends Entity {
         this.targetX = this.camera.position.x + (cos * (targetX - this.camera.position.x) + sin * (targetY - this.camera.position.y));
         this.targetY = this.camera.position.y + (-sin * (targetX - this.camera.position.x) + cos * (targetY - this.camera.position.y));
 
-        //Converts mouse values to game x,y values 
-        this.targetX = (this.targetX + (game.getPlayer.getX - this.camera.position.x)) + 21;
-        this.targetY = (this.targetY + (game.getPlayer.getY - this.camera.position.y)) + 21;
-
         //Creates an angle from our target & position
         //TODO: subtract targetX by 16-cos (angle from mouse below...?)
-        var deltaX = this.targetX - this.x;
-        var deltaY = this.targetY - this.y;
+        var deltaX = this.targetX - this.sprite.x;
+        var deltaY = this.targetY - this.sprite.y;
 
         this.angle = Math.atan2(deltaY, deltaX);
 
@@ -41,7 +37,7 @@ export default class Projectile extends Entity {
     moveToTarget() {
         if (--this.duration > 0) {
 
-            console.log((this.angle * (180 / Math.PI)));
+            //console.log((this.angle * (180 / Math.PI)));
             if (!this.sprite.visible)
                 this.sprite.visible = true;
 

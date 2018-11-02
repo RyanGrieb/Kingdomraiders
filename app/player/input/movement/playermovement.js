@@ -301,7 +301,6 @@ export default class PlayerMovement {
 
     update() {
         if (game.getPlayer.inGame) {
-
             this.handleMovement();
         }
     }
