@@ -1,5 +1,6 @@
 import game from "index";
 import AssetsEnum from "../assets/assetsenum";
+import CustomSprite from "../../ui/custom/customsprite";
 
 export default class Entity {
 
@@ -10,25 +11,53 @@ export default class Entity {
         //this.entityClass = entityClass;
         this.type = type;
 
-        //Note: these this.x & y values are meant to display the true position of the entity /w out rotation offsets.
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
 
-        this.sprite = new PIXI.Sprite(AssetsEnum.getObjectFromName(this.type.name).texture);
-
-        this.sprite.x = (this.x + (this.camera.position.x - game.getPlayer.getX) - 21) + (w / 2);
-        this.sprite.y = (this.y + (this.camera.position.y - game.getPlayer.getY) - 21) + (w / 2);
-        this.sprite.width = w;
-        this.sprite.height = h;
-        this.sprite.anchor.x = (type.anchorX === undefined) ? 0.5 : type.anchorX;
-        this.sprite.anchor.y = (type.anchorY === undefined) ? 0.5 : type.anchorY;
-
-        game.stage.addChild(this.sprite);
+        var screenPosition = this.getScreenPosition(this.x, this.y);
+        this.sprite = new CustomSprite(this.type.name, screenPosition.x, screenPosition.y, this.w, this.h);
+        this.sprite.setAnchor(type.anchorX, type.anchorY);
 
         this.allowRotate = true;
         this.rotation = 0;
+    }
+
+
+    addCollision(xOffset, yOffset, width, height) {
+        this.collider = {
+            x: this.x + xOffset,
+            y: this.y + yOffset,
+            w: width,
+            h: height,
+            collided: false,
+        }
+    }
+
+    setPosition(x, y) {
+        //Set the custom sprite position /w screenX&Y..
+        var screenPosition = this.getScreenPosition(x, y);
+        this.sprite.setPosition(screenPosition.x, screenPosition.y);
+
+        //Set our gameX&Y values.
+        this.x = x;
+        this.y = y;
+    }
+
+    getScreenPosition(x, y) {
+        var screenX = (x + (this.camera.position.x - game.getPlayer.getX) - 21) + (this.w / 2);
+        var screenY = (y + (this.camera.position.y - game.getPlayer.getY) - 21) + (this.h / 2);
+
+        return { x: screenX, y: screenY };
+    }
+
+    setGameVelocity(x, y) {
+        this.x += x;
+        this.y += y;
+
+        this.collider.x += x;
+        this.collider.y += y;
     }
 
     setCameraPivot(rotation, x, y) {
@@ -46,29 +75,25 @@ export default class Entity {
         var camPosOffsetY = (cos * differenceInDistanceY) + (sin * differenceInDistanceX);
 
         //For some reason, the x axis is moving 
-
-        this.sprite.x -= camPosOffsetX;
-        this.sprite.y -= camPosOffsetY;
-        //..
+        this.sprite.setVelocity(-camPosOffsetX, -camPosOffsetY);
 
 
 
         //Camera rotation (Moves the sprite's around the player)
-        
+
         if (this.rotation != rotation) {
             var radians = (Math.PI / 180) * (this.rotation - rotation);
 
             //Sprite rotatation offset
             var cos = Math.cos(radians);
             var sin = Math.sin(radians);
-            var newX = (cos * (this.sprite.x - this.camera.position.x)) + (sin * (this.sprite.y - this.camera.position.y)) + this.camera.position.x;
-            var newY = (cos * (this.sprite.y - this.camera.position.y)) - (sin * (this.sprite.x - this.camera.position.x)) + this.camera.position.y;
+            var newX = (cos * (this.sprite.customSprite.x - this.camera.position.x)) + (sin * (this.sprite.customSprite.y - this.camera.position.y)) + this.camera.position.x;
+            var newY = (cos * (this.sprite.customSprite.y - this.camera.position.y)) - (sin * (this.sprite.customSprite.x - this.camera.position.x)) + this.camera.position.y;
 
-            this.sprite.x = newX;
-            this.sprite.y = newY;
+            this.sprite.setPosition(newX, newY);
 
             if (!this.allowRotate)
-                this.sprite.rotation -= (radians);
+                this.sprite.customSprite.rotation -= (radians);
 
         }
 
@@ -77,25 +102,42 @@ export default class Entity {
         this.rotation = rotation;
     }
 
-    setVelocity(x, y) {
-        // console.log(x + "," + y);
-        this.x += x;
-        this.y += y;
 
-        //Fake x,y for camera rotation offset.
-        var rotation = game.getUI.getCurrentScreen.camera.rotation;
-        var radians = (Math.PI / 180) * rotation;
+    checkCollision(x, y) {
+        this.collider.collided = false;
+        var velocity = { x: x, y: y };
+        //Collision (TODO: SEPERATE METHOD)
 
-        //Sprite rotatation offset
-        var cos = Math.cos(radians);
-        var sin = Math.sin(radians);
+        var tilesUpDown = [];
+        var tilesLeftRight = [];
 
-        //Ofset the cos & sin
-        var testX = (y * sin) + (-(x * cos));
-        var testY = (y * cos) + (x * sin);
+        for (var i = 0; i < 4; i++) {
+            //Add all four corners of the collider.
+            var colliderXOffset = (i == 0 || i == 2) ? (this.collider.x) : (this.collider.x + this.collider.w);
+            var colliderYOffset = (i == 0 || i == 1) ? (this.collider.y) : (this.collider.y + this.collider.h);
 
-        this.sprite.x -= testX;
-        this.sprite.y += testY;
+            if (game.getTileGrid.getChunkFromLocation(this.x, this.y) !== undefined) {
+
+                tilesUpDown.push(game.getTileGrid.getTileFromLocation(colliderXOffset, (colliderYOffset + velocity.y)));
+                tilesLeftRight.push(game.getTileGrid.getTileFromLocation((colliderXOffset + velocity.x), colliderYOffset));
+            }
+        }
+
+        for (var i = 0; i < tilesUpDown.length; i++)
+            if (tilesUpDown[i].tileType.collision) {
+
+                velocity.y = 0;
+                this.collider.collided = true;
+            }
+
+        for (var i = 0; i < tilesLeftRight.length; i++)
+            if (tilesLeftRight[i].tileType.collision) {
+
+                velocity.x = 0;
+                this.collider.collided = true;
+            }
+
+        return velocity;
     }
 
     removeOutsideofScreen() {
@@ -108,7 +150,7 @@ export default class Entity {
     }
 
     kill() {
-        this.sprite.destroy();
+        this.sprite.kill();
     }
 
     update() {

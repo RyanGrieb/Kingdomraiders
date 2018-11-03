@@ -6,6 +6,7 @@ import BuildMode from "./item/buildmode";
 
 import game from "index";
 import Inventory from "./item/inventory/inventory";
+import Entity from "../world/entity/entity";
 
 
 export default class Player {
@@ -39,13 +40,12 @@ export default class Player {
         this.w = 42;
         this.h = 42;
 
-        this.sprite = new CustomSprite(this.className, (game.WIDTH / 2) - (21), (game.HEIGHT / 2) - (21), this.w, this.h);
+        this.entity = new Entity({ name: this.className }, this.spawnX, this.spawnY, this.w, this.h);
         //Updates the camera offset..
-        this.sprite.setPosition(this.spawnX, this.spawnY);
-        this.sprite.addCollision(8, 5, 27, 30);
+        this.entity.addCollision(8, 5, 27, 30);
 
         //Sprite layer
-        this.sprite.customSprite.parentGroup = game.getUI.parentGroup.positive3;
+        this.entity.sprite.customSprite.parentGroup = game.getUI.parentGroup.positive3;
 
 
         this.inGame = true;
@@ -56,7 +56,11 @@ export default class Player {
         this.buildMode.buildEnabled = false;
 
         this.inventory.close();
-        this.sprite.customSprite.destroy();
+        this.inventory = undefined;
+
+        this.entity.kill();
+        this.entity = undefined;
+
         this.movement.clearKeys();
     }
 
@@ -88,16 +92,16 @@ export default class Player {
     }
 
     get getX() {
-        if (this.sprite == null)
+        if (this.entity == null)
             return this.spawnX;
 
-        return this.sprite.getFakeX;
+        return this.entity.x;
     }
 
     get getY() {
-        if (this.sprite == null)
+        if (this.entity == null)
             return this.spawnY;
 
-        return this.sprite.getFakeY;
+        return this.entity.y;
     }
 }

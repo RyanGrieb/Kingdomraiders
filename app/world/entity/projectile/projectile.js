@@ -7,6 +7,7 @@ export default class Projectile extends Entity {
 
     constructor(projType, x, y, targetX, targetY) {
         super(projType, x, y, 32, 32);
+        this.addCollision(2, 2, 30, 30);
 
         this.duration = 40;
 
@@ -27,24 +28,40 @@ export default class Projectile extends Entity {
 
         //Convert back to degree.
         var deg = (this.angle * (180 / Math.PI) + 90);
-        this.sprite.rotation = deg * (Math.PI / 180);
+        this.sprite.customSprite.rotation = deg * (Math.PI / 180);
 
-        this.sprite.parentGroup = game.getUI.parentGroup.positive2;
-        this.sprite.visible = false;
+        this.sprite.customSprite.parentGroup = game.getUI.parentGroup.positive2;
+        this.sprite.customSprite.visible = false;
         this.allowRotate = false;
     }
 
     moveToTarget() {
-        if (--this.duration > 0) {
+        if (--this.duration > 0 && !this.collider.collided) {
 
             //console.log((this.angle * (180 / Math.PI)));
-            if (!this.sprite.visible)
-                this.sprite.visible = true;
+            if (!this.sprite.customSprite.visible)
+                this.sprite.customSprite.visible = true;
 
             var velX = 7 * Math.cos(this.angle);
             var velY = 7 * Math.sin(this.angle);
 
-            this.setVelocity(velX, velY);
+
+            var velocity = this.checkCollision(velX, velY);
+
+            //Camera rotation offset.
+            var radians = (Math.PI / 180) * this.camera.rotation;
+            //Sprite rotatation offset
+            var cos = Math.cos(radians);
+            var sin = Math.sin(radians);
+            //Ofset the cos & sin
+            var velXOffset = (velocity.y * sin) + (-(velocity.x * cos));
+            var velYOffset = (velocity.y * cos) + (velocity.x * sin);
+
+
+            //Same as projectile.js, make sure to keep gameX&Y not offsetted by rotation.
+            this.setGameVelocity(velocity.x, velocity.y);
+
+            this.sprite.setVelocity(-velXOffset, velYOffset);
 
         } else
             this.kill();
@@ -59,6 +76,8 @@ export default class Projectile extends Entity {
     }
 
     update() {
+        //console.log(Math.round(this.sprite.collider.x) + "," + Math.round(this.sprite.collider.y));
+        //console.log(Math.round(this.sprite.getGamePositionX) + "," + Math.round(this.sprite.getGamePositionY));
         super.update();
 
         this.moveToTarget();

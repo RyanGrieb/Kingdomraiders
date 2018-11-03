@@ -33,7 +33,7 @@ export default class PlayerMovement {
             var camera = game.getUI.getCurrentScreen.getCamera;
 
             //Incorrect.
-            game.getPlayer.sprite.setPosition(x, y);
+            game.getPlayer.sprite.setGamePosition(x, y);
         }
         else {
             //Player origin
@@ -253,8 +253,8 @@ export default class PlayerMovement {
         var offsetY = ((y * cos) - (x * sin));
 
 
-        //Collision
-        var collider = game.getPlayer.sprite.collider;
+        //Collision (TODO: SEPERATE METHOD)
+        var collider = game.getPlayer.entity.collider;
         var currentX = game.getPlayer.getX;
         var currentY = game.getPlayer.getY;
 
@@ -292,7 +292,9 @@ export default class PlayerMovement {
 
             }
 
-        game.getPlayer.sprite.setVelocity(offsetX, offsetY);
+        //Instead of setting velocity we just chang our x&y values here, b/c we don't want to move the customsprite insdie.
+        game.getPlayer.entity.setGameVelocity(offsetX, offsetY);
+        //game.getPlayer.entity.setVelocity(offsetX, offsetY);
     }
 
     clearKeys() {

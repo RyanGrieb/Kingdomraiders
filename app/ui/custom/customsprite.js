@@ -4,12 +4,6 @@ import AssetEnum from "../../world/assets/assetsenum";
 
 export default class CustomSprite extends UIObject {
 
-    //There are there (x,y) points in this class
-
-    //this.customSprite.x: the real location of the sprite
-    //this.x: the location of the sprite based off the camera
-    //this.fakeX: the location the the sprite based off camera + rotation
-
     constructor(spriteName, x, y, w, h) {
         super(spriteName, x, y, w, h);
 
@@ -25,32 +19,26 @@ export default class CustomSprite extends UIObject {
 
     }
 
-    addCollision(xOffset, yOffset, width, height) {
-        this.collider = {
-            x: this.fakeX + xOffset,
-            y: this.fakeY + yOffset,
-            w: width,
-            h: height,
-        }
-    }
-
+    //Set screen & game position values (x,y values are screen values though.)
     setPosition(x, y) {
-        //this.x = x;
-        //this.y = y;
+       // this.x = x;
+       // this.y = y;
 
-        this.fakeX = x;
-        this.fakeY = y;
+        this.customSprite.x = x;
+        this.customSprite.y = y;
     }
 
     setVelocity(x, y) {
-        this.collider.x += x;
-        this.collider.y += y;
-        this.fakeX += x;
-        this.fakeY += y;
+       // this.x = x;
+        //this.y = y;
 
-        //This is just without rotation offsets.
-        //this.x += x;
-        //this.y += y;
+        this.customSprite.x += x;
+        this.customSprite.y += y;
+    }
+
+    setAnchor(x, y) {
+        this.customSprite.anchor.x = (x === undefined) ? 0.5 : x;
+        this.customSprite.anchor.y = (y === undefined) ? 0.5 : y;
     }
 
     setInteractive() {
@@ -59,18 +47,6 @@ export default class CustomSprite extends UIObject {
 
     kill() {
         this.customSprite.destroy();
-    }
-
-    get getFakeX() {
-        return this.fakeX;
-    }
-
-    get getFakeY() {
-        return this.fakeY;
-    }
-
-    get baseSprite() {
-        return this.customSprite;
     }
 
 }

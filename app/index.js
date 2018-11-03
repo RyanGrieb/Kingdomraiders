@@ -25,8 +25,8 @@ function initGame() {
     //Apply settings here..
     //Fixes blurry sprites & fonts
     PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
-    //PIXI.settings.RENDER_OPTIONS.roundPixels = true;
-    //PIXI.settings.RENDER_OPTIONS.forceFXAA = true;
+    PIXI.settings.RENDER_OPTIONS.roundPixels = true;
+    PIXI.settings.RENDER_OPTIONS.forceFXAA = true;
 
     //..
     

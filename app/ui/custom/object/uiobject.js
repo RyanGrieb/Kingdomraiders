@@ -8,10 +8,6 @@ export default class UIObject {
         this.y = y;
         this.w = w;
         this.h = h;
-
-        //For resize offsets..
-        this.baseX = x;
-        this.baseY = y;
     }
 
 
