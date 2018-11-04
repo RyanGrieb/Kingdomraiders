@@ -28,9 +28,8 @@ export default class BuildMode {
         var x = (mouseX + (game.getPlayer.getX - camera.position.x)) + 21;
         var y = (mouseY + (game.getPlayer.getY - camera.position.y)) + 21;
         var id = game.getUI.getWindowByName("BuildWindow").selectedTileID;
+        var tileType = TileType.getTileFromID(id);
 
-        var chunkX = game.getTileGrid.getChunkFromLocation(x, y).x;
-        var chunkY = game.getTileGrid.getChunkFromLocation(x, y).y;
         //Send build packet.
         var msg = {
             type: "BuildRequest",

@@ -30,8 +30,11 @@ const AssetsEnum = {
         TILE_GRASS: { path: "assets/images/tile/grass.png" },
         TILE_GRASS2: { path: "assets/images/tile/grass2.png" },
         TILE_FLOOR: { path: "assets/images/tile/floor.png" },
+        TILE_WOODFLOOR: { path: "assets/images/tile/woodfloor.png" },
         TILE_PATH: { path: "assets/images/tile/path.png" },
         TILE_LIGHTPATH: { path: "assets/images/tile/lightpath.png" },
+        TILE_WATER: { path: "assets/images/tile/water.png" },
+        TILE_SAND: { path: "assets/images/tile/sand.png" },
 
         TILE_TREE: { path: "assets/images/tile/tree.png" },
         TILE_BIGTREE: { path: "assets/images/tile/treebig.png" },
@@ -49,21 +52,23 @@ const AssetsEnum = {
         TILE_WALLTOP: { path: "assets/images/tile/walltop.png" },
         TILE_WALLTOPLEFT: { path: "assets/images/tile/walltopleft.png" },
         TILE_WALLTOPRIGHT: { path: "assets/images/tile/walltopright.png" },
+        TILE_WALLFULL: { path: "assets/images/tile/wallfull.png" },
 
         TILE_WOODWALLBOTTOM: { path: "assets/images/tile/woodwallbottom.png" },
         TILE_WOODWALLBOTTOMLEFT: { path: "assets/images/tile/woodwallbottomleft.png" },
         TILE_WOODWALLBOTTOMRIGHT: { path: "assets/images/tile/woodwallbottomright.png" },
         TILE_WOODWALLTOPLEFT: { path: "assets/images/tile/woodwalltopleft.png" },
         TILE_WOODWALLTOPRIGHT: { path: "assets/images/tile/woodwalltopright.png" },
-        TILE_WOODWALLSIDE: {path: "assets/images/tile/woodwallside.png"},
+        TILE_WOODWALLSIDE: { path: "assets/images/tile/woodwallside.png" },
+
         //ENTITY
 
         //Monster
         MONSTER_DEMON: { path: "assets/images/monster/demon.png" },
 
         //Projectile
-        PROJECTILE_BASIC: {path: "assets/images/projectile/basic.png"},
-        PROJECTILE_BASIC2: {path: "assets/images/projectile/basic2.png"},
+        PROJECTILE_BASIC: { path: "assets/images/projectile/basic.png" },
+        PROJECTILE_BASIC2: { path: "assets/images/projectile/basic2.png" },
 
         //SOUNDS
         SOUND_BUTTONCLICK: { path: "assets/sound/buttonclick.mp3" },

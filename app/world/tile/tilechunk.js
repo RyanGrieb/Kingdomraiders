@@ -38,11 +38,12 @@ export default class TileChunk {
         this.combinedSprite.y = this.y + (this.camera.position.y - game.getPlayer.getY) - 21;
 
         //For debugging purposes
-        /*this.combinedSprite.interactive = true;
+        this.combinedSprite.interactive = true;
 
         this.combinedSprite.on('pointerover', () => {
-            this.combinedSprite.tint = Math.random() * 0xFFFFFF;
-        });*/
+            if (game.getPlayer.playerSettings.getSetting("chunkDebug"))
+                this.combinedSprite.tint = Math.random() * 0xFFFFFF;
+        });
         //..
 
         game.stage.addChild(this.combinedSprite);
@@ -74,6 +75,7 @@ export default class TileChunk {
             if (topChunk[i] != -1) {
                 var tileType = TileType.getTileFromID(topChunk[i]);
 
+                //Make a better way to do this...
                 var entityType = {
                     name: "TILE_" + tileType.name,
                     anchorX: (tileType.anchorX === undefined) ? 0.5 : tileType.anchorX,
@@ -83,7 +85,13 @@ export default class TileChunk {
                 var entity = new Entity(entityType, this.x + (x * 32), this.y - (y * 32) - 32, tileType.width, tileType.height);
                 entity.allowRotate = tileType.rotate;
                 entity.sprite.customSprite.parentGroup = game.getUI.getParentGroupFromNumber(tileType.group);
-                //entity.sprite.parentGroup = game.getUI.parentGroup.positive3;
+
+                if (tileType.collider !== undefined) {
+                    entity.addCollision(tileType.collider.x, tileType.collider.y, tileType.collider.w, tileType.collider.h);
+                    entity.setPosition(entity.x - tileType.collider.x, entity.y - tileType.collider.y);
+                }
+
+
                 this.topEntities.push(entity);
             }
 
@@ -167,10 +175,20 @@ export default class TileChunk {
 
     //Figure out why I need to subtract 64 to get the correct position
     getTileFromLocation(x, y) {
+        //Top Tiles
+        for (var i = 0; i < this.topEntities.length; i++)
+            if (this.topEntities[i].collider !== undefined) {
+                if (x > this.topEntities[i].collider.x && x < this.topEntities[i].collider.x + this.topEntities[i].collider.w &&
+                    y > this.topEntities[i].collider.y && y < this.topEntities[i].collider.y + this.topEntities[i].collider.h)
+                    return this.topEntities[i];
+            }
+
+        //Bottom Tiles
         for (var i = 0; i < this.tiles.length; i++) {
             if (Math.abs(x - this.tiles[i].x) < 32 && Math.abs(y - this.tiles[i].y) < 32)
                 return this.tiles[i];
         }
+
 
         return undefined;
     }

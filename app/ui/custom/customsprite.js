@@ -41,6 +41,10 @@ export default class CustomSprite extends UIObject {
         this.customSprite.anchor.y = (y === undefined) ? 0.5 : y;
     }
 
+    setParentGroup(parentGroup) {
+        this.customSprite.parentGroup = parentGroup;
+    }
+
     setInteractive() {
         return this.customSprite.setInteractive();
     }

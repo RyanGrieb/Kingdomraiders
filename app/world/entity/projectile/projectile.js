@@ -7,7 +7,7 @@ export default class Projectile extends Entity {
 
     constructor(projType, x, y, targetX, targetY) {
         super(projType, x, y, 32, 32);
-        this.addCollision(2, 2, 30, 30);
+        this.addCollision(8, 5, 16, 22);
 
         this.duration = 40;
 

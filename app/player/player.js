@@ -7,6 +7,7 @@ import BuildMode from "./item/buildmode";
 import game from "index";
 import Inventory from "./item/inventory/inventory";
 import Entity from "../world/entity/entity";
+import PlayerSettings from "./profile/playersettings";
 
 
 export default class Player {
@@ -17,6 +18,7 @@ export default class Player {
 
         //Status Information
         this.playerProfile = new PlayerProfile();
+        this.playerSettings = new PlayerSettings();
 
         //Other player constructors
         this.buildMode = new BuildMode();

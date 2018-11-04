@@ -1,6 +1,7 @@
 import game from "index";
 import Player from "../../player";
 import { setInterval } from "timers";
+import Entity from "../../../world/entity/entity";
 
 export default class PlayerMovement {
     constructor() {
@@ -274,23 +275,29 @@ export default class PlayerMovement {
         }
 
         for (var i = 0; i < tilesUpDown.length; i++)
-            if (tilesUpDown[i].tileType.collision) {
-                var tileY = tilesUpDown[i].y + 32;
-
+            if (tilesUpDown[i] instanceof Entity)
                 offsetY = 0;
-            }
+            else
+                if (tilesUpDown[i].tileType.collision) {
+                    var tileY = tilesUpDown[i].y + 32;
+
+                    offsetY = 0;
+                }
 
         for (var i = 0; i < tilesLeftRight.length; i++)
-            if (tilesLeftRight[i].tileType.collision) {
-                //Find better way to tell which side of the tile we want
-                //!!!!!!! maybe a method tile.getXFromSide(,colliderY)??????!!!!!!!!!!!!!!!!!
-                var tileX = (offsetX < 0) ? tilesLeftRight[i].x + 32 : tilesLeftRight[i].x;
-
-                //Figure out why tilesUpDown gets called when we collide right.
-                // offsetX = tileX - collider.x;
+            if (tilesLeftRight[i] instanceof Entity)
                 offsetX = 0;
+            else
+                if (tilesLeftRight[i].tileType.collision) {
+                    //Find better way to tell which side of the tile we want
+                    //!!!!!!! maybe a method tile.getXFromSide(,colliderY)??????!!!!!!!!!!!!!!!!!
+                    var tileX = (offsetX < 0) ? tilesLeftRight[i].x + 32 : tilesLeftRight[i].x;
 
-            }
+                    //Figure out why tilesUpDown gets called when we collide right.
+                    // offsetX = tileX - collider.x;
+                    offsetX = 0;
+
+                }
 
         //Instead of setting velocity we just chang our x&y values here, b/c we don't want to move the customsprite insdie.
         game.getPlayer.entity.setGameVelocity(offsetX, offsetY);

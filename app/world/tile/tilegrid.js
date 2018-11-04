@@ -120,6 +120,8 @@ export default class TileGrid {
     }
 
     async receiveChunk(json) {
+        var time = (game.getPlayer.playerSettings.getSetting("asyncChunkLoading")) ? (Math.random() * 210) + 15 : 0;
+
         setTimeout(() => {
 
             //If an existing chunk is already here.. replace it. (Might be buggy)
@@ -138,7 +140,7 @@ export default class TileGrid {
             this.tileMap.push(tileChunk)
 
             //was 75 20
-        }, Math.floor(Math.random() * 210) + 15);
+        }, time);
     }
 
     updateChunk(json) {

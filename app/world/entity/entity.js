@@ -27,6 +27,8 @@ export default class Entity {
 
     addCollision(xOffset, yOffset, width, height) {
         this.collider = {
+            xOffset: xOffset,
+            yOffset: yOffset,
             x: this.x + xOffset,
             y: this.y + yOffset,
             w: width,
@@ -43,6 +45,11 @@ export default class Entity {
         //Set our gameX&Y values.
         this.x = x;
         this.y = y;
+
+        if (this.collider !== undefined) {
+            this.collider.x = x + this.collider.xOffset;
+            this.collider.y = y + this.collider.yOffset;
+        }
     }
 
     getScreenPosition(x, y) {
@@ -56,8 +63,10 @@ export default class Entity {
         this.x += x;
         this.y += y;
 
-        this.collider.x += x;
-        this.collider.y += y;
+        if (this.collider !== undefined) {
+            this.collider.x += x;
+            this.collider.y += y;
+        }
     }
 
     setCameraPivot(rotation, x, y) {
@@ -123,19 +132,32 @@ export default class Entity {
             }
         }
 
+        //Todo: remove the repating things.
         for (var i = 0; i < tilesUpDown.length; i++)
-            if (tilesUpDown[i].tileType.collision) {
-
+            if (tilesUpDown[i] instanceof Entity) {
                 velocity.y = 0;
                 this.collider.collided = true;
             }
+            else
+                if (tilesUpDown[i].tileType.collision) {
+
+                    velocity.y = 0;
+                    this.collider.collided = true;
+
+                }
 
         for (var i = 0; i < tilesLeftRight.length; i++)
-            if (tilesLeftRight[i].tileType.collision) {
-
+            if (tilesLeftRight[i] instanceof Entity) {
                 velocity.x = 0;
                 this.collider.collided = true;
             }
+            else
+                if (tilesLeftRight[i].tileType.collision) {
+
+                    velocity.x = 0;
+                    this.collider.collided = true;
+
+                }
 
         return velocity;
     }

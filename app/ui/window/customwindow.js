@@ -30,7 +30,14 @@ export default class CustomWindow {
         this.attatchedUI = [];
     }
 
+    setParentGroup(parentGroup) {
+        this.parentGroup = parentGroup;
+    }
+
     addUI(uiObj) {
+        if (this.parentGroup !== undefined)
+            uiObj.setParentGroup(this.parentGroup);
+
         this.attatchedUI.push(uiObj);
         game.getUI.uiObjects.push(uiObj);
     }

@@ -31,6 +31,10 @@ export default class CustomText extends UIObject {
         this.customText.parentGroup = parentGroup;
     }
 
+    setParentGroup(parentGroup) {
+        this.customText.parentGroup = parentGroup;
+    }
+
     generateText() {
         this.customText = new PIXI.Text(this.text, {
             fontFamily: 'Trebuchet MS',

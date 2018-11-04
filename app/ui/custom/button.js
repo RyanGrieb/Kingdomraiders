@@ -45,6 +45,11 @@ export default class Button extends UIObject {
         // this.customSprite.setTexture(name, 0, false);
     }
 
+    setParentGroup(parentGroup) {
+        this.customSprite.parentGroup = parentGroup;
+        this.buttonText.customText.parentGroup = parentGroup;
+    }
+
     get getTexture() {
         return this.texture;
     }

@@ -142,6 +142,11 @@ export default class TextBox extends UIObject {
         this.cycleHighlighter();
     }
 
+    setParentGroup(parentGroup) {
+        this.customSprite.customSprite.parentGroup = parentGroup;
+        this.customText.parentGroup = parentGroup;
+    }
+
     get getText() {
         return this.customText.text;
     }

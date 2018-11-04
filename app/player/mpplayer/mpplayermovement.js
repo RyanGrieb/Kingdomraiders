@@ -45,6 +45,7 @@ export default class MPPlayerMovement {
         distanceY = (distanceY / hypotnuse);
 
         //TODO: CHECK FOR COLLISION VARS TO STOP MPPLAYER GITCH ON WALL
+        //USE THE .CHECKCOLLISION METHOD IN ENTITY.
 
         //Prevents overextension
         if (hypotnuse < -5 || hypotnuse > 5) {
