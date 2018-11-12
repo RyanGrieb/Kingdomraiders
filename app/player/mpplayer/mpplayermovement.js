@@ -30,9 +30,9 @@ export default class MPPlayerMovement {
         //If the player is lagging behind or tabbed out...
         if (Math.abs(distanceX) > 96 || Math.abs(distanceY) > 96) {
             //(We set our rotation to 0, since were adding a non rotated-location)
-            //this.mpPlayer.rotation = 0;
-            //this.mpPlayer.setPosition(this.finalTarget.x, this.finalTarget.y);
-            return;
+          //  this.mpPlayer.rotation = 0;
+           // this.mpPlayer.setPosition(this.finalTarget.x, this.finalTarget.y);
+           // return;
         }
 
         var hypotnuse = Math.sqrt(((distanceX * distanceX) + (distanceY * distanceY)));

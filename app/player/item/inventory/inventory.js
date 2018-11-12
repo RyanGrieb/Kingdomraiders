@@ -49,8 +49,16 @@ export default class Inventory {
         game.getNetwork.sendMessage(JSON.stringify(msg));
     }
 
-    //Tooltip.
+    //Tooltip. 
     onHover() {
+        //Checks if were dragging an item, if so, then delete...
+        var draggedItem = false;
+        for (var i = 0; i < this.items.length; i++)
+            if (this.items[i] !== undefined)
+                if (this.items[i].dragged)
+                    draggedItem = true;
+
+        //Basic mouse x,y
         var mouseX = game.renderer.plugins.interaction.mouse.global.x;
         var mouseY = game.renderer.plugins.interaction.mouse.global.y;
         var hoveredItem = undefined;
@@ -63,23 +71,26 @@ export default class Inventory {
 
 
         //Create the tooltip for the first time.
-        if (this.tooltip === undefined) {
 
-            if (hoveredItem !== undefined) {
-                this.tooltip = new Tooltip(hoveredItem, mouseX + 15, mouseY + 15);
-
-            }
-        } else { //If tooltop exists modify or delete if needed..
-            if (hoveredItem !== undefined) {
-                this.tooltip.setPosition(mouseX + 15, mouseY + 15);
-            }
-            else {
+        if (hoveredItem !== undefined && !draggedItem) {
+            if (this.tooltip !== undefined) {
                 this.tooltip.kill();
                 this.tooltip = undefined;
             }
 
-        }
+            if (mouseY + 15 > 650)
+                mouseY -= 133;
+
+            this.tooltip = new Tooltip(hoveredItem, mouseX + 15, mouseY + 15);
+        } else
+            //If there is no item hovered & we still have a tooltip, delete.
+            if (this.tooltip !== undefined) {
+                this.tooltip.kill();
+                this.tooltip = undefined;
+            }
+
     }
+
 
     onMouseClick() {
         if (!this.windowOpen)
@@ -230,12 +241,12 @@ export default class Inventory {
         this.overlayObjects.push(manabarOverlay);
 
 
-        var healthLabelOverlay = new CustomText("txtHealthLabel", "100 / 100", game.WIDTH / 2 - 50 / 2, game.HEIGHT - 106, 80, 15);
+        var healthLabelOverlay = new CustomText("txtHealthLabel", "100 / 100", "#ffffff", game.WIDTH / 2 - 50 / 2, game.HEIGHT - 106, 80, 15);
         healthLabelOverlay.customText.parentGroup = game.getUI.parentGroup.positive4;
         healthLabelOverlay.customText.x = game.WIDTH / 2 - healthLabelOverlay.customText.width / 2;
         this.overlayObjects.push(healthLabelOverlay);
 
-        var manaLabelOverlay = new CustomText("txtManaLabel", "100 / 100", game.WIDTH / 2 - 50 / 2, game.HEIGHT - 91, 80, 15);
+        var manaLabelOverlay = new CustomText("txtManaLabel", "100 / 100", "#ffffff", game.WIDTH / 2 - 50 / 2, game.HEIGHT - 91, 80, 15);
         manaLabelOverlay.customText.parentGroup = game.getUI.parentGroup.positive4;
         manaLabelOverlay.customText.x = game.WIDTH / 2 - manaLabelOverlay.customText.width / 2;
         this.overlayObjects.push(manaLabelOverlay);
@@ -257,13 +268,15 @@ export default class Inventory {
         inventoryBackground.customSprite.parentGroup = game.getUI.parentGroup.positive4;
         this.openInventoryObjects.push(inventoryBackground);
 
-        var lblInvName = new CustomText("txtInvName", game.getPlayer.playerProfile.name + "'s Inventory", game.WIDTH / 2, game.HEIGHT / 2 - 165, 100, -1);
+        var lblInvName = new CustomText("txtInvName", game.getPlayer.playerProfile.name + "'s Inventory", "#ffffff", game.WIDTH / 2, game.HEIGHT / 2 - 165, 100, -1);
         lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
         this.openInventoryObjects.push(lblInvName);
 
         var lblInvPlayer = new CustomSprite("DEFAULT_PLAYER", (game.WIDTH / 2 - 350 / 2) + 25, (game.HEIGHT / 2) - 120, 96, 96);
         lblInvPlayer.customSprite.parentGroup = game.getUI.parentGroup.positive4;
         this.openInventoryObjects.push(lblInvPlayer);
+
+
 
         //Display our items
         for (var i = 0; i < this.items.length; i++) {

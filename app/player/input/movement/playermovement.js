@@ -230,8 +230,8 @@ export default class PlayerMovement {
 
                 var msg = {
                     type: "MovementUpdate",
-                    x: game.getPlayer.getX,
-                    y: game.getPlayer.getY,
+                    x: Math.round(game.getPlayer.getX),
+                    y: Math.round(game.getPlayer.getY),
                 };
 
                 game.getNetwork.sendMessage(JSON.stringify(msg));
@@ -278,7 +278,7 @@ export default class PlayerMovement {
             if (tilesUpDown[i] instanceof Entity)
                 offsetY = 0;
             else
-                if (tilesUpDown[i].tileType.collision) {
+                if (tilesUpDown[i].tileType.collision || tilesUpDown[i].tileType.collision === undefined) {
                     var tileY = tilesUpDown[i].y + 32;
 
                     offsetY = 0;
@@ -288,7 +288,7 @@ export default class PlayerMovement {
             if (tilesLeftRight[i] instanceof Entity)
                 offsetX = 0;
             else
-                if (tilesLeftRight[i].tileType.collision) {
+                if (tilesLeftRight[i].tileType.collision || tilesLeftRight[i].tileType.collision === undefined) {
                     //Find better way to tell which side of the tile we want
                     //!!!!!!! maybe a method tile.getXFromSide(,colliderY)??????!!!!!!!!!!!!!!!!!
                     var tileX = (offsetX < 0) ? tilesLeftRight[i].x + 32 : tilesLeftRight[i].x;

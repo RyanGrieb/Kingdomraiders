@@ -1,10 +1,11 @@
+
 const EntityType = {
 
     //List of misc entities
     list: {
         //Trees
         TREE: { name: "ENTITY_TREE" },
-        BIGTREE: {name: "ENTITY_BIGTREE"},
+        BIGTREE: { name: "ENTITY_BIGTREE" },
 
 
         ERROR: { name: "ERROR" },

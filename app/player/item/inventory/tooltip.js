@@ -12,28 +12,35 @@ export default class Tooltip {
 
         this.uiElements = [];
 
-        //this.constructUI();
+        this.constructUI();
     }
 
     constructUI() {
         var name = this.item.itemType.displayName;
+        var description = this.item.itemType.description;
 
 
-        var overlay = new CustomSprite("GRAYMENU", this.x, this.y, 125, 100);
+        var overlay = new CustomSprite("GRAYMENU", this.x, this.y, 200, 150);
         overlay.customSprite.parentGroup = game.getUI.parentGroup.positive5;
         this.uiElements.push(overlay);
 
-        var displayName = new CustomText("txtTooltipDisplay", name, this.x + (125 / 2), this.y, 100, -1);
+        var overlay = new CustomSprite("ITEM_" + this.item.itemType.name, this.x + 5, this.y + 5, 32, 32);
+        overlay.customSprite.parentGroup = game.getUI.parentGroup.positive5;
+        this.uiElements.push(overlay);
+
+        var displayName = new CustomText("txtTooltipDisplay", name, "#000000", this.x + (200 / 2) + 10, this.y + 12, 100, -1);
         displayName.customText.parentGroup = game.getUI.parentGroup.positive5;
         this.uiElements.push(displayName);
+        //290
+        var displayDescription = new CustomText("txtTooltipDesc", description, "#000000", this.x + 5, this.y + 60, 85, -1);
+        displayDescription.customText.x = displayDescription.customText.x + displayDescription.customText.width / 2;
+        displayDescription.customText.parentGroup = game.getUI.parentGroup.positive5;
+        this.uiElements.push(displayDescription);
     }
 
     setPosition(x, y) {
         this.x = x;
         this.y = y;
-
-        if (this.y > 650)
-            this.y -= 133;
 
         for (var i = 0; i < this.uiElements.length; i++)
             if (this.uiElements[i].customSprite !== undefined) {

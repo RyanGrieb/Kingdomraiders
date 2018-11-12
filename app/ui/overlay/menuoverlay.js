@@ -95,11 +95,16 @@ export default class MenuOverlay {
                     tileType = TileType.list.YELLOWFLOWER;
                     parentGroup = game.getUI.parentGroup.negative2;
                 }
+                else
+                    if (randomNum >= 6 && randomNum < 7) {
+                        tileType = TileType.list.BLUEFLOWER;
+                        parentGroup = game.getUI.parentGroup.negative2;
+                    }
 
-                else {
-                    tileType = TileType.list.BRUSH;
-                    parentGroup = game.getUI.parentGroup.negative2;
-                }
+                    else {
+                        tileType = TileType.list.BRUSH;
+                        parentGroup = game.getUI.parentGroup.negative2;
+                    }
 
         let tile = new Tile(this.container, tileType, x, y);
         tile.sprite.parentGroup = parentGroup;

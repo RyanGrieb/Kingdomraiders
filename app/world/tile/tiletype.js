@@ -12,16 +12,19 @@ const TileType = {
         PATH: { name: "PATH", collision: false },
         LIGHTPATH: { name: "LIGHTPATH", collision: false },
 
-        WATER: { name: "WATER", collision: true },
+        WATER: { name: "WATER", collision: undefined }, //An undefined collision means the player colliders but the projectile doesn't.
         SAND: { name: "SAND", collision: false },
 
-        TREE: { name: "TREE", replace: true, rotate: true, collision: undefined, width: 32, height: 32, group: 3 },
-        BIGTREE: { name: "BIGTREE", replace: true, rotate: true, collision: undefined, width: 128, height: 128, group: 5, anchorX: 0.5, anchorY: 1, collider: { x: 50, y: 45, w: 32, h: 30 }, },
-        BIGTREE2: { name: "BIGTREE2", replace: true, rotate: true, collision: undefined, width: 128, height: 128, group: 5, anchorX: 0.5, anchorY: 1, collider: { x: 50, y: 45, w: 32, h: 30 }, },
-        STATUE: { name: "STATUE", replace: true, rotate: true, collision: undefined, width: 64, height: 64, group: 5, collider: { x: 0, y: 0 }, },
+        TREE: { name: "TREE", replace: true, rotate: true, width: 32, height: 32, group: 3 },
+        BIGTREE: { name: "BIGTREE", replace: true, rotate: true, width: 128, height: 128, group: 5, anchorX: 0.5, anchorY: 1, collider: { x: 50, y: 45, w: 32, h: 30 }, },
+        BIGTREE2: { name: "BIGTREE2", replace: true, rotate: true, width: 128, height: 128, group: 5, anchorX: 0.5, anchorY: 1, collider: { x: 50, y: 45, w: 32, h: 30 }, },
+        STATUE: { name: "STATUE", replace: true, rotate: true, width: 64, height: 64, group: 5, collider: { x: 8, y: 10, w: 50, h: 55 }, },
+        CHAIR: { name: "CHAIR", replace: true, rotate: true, width: 32, height: 32, group: 5, collider: { x: 0, y: 0, w: 32, h: 32 }, },
+        TABLE: { name: "TABLE", replace: true, rotate: true, width: 32, height: 32, group: 5, collider: { x: 0, y: 0, w: 32, h: 32 }, },
 
         BRUSH: { name: "BRUSH", replace: true, rotate: false, collision: false, width: 32, height: 32, group: 3 },
         YELLOWFLOWER: { name: "YELLOWFLOWER", replace: true, rotate: false, collision: false, width: 32, height: 32, group: 3 },
+        BLUEFLOWER: { name: "BLUEFLOWER", replace: true, rotate: false, collision: false, width: 32, height: 32, group: 3 },
 
         WALLBOTTOM: { name: "WALLBOTTOM", collision: true },
         WALLBOTTOMLEFT: { name: "WALLBOTTOMLEFT", collision: true },
@@ -34,10 +37,10 @@ const TileType = {
         WALLFULL: { name: "WALLFULL", collision: true },
 
         WOODWALLBOTTOM: { name: "WOODWALLBOTTOM", collision: true },
-        WOODWALLBOTTOMLEFT: { name: "WOODWALLBOTTOMLEFT", replace: true, collision: true, width: 32, height: 32, group: 3 },
-        WOODWALLBOTTOMRIGHT: { name: "WOODWALLBOTTOMRIGHT", replace: true, collision: true, width: 32, height: 32, group: 3 },
-        WOODWALLTOPLEFT: { name: "WOODWALLTOPLEFT", replace: true, collision: true, width: 32, height: 32, group: 3 },
-        WOODWALLTOPRIGHT: { name: "WOODWALLTOPRIGHT", replace: true, collision: true, width: 32, height: 32, group: 3 },
+        WOODWALLBOTTOMLEFT: { name: "WOODWALLBOTTOMLEFT", replace: true, collision: true, width: 32, height: 32, group: 3, collider: { x: 0, y: 0, w: 32, h: 32 }, },
+        WOODWALLBOTTOMRIGHT: { name: "WOODWALLBOTTOMRIGHT", replace: true, collision: true, width: 32, height: 32, group: 3, collider: { x: 0, y: 0, w: 32, h: 32 }, },
+        WOODWALLTOPLEFT: { name: "WOODWALLTOPLEFT", replace: true, collision: true, width: 32, height: 32, group: 3, collider: { x: 0, y: 0, w: 32, h: 32 }, },
+        WOODWALLTOPRIGHT: { name: "WOODWALLTOPRIGHT", replace: true, collision: true, width: 32, height: 32, group: 3, collider: { x: 0, y: 0, w: 32, h: 32 }, },
         WOODWALLSIDE: { name: "WOODWALLSIDE", collision: true },
 
 

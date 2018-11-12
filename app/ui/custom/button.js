@@ -30,7 +30,7 @@ export default class Button extends UIObject {
 
 
         //BUTTON TEXT
-        this.buttonText = new CustomText("txtBtn" + name, text, x + w / 2, y + h / 2, txtW, txtH);
+        this.buttonText = new CustomText("txtBtn" + name, text, "#ffffff", x + w / 2, y + h / 2, txtW, txtH);
     }
 
     playSound() {

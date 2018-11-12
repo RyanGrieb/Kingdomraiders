@@ -20,7 +20,10 @@ export default class MenuScreen extends Screen {
 
         game.getUI.uiObjects.push(new Button("btnPlay", "Play", (game.WIDTH / 2) - 200 / 2, (game.HEIGHT / 2) + 100, 200, 50, 200, 50));
         game.getUI.uiObjects.push(new CustomSprite("TITLE_IMAGE", (game.WIDTH / 2) - (500 / 2), 175, 500, 200));
-        game.getUI.uiObjects.push(new CustomText("txtAuthor", "By Ryan Grieb | KingdomRaiders 1.00", 125, game.HEIGHT - 15, 100, 20));
+        game.getUI.uiObjects.push(new CustomText("txtAuthor", "By Ryan Grieb | KingdomRaiders 1.00", "#ffffff", 125, game.HEIGHT - 15, 100, 20));
+
+        //MOTW demo
+        game.getUI.uiObjects.push(new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (500 / 2), 175, 500, 200));
 
         if (!game.getPlayer.loggedIn)
             this.setLoggedOut();
@@ -48,7 +51,7 @@ export default class MenuScreen extends Screen {
         game.getUI.removeObject("btnRegister");
 
         //Hacked way to center the login info window to the right side.
-        var loggedInInfo = new CustomText("txtLoggedInInfo", "Logged in as " + game.getPlayer.playerProfile.name, -1, 25, 130, 35);
+        var loggedInInfo = new CustomText("txtLoggedInInfo", "Logged in as " + game.getPlayer.playerProfile.name, "#ffffff", -1, 25, 130, 35);
         loggedInInfo.x = ((game.WIDTH - 100) - loggedInInfo.customText.width) + (loggedInInfo.customText.width * 0.5);
         loggedInInfo.kill();
         loggedInInfo.generateText();

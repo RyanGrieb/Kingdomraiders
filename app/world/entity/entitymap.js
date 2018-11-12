@@ -26,7 +26,6 @@ export default class EntityMap {
         for (var i = 0; i < this.entityMap.length; i++)
             this.entityMap[i].update();
 
-            
         this.projectileManager.update();
     }
 

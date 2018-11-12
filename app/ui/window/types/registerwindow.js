@@ -23,14 +23,14 @@ export default class RegisterWindow extends CustomWindow {
 
         this.addUI(new Button("btnRegisterAccount", "Register Account", (game.WIDTH / 2) - (178 / 2), (game.HEIGHT / 2) + 215, 178, 35, 115, 35));
 
-        this.addUI(new CustomText("txtInfoSignIn", "Register Account", (game.WIDTH / 2) - 78, (game.HEIGHT / 3.1), 123, 35));
+        this.addUI(new CustomText("txtInfoSignIn", "Register Account", "#ffffff", (game.WIDTH / 2) - 78, (game.HEIGHT / 3.1), 123, 35));
 
-        this.addUI(new CustomText("txtInfoUsername", "Username", (game.WIDTH / 2), (game.HEIGHT / 2) - 68, 130, 35));
-        this.addUI(new CustomText("txtInfoEmail", "Email", (game.WIDTH / 2), (game.HEIGHT / 2) - 1, 130, 35));
-        this.addUI(new CustomText("txtInfoPassword", "Password", (game.WIDTH / 2), (game.HEIGHT / 2) + 64, 130, 35));
-        this.addUI(new CustomText("txtInfoPasswordAgain", "Re-Enter Password", (game.WIDTH / 2), (game.HEIGHT / 2) + 130, 130, 35));
+        this.addUI(new CustomText("txtInfoUsername", "Username", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) - 68, 130, 35));
+        this.addUI(new CustomText("txtInfoEmail", "Email", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) - 1, 130, 35));
+        this.addUI(new CustomText("txtInfoPassword", "Password", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) + 64, 130, 35));
+        this.addUI(new CustomText("txtInfoPasswordAgain", "Re-Enter Password", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) + 130, 130, 35));
 
-        var errorMessage = (new CustomText("txtErrorMessage", "", (game.WIDTH / 2), (game.HEIGHT / 2) - 100, 130, 35));
+        var errorMessage = (new CustomText("txtErrorMessage", "", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) - 100, 130, 35));
         this.addUI(errorMessage);
 
 
@@ -39,7 +39,13 @@ export default class RegisterWindow extends CustomWindow {
             game.getUI.toggleWindow(new LoginWindow());
 
         //Highlight the 1st textbox.
-        game.getUI.uiObjects[6].select();
+        for (var i = 0; i < game.getUI.uiObjects.length; i++)
+            if (game.getUI.uiObjects[i] instanceof TextBox) {
+                game.getUI.uiObjects[i].select();
+                break;
+            }
+
+
     }
 
     close() {

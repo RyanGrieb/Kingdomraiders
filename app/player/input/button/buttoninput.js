@@ -76,11 +76,17 @@ export default class ButtonInput {
                 },
 
                 //Game Screen Buttons
+                btnMainMenuBack: {
+                    action: () => {
+                        game.getUI.toggleWindow(new EscapeWindow());
+                        return true;
+                    }
+                },
+
                 btnMainMenu: {
                     action: () => {
                         game.getNetwork.sendMessage(JSON.stringify({ type: "LeaveGame", }));
                         game.getUI.setScreen(new MenuScreen());
-
                         return true;
                     }
                 },

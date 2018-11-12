@@ -18,7 +18,7 @@ export default class SettingsWindow extends CustomWindow {
     open() {
         this.addUI(new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (500 / 2), (game.HEIGHT / 3) - 25, 500, 300));
 
-        this.addUI(new CustomText("txtSettingsInfo", "Settings", (game.WIDTH / 2), (game.HEIGHT / 3) - 10, 115, -1));
+        this.addUI(new CustomText("txtSettingsInfo", "Settings", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 3) - 10, 115, -1));
 
         this.addUI(new Button("btnSettingsBack", "Back", (game.WIDTH / 2) - (500 / 2) + 5, (game.HEIGHT / 3) - 20, 65, 35, 115, -1));
 

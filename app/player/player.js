@@ -8,6 +8,7 @@ import game from "index";
 import Inventory from "./item/inventory/inventory";
 import Entity from "../world/entity/entity";
 import PlayerSettings from "./profile/playersettings";
+import PlayerChat from "./chat/playerchat";
 
 
 export default class Player {
@@ -34,6 +35,7 @@ export default class Player {
 
     spawnToGame() {
         this.inventory = new Inventory();
+        this.playerChat = new PlayerChat();
 
         //Should be changed when we go into character select
         this.className = "DEFAULT_PLAYER";

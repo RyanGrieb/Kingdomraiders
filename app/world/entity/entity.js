@@ -131,7 +131,6 @@ export default class Entity {
                 tilesLeftRight.push(game.getTileGrid.getTileFromLocation((colliderXOffset + velocity.x), colliderYOffset));
             }
         }
-
         //Todo: remove the repating things.
         for (var i = 0; i < tilesUpDown.length; i++)
             if (tilesUpDown[i] instanceof Entity) {

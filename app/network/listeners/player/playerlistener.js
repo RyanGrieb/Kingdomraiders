@@ -21,6 +21,10 @@ export default class PlayerListener {
                 this.handlePositionUpdate(json);
                 break;
 
+            case "ChatMessage":
+                this.handleChatMessage(json);
+                break;
+
             case "RequestInventory":
                 this.handleRequestInventory(json);
                 break;
@@ -41,6 +45,18 @@ export default class PlayerListener {
             case "MPMovementTarget":
                 this.handleMPMovementTarget(json);
                 break;
+
+            case "MPAddShooter":
+                this.handleMPAddShooter(json);
+                break;
+
+            case "MPShooterUpdate":
+                this.handleMPShooterUpdate(json);
+                break;
+
+            case "MPRemoveShooter":
+                this.handleMPRemoveShooter(json);
+                break;
         }
     }
 
@@ -53,6 +69,10 @@ export default class PlayerListener {
         game.getPlayer.movement.updatePosition(json.x, json.y);
     }
 
+    handleChatMessage(json) {
+        game.getPlayer.playerChat.reciveMessage(json);
+    }
+
     handleRequestInventory(json) {
         game.getPlayer.inventory.receiveInventoryUpdate(json);
     }
@@ -63,7 +83,8 @@ export default class PlayerListener {
     }
 
     handleMPLeaveResponse(json) {
-        game.getEntityMap.getMPPlayerByID(json.id).leaveGame();
+        if (game.getEntityMap.getMPPlayerByID(json.id) !== undefined)
+            game.getEntityMap.getMPPlayerByID(json.id).leaveGame();
     }
 
     handleMPPositionUpdate(json) {
@@ -75,5 +96,22 @@ export default class PlayerListener {
         //Move the mpplayer to the target /w velocity.
         if (game.getPlayer.inGame) //temp.. remove later.
             game.getEntityMap.getMPPlayerByID(json.id).recivePosition(json);
+    }
+
+    handleMPAddShooter(json) {
+        //Server should be checking for us !!!
+        if (game.getPlayer.inGame)
+            game.getEntityMap.projectileManager.recieveShooter(json);
+
+    }
+
+    handleMPShooterUpdate(json) {
+        if (game.getPlayer.inGame)
+            game.getEntityMap.projectileManager.recieveShooterUpdate(json);
+    }
+
+    handleMPRemoveShooter(json) {
+        if (game.getPlayer.inGame)
+            game.getEntityMap.projectileManager.removeShooter(json.id);
     }
 }

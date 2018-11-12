@@ -23,12 +23,12 @@ export default class LoginWindow extends CustomWindow {
         this.addUI(new Button("btnRegister", "Register Account", (game.WIDTH / 2) - (178 / 2), (game.HEIGHT / 2) + 125, 178, 35, 115, 35));
 
 
-        this.addUI(new CustomText("txtInfoSignIn", "Sign In", (game.WIDTH / 2) - 115, (game.HEIGHT / 2.80), 130, 35));
+        this.addUI(new CustomText("txtInfoSignIn", "Sign In", "#ffffff", (game.WIDTH / 2) - 115, (game.HEIGHT / 2.80), 130, 35));
 
-        this.addUI(new CustomText("txtInfoUsername", "Email", (game.WIDTH / 2), (game.HEIGHT / 2) - 53, 130, 35));
-        this.addUI(new CustomText("txtInfoUsername", "Password", (game.WIDTH / 2), (game.HEIGHT / 2) + 10, 130, 35));
+        this.addUI(new CustomText("txtInfoUsername", "Email", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) - 53, 130, 35));
+        this.addUI(new CustomText("txtInfoUsername", "Password", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) + 10, 130, 35));
 
-        this.addUI(new CustomText("txtErrorMessage", "", (game.WIDTH / 2), (game.HEIGHT / 2) - 80, 130, 35));
+        this.addUI(new CustomText("txtErrorMessage", "", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) - 80, 130, 35));
 
         //Close other windows..
         //Close other windows..
@@ -36,7 +36,12 @@ export default class LoginWindow extends CustomWindow {
             game.getUI.toggleWindow(new RegisterWindow());
 
         //Highlight the 1st textbox.
-        game.getUI.uiObjects[6].select();
+        for (var i = 0; i < game.getUI.uiObjects.length; i++)
+            if (game.getUI.uiObjects[i] instanceof TextBox) {
+                game.getUI.uiObjects[i].select();
+                break;
+            }
+
     }
 
     close() {

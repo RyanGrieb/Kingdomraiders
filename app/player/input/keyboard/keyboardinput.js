@@ -20,7 +20,7 @@ export default class KeyboardInput {
                 game.getPlayer.playerProfile.requestToLogin();
 
             if (game.getUI.isWindowOpen("RegisterWindow"))
-            game.getPlayer.playerProfile.requestToRegister();
+                game.getPlayer.playerProfile.requestToRegister();
 
         }
     }
@@ -38,18 +38,25 @@ export default class KeyboardInput {
     }
 
     onKeyJustPressed(e) {
+
+        //All screens
+        this.onTextboxType(e);
+
         if (game.getUI.getCurrentScreen.name === "MenuScreen") {
-            this.onTextboxType(e);
             this.onEnter(e);
         }
 
         if (game.getUI.getCurrentScreen.name === "GameScreen") {
-            //Player input keys
-            game.getPlayer.movement.handleInput(e);
+            //Stop all input if chat is selected
+
+            //Player input keys            
+            if (!game.getPlayer.playerChat.isSelected)
+                game.getPlayer.movement.handleInput(e);
 
             //Inventory
-            if (e.key === "c")
-                game.getPlayer.inventory.toggle();
+            if (!game.getPlayer.playerChat.isSelected)
+                if (e.key === "c")
+                    game.getPlayer.inventory.toggle();
 
             //Other game keys
             if (e.key === "Escape") {
@@ -65,21 +72,11 @@ export default class KeyboardInput {
                 if (game.getUI.getWindowByName("BuildWindow") !== undefined)
                     game.getUI.getWindowByName("BuildWindow").previousTile();
             //..
-        }
 
-        //Debug
-        if (e.key == "Enter") {
-           // game.getTileGrid.requestMapFromLocation(game.getPlayer.getX, game.getPlayer.getY);
-        }
-
-        if (e.key == "r") {
-            for (var i = 0; i < game.getTileGrid.tileMap.length; i++) {
-                console.log(game.getTileGrid.tileMap[i].x + "," + game.getTileGrid.tileMap[i].y);
+            //Chat
+            if (e.key == "Enter") {
+                game.getPlayer.playerChat.sendMessage();
             }
-        }
-
-        if (e.key == "f") {
-            game.getTileGrid.stopChunkRenderer = true;
         }
 
     }

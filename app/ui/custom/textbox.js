@@ -10,15 +10,15 @@ export default class TextBox extends UIObject {
         //Textbox Element
         this.customSprite = new CustomSprite("CHATBOX", x, y, this.w, this.h);
 
-        //Text
-        this.customText = new PIXI.Text("", {
+        //Text [] is to prevent the space that appears using "".
+        this.customText = new PIXI.Text([], {
             fontFamily: 'Georgia',
             fontSize: 16,
             wordWrap: true,
             wordWrapWidth: 440
         });
-        this.customText.x = x;
-        this.customText.y = y + 8;
+        this.customText.x = x + 2;
+        this.customText.y = y + ((h / 2) - 10);
 
         game.stage.addChild(this.customText);
     }
@@ -42,6 +42,7 @@ export default class TextBox extends UIObject {
             return;
 
         this.selectGraphic = new CustomSprite("TEXTBOX_HIGHLIGHT", (this.x + this.customText.width) + 2, this.y + (10 / 2), 0.7, this.h - 10);
+        this.selectGraphic.setParentGroup(this.customSprite.customSprite.parentGroup);
     }
 
     unhighlight() {
@@ -80,7 +81,12 @@ export default class TextBox extends UIObject {
             //Backspace
             case 8:
                 e.preventDefault();
-                this.customText.text = this.customText.text.substring(0, this.customText.text.length - 1);
+
+                if (this.customText.text.length > 1)
+                    this.customText.text = this.customText.text.substring(0, this.customText.text.length - 1);
+                else
+                    this.customText.text = [];
+
                 this.cycleHighlighter();
                 return;
 

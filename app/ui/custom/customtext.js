@@ -3,10 +3,10 @@ import game from "index";
 
 export default class CustomText extends UIObject {
 
-    constructor(name, text, x, y, w, h) {
+    constructor(name, text, color, x, y, w, h) {
         super(name, x, y, w, h);
         this.text = text;
-        this.color = "#ffffff";
+        this.color = color;
 
         //Text
         this.generateText();
@@ -39,7 +39,7 @@ export default class CustomText extends UIObject {
         this.customText = new PIXI.Text(this.text, {
             fontFamily: 'Trebuchet MS',
             fontSize: this.w / 7,
-            fill: ['#ffffff'], // gradient
+            fill: [this.color], // gradient
             wordWrap: true,
             wordWrapWidth: 440
         });

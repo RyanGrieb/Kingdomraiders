@@ -75,6 +75,12 @@ export default class TileChunk {
             if (topChunk[i] != -1) {
                 var tileType = TileType.getTileFromID(topChunk[i]);
 
+                //If we add a new id & the updated id isn't a entity object...
+                if (tileType.replace === undefined) {
+                    game.getPlayer.buildMode.sendBuildRequest(this.x + (x * 32), this.y - (y * 32) - 32, TileType.list.ERROR);
+                    continue;
+                }
+
                 //Make a better way to do this...
                 var entityType = {
                     name: "TILE_" + tileType.name,

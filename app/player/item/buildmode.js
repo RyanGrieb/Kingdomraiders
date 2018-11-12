@@ -30,6 +30,10 @@ export default class BuildMode {
         var id = game.getUI.getWindowByName("BuildWindow").selectedTileID;
         var tileType = TileType.getTileFromID(id);
 
+        this.sendBuildRequest(x, y, id);
+    }
+
+    sendBuildRequest(x, y, id) {
         //Send build packet.
         var msg = {
             type: "BuildRequest",
