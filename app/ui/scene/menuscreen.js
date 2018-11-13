@@ -22,9 +22,6 @@ export default class MenuScreen extends Screen {
         game.getUI.uiObjects.push(new CustomSprite("TITLE_IMAGE", (game.WIDTH / 2) - (500 / 2), 175, 500, 200));
         game.getUI.uiObjects.push(new CustomText("txtAuthor", "By Ryan Grieb | KingdomRaiders 1.00", "#ffffff", 125, game.HEIGHT - 15, 100, 20));
 
-        //MOTW demo
-        game.getUI.uiObjects.push(new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (500 / 2), 175, 500, 200));
-
         if (!game.getPlayer.loggedIn)
             this.setLoggedOut();
         else

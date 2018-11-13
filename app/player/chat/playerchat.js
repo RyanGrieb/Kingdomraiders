@@ -41,7 +41,7 @@ export default class PlayerChat {
         for (var i = 0; i < this.messages.length; i++)
             this.messages[i].customText.y -= 25;
 
-        var msgText = new CustomText("txtChatMessage", json.name + ": " + message, 20, game.HEIGHT - 50, 100, -1);
+        var msgText = new CustomText("txtChatMessage", json.name + ": " + message, "#ffffff", 20, game.HEIGHT - 50, 100, -1);
         msgText.setParentGroup(game.getUI.parentGroup.positive5);
         msgText.customText.x = msgText.customText.x + msgText.customText.width / 2;
         this.messages.push(msgText);

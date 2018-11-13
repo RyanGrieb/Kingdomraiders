@@ -22,8 +22,8 @@ export default class OutdatedWindow extends CustomWindow {
         var body = new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (350 / 2), (game.HEIGHT / 3), 350, 300);
         this.addUI(body);
 
-        this.addUI(new CustomText("txtInfoOutdated", "Outdated Browser!", body.x + body.w / 2, (game.HEIGHT / 2.80), 130, 35));
-        this.addUI(new CustomText("txtInfoOutdated2", "Please use a modern browser to play.", body.x + body.w / 2, (game.HEIGHT / 1.85), 130, 35));
+        this.addUI(new CustomText("txtInfoOutdated", "Outdated Browser!", "#ffffff", body.x + body.w / 2, (game.HEIGHT / 2.80), 130, 35));
+        this.addUI(new CustomText("txtInfoOutdated2", "Please use a modern browser to play.", "#ffffff", body.x + body.w / 2, (game.HEIGHT / 1.85), 130, 35));
 
 
     }
@@ -33,9 +33,9 @@ export default class OutdatedWindow extends CustomWindow {
     }
 
     static checkOutdated() {
-            var ua = window.navigator.userAgent; //Check the userAgent property of the window.navigator object
-            var msie = ua.indexOf('MSIE '); // IE 10 or older
-            var trident = ua.indexOf('Trident/'); //IE 11
+        var ua = window.navigator.userAgent; //Check the userAgent property of the window.navigator object
+        var msie = ua.indexOf('MSIE '); // IE 10 or older
+        var trident = ua.indexOf('Trident/'); //IE 11
 
         if ((msie > 0 || trident > 0))
             game.getUI.toggleWindow(new OutdatedWindow());

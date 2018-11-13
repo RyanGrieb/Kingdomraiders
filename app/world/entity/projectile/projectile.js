@@ -2,6 +2,7 @@ import Entity from "../entity";
 
 import game from "index";
 import ProjectileType from "./projectiletype";
+import { setInterval, clearInterval } from "timers";
 
 export default class Projectile extends Entity {
 
@@ -33,6 +34,12 @@ export default class Projectile extends Entity {
         this.sprite.customSprite.parentGroup = game.getUI.parentGroup.positive2;
         this.sprite.customSprite.visible = false;
         this.allowRotate = false;
+
+        //Animation
+        this.currentIndex = 1;
+        this.minIndex = 1;
+        this.maxIndex = 3;
+        this.intervalID = setInterval(() => this.animate(), 150);
     }
 
     moveToTarget() {
@@ -67,12 +74,25 @@ export default class Projectile extends Entity {
             this.kill();
     }
 
+    animate() {
+
+
+        console.log("Texture: " + this.currentIndex);
+
+        this.currentIndex += 1;
+
+        if (this.currentIndex === this.maxIndex)
+            this.currentIndex = 1;
+    }
+
     kill() {
         //Bad solution, but stops stray projectiles from staying on screen during screen switch.
         if (game.getPlayer.inGame)
             game.getEntityMap.removeObject(this);
 
         super.kill();
+
+        clearInterval(this.intervalID);
     }
 
     update() {

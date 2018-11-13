@@ -75,6 +75,15 @@ export default class ProjectileManager {
     }
 
     sendTargetUpdate() {
+        //If we open our inventory while shooting, stop!! (I don't like the return statements either.)
+        if (game.getPlayer.inventory === undefined)
+            return;
+
+        if (!game.getUI.isAllWindowsClosed || game.getPlayer.inventory.windowOpen) {
+            this.removeClientsideShooter();
+            return;
+        }
+
         var radians = (Math.PI / 180) * (this.camera.rotation);
         var cos = Math.cos(radians);
         var sin = Math.sin(radians);

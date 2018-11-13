@@ -15,7 +15,7 @@ export default class MPPlayer extends Entity {
         this.id = json.id;
         this.name = json.name;
 
-        this.nametag = new CustomText("mpnametag_" + this.name, this.name, this.sprite.x, this.sprite.y, 100, 125);
+        this.nametag = new CustomText("mpnametag_" + this.name, this.name, "#ffffff", this.sprite.x, this.sprite.y, 100, 125);
 
         this.sprite.customSprite.parentGroup = game.getUI.parentGroup.positive2;
         this.nametag.customText.parentGroup = game.getUI.parentGroup.positive2;

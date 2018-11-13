@@ -20,11 +20,16 @@ export default class Inventory {
 
         this.openOverlay();
         this.requestCurrentItems();
+        this.requestStats();
     }
 
     requestCurrentItems() {
         //Make a server request.
         game.getNetwork.sendMessage(JSON.stringify({ type: "RequestInventory" }));
+    }
+
+    requestStats(){
+        game.getNetwork.sendMessage(JSON.stringify({ type: "RequestStats" }));
     }
 
     receiveInventoryUpdate(json) {
@@ -277,6 +282,21 @@ export default class Inventory {
         this.openInventoryObjects.push(lblInvPlayer);
 
 
+        var lblInvName = new CustomText("txtHealthStat", "Max Health: 100", "#ffffff", game.WIDTH / 2, game.HEIGHT / 2 - 115, 85, -1);
+        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
+        this.openInventoryObjects.push(lblInvName);
+
+        var lblInvName = new CustomText("txtManaStat", "Max Mana: 100", "#ffffff", game.WIDTH / 2 + 100, game.HEIGHT / 2 - 115, 85, -1);
+        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
+        this.openInventoryObjects.push(lblInvName);
+
+        var lblInvName = new CustomText("txtSpeedStat", "Speed: 1", "#ffffff", game.WIDTH / 2, game.HEIGHT / 2 - 90, 85, -1);
+        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
+        this.openInventoryObjects.push(lblInvName);
+
+        var lblInvName = new CustomText("txtDexStat", "Dexterity: 1", "#ffffff", game.WIDTH / 2 + 100, game.HEIGHT / 2 - 90, 85, -1);
+        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
+        this.openInventoryObjects.push(lblInvName);
 
         //Display our items
         for (var i = 0; i < this.items.length; i++) {

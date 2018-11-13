@@ -26,8 +26,8 @@ export default class MouseInput {
     }
 
     fireProjectile() {
-        if (game.getUI.isAllWindowsClosed && !game.getPlayer.inventory.windowOpen)
-            game.getEntityMap.projectileManager.setClientsideShooter();
+            if (game.getUI.isAllWindowsClosed && !game.getPlayer.inventory.windowOpen)
+                game.getEntityMap.projectileManager.setClientsideShooter();
     }
 
     stopProjectile() {

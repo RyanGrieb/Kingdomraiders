@@ -21,15 +21,15 @@ export default class CustomSprite extends UIObject {
 
     //Set screen & game position values (x,y values are screen values though.)
     setPosition(x, y) {
-       // this.x = x;
-       // this.y = y;
+        // this.x = x;
+        // this.y = y;
 
         this.customSprite.x = x;
         this.customSprite.y = y;
     }
 
     setVelocity(x, y) {
-       // this.x = x;
+        // this.x = x;
         //this.y = y;
 
         this.customSprite.x += x;
@@ -47,6 +47,11 @@ export default class CustomSprite extends UIObject {
 
     setInteractive() {
         return this.customSprite.setInteractive();
+    }
+
+    setTexture(name) {
+        var texture = AssetEnum.getObjectFromName(name).texture;
+        this.customSprite.texture = texture;
     }
 
     kill() {

@@ -6,7 +6,7 @@ const ProjectileType = {
         BASIC: { name: "PROJECTILE_BASIC", speed: 6, },
         BASIC2: { name: "PROJECTILE_BASIC2", speed: 6, },
         FROZEN: { name: "PROJECTILE_FROZEN", speed: 6, },
-
+        FROZEN2: { name: "PROJECTILE_FROZEN2", speed: 6, },
 
         ERROR: { name: "ERROR" },
     },
