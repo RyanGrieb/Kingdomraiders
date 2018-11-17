@@ -21,6 +21,16 @@ const TileType = {
         STATUE: { name: "STATUE", replace: true, rotate: true, width: 64, height: 64, group: 5, collider: { x: 8, y: 10, w: 50, h: 55 }, },
         CHAIR: { name: "CHAIR", replace: true, rotate: true, width: 32, height: 32, group: 5, collider: { x: 0, y: 0, w: 32, h: 32 }, },
         TABLE: { name: "TABLE", replace: true, rotate: true, width: 32, height: 32, group: 5, collider: { x: 0, y: 0, w: 32, h: 32 }, },
+        BIRDBATH1: {
+            name: "BIRDBATH1", replace: true, rotate: true, width: 32, height: 32, group: 5,
+            collider: { x: 0, y: 0, w: 32, h: 32 },
+            animation: { tick: 100, cycles: 2 },
+        },
+        FOUNTAIN1: {
+            name: "FOUNTAIN1", replace: true, rotate: true, width: 32, height: 32, group: 5,
+            collider: { x: 0, y: 0, w: 32, h: 32 },
+            animation: { tick: 500, cycles: 2 },
+        },
 
         BRUSH: { name: "BRUSH", replace: true, rotate: false, collision: false, width: 32, height: 32, group: 3 },
         YELLOWFLOWER: { name: "YELLOWFLOWER", replace: true, rotate: false, collision: false, width: 32, height: 32, group: 3 },

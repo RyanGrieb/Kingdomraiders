@@ -39,8 +39,8 @@ export default class ProjectileManager {
                 var shooterObj = {
                     id: undefined,
                     projectile: game.getPlayer.inventory.getWeapon.itemType.projectile,
-                    delay: game.getPlayer.playerProfile.stats.dex,
-                    currentDelay: game.getPlayer.playerProfile.stats.dex,
+                    delay: game.getPlayer.playerProfile.convertDexToDelay(game.getPlayer.playerProfile.stats.dex),
+                    currentDelay: game.getPlayer.playerProfile.convertDexToDelay(game.getPlayer.playerProfile.stats.dex),
 
                     targetX: game.renderer.plugins.interaction.mouse.global.x,
                     targetY: game.renderer.plugins.interaction.mouse.global.y,
@@ -62,16 +62,20 @@ export default class ProjectileManager {
     }
 
     removeClientsideShooter() {
-        for (var i = 0; i < this.shooters.length; i++)
-            if (this.shooters[i].id === undefined)
-                this.shooters.splice(i, 1);
+        //If any of our windows are open, don't send a remove packet, unless we are shooting still.
+        if (game.getUI.isAllWindowsClosed && !game.getPlayer.inventory.windowOpen || this.getShooterByID(undefined) !== undefined) {
 
-        var msg = {
-            type: "RemoveShooter",
-            entityType: "Player",
-        };
+            for (var i = 0; i < this.shooters.length; i++)
+                if (this.shooters[i].id === undefined)
+                    this.shooters.splice(i, 1);
 
-        game.getNetwork.sendMessage(JSON.stringify(msg));
+            var msg = {
+                type: "RemoveShooter",
+                entityType: "Player",
+            };
+
+            game.getNetwork.sendMessage(JSON.stringify(msg));
+        }
     }
 
     sendTargetUpdate() {
@@ -80,7 +84,9 @@ export default class ProjectileManager {
             return;
 
         if (!game.getUI.isAllWindowsClosed || game.getPlayer.inventory.windowOpen) {
-            this.removeClientsideShooter();
+            //If the clientside shooter exists, remove it.
+            if (this.getShooterByID(undefined) !== undefined)
+                this.removeClientsideShooter();
             return;
         }
 
@@ -121,7 +127,6 @@ export default class ProjectileManager {
                     this.shooters[i].serversideTargetX = mouseX;
                     this.shooters[i].serversideTargetY = mouseY;
                 }
-
     }
 
     //Non-clientside based methods (MPPlayers & other entities)
@@ -149,8 +154,8 @@ export default class ProjectileManager {
         var shooterObj = {
             id: id,
             projectile: ProjectileType.getProjectileFromID(json.projectileID),
-            delay: 10, //Need to change to get it from json.delay.
-            currentDelay: 10,
+            delay: game.getPlayer.playerProfile.convertDexToDelay(json.dex), //Need to change to get it from json.delay.
+            currentDelay: game.getPlayer.playerProfile.convertDexToDelay(json.dex),
             targetX: targetXOffset,
             targetY: targetYOffset,
         };
@@ -186,8 +191,42 @@ export default class ProjectileManager {
                 this.shooters.splice(i, 1);
     }
 
+    getShooterByID(id) {
+        for (var i = 0; i < this.shooters.length; i++)
+            if (this.shooters[i].id === id)
+                return this.shooters[i];
+    }
+
+    //Sets the sprit face depending on our mouse positons.
+    setClientsideDirection() {
+        var mouseX = game.renderer.plugins.interaction.mouse.global.x;
+        var mouseY = game.renderer.plugins.interaction.mouse.global.y;
+        var animationTick = "1";
+        if (String(game.getPlayer.entity.sprite.name).includes("2"))
+            animationTick = "2";
+
+        if ((mouseY < game.HEIGHT / 2) &&
+            (Math.abs(mouseY - game.HEIGHT / 2) > Math.abs(mouseX - game.WIDTH / 2))) {
+            game.getPlayer.entity.sprite.setTexture("PLAYER_WARRIOR_UP" + animationTick);
+        }
+        if ((mouseY > game.HEIGHT / 2) &&
+            (Math.abs(mouseY - game.HEIGHT / 2) > Math.abs(mouseX - game.WIDTH / 2))) {
+            game.getPlayer.entity.sprite.setTexture("PLAYER_WARRIOR_DOWN" + animationTick);
+        }
+        if ((mouseX < game.WIDTH / 2) &&
+            (Math.abs(mouseX - game.WIDTH / 2) > Math.abs(mouseY - game.HEIGHT / 2))) {
+            game.getPlayer.entity.sprite.setTexture("PLAYER_WARRIOR_LEFT" + animationTick);
+        }
+        if ((mouseX > game.WIDTH / 2) &&
+            (Math.abs(mouseX - game.WIDTH / 2) > Math.abs(mouseY - game.HEIGHT / 2))) {
+            game.getPlayer.entity.sprite.setTexture("PLAYER_WARRIOR_RIGHT" + animationTick);
+        }
+
+    }
+
     update() {
 
+        //Fires our shooters projectile every x ms..
         for (var i = 0; i < this.shooters.length; i++) {
             var x = 0;
             var y = 0;
@@ -220,6 +259,8 @@ export default class ProjectileManager {
             this.shooters[i].currentDelay++;
         }
 
-
+        //Inefficent
+        if (this.getShooterByID(undefined) !== undefined)
+            this.setClientsideDirection();
     }
 }

@@ -29,6 +29,10 @@ export default class PlayerListener {
                 this.handleRequestInventory(json);
                 break;
 
+            case "RequestStats":
+                this.handleRequestStats(json);
+                break;
+
             //MPPlayer based packets
             case "MPJoinGame":
                 this.handleMPJoinResponse(json);
@@ -75,6 +79,10 @@ export default class PlayerListener {
 
     handleRequestInventory(json) {
         game.getPlayer.inventory.receiveInventoryUpdate(json);
+    }
+
+    handleRequestStats(json) {
+        game.getPlayer.playerProfile.recieveStats(json);
     }
 
     //MPPlayer based response

@@ -16,7 +16,16 @@ const AssetsEnum = {
 
 
         //PLAYER
-        DEFAULT_PLAYER: { path: "assets/images/player/player.png" },
+        // DEFAULT_PLAYER: { path: "assets/images/player/warrior/warriordown.png" },
+        PLAYER_WARRIOR_UP1: { path: "assets/images/player/warrior/warriorup.png" },
+        PLAYER_WARRIOR_UP2: { path: "assets/images/player/warrior/warriorup2.png" },
+        PLAYER_WARRIOR_DOWN1: { path: "assets/images/player/warrior/warriordown.png" },
+        PLAYER_WARRIOR_DOWN2: { path: "assets/images/player/warrior/warriordown2.png" },
+        PLAYER_WARRIOR_LEFT1: { path: "assets/images/player/warrior/warriorleft.png" },
+        PLAYER_WARRIOR_LEFT2: { path: "assets/images/player/warrior/warriorleft2.png" },
+        PLAYER_WARRIOR_RIGHT1: { path: "assets/images/player/warrior/warriorright.png" },
+        PLAYER_WARRIOR_RIGHT2: { path: "assets/images/player/warrior/warriorright2.png" },
+
 
         //ITEM
         ITEM_BASIC_SWORD: { path: "assets/images/item/basicsword.png" },
@@ -24,7 +33,7 @@ const AssetsEnum = {
         ITEM_BASIC_SHIELD: { path: "assets/images/item/basicshield.png" },
         ITEM_BASIC_RING: { path: "assets/images/item/basicring.png" },
         ITEM_BASIC_AMULET: { path: "assets/images/item/basicamulet.png" },
-        ITEM_FROZEN_WAND: {path: "assets/images/item/frozenwand.png" },
+        ITEM_FROZEN_WAND: { path: "assets/images/item/frozenwand.png" },
 
         //TILE
         TILE_ERROR: { path: "assets/images/tile/error.png" },
@@ -46,6 +55,10 @@ const AssetsEnum = {
         TILE_BLUEFLOWER: { path: "assets/images/tile/blueflower.png" },
         TILE_CHAIR: { path: "assets/images/tile/chair.png" },
         TILE_TABLE: { path: "assets/images/tile/table.png" },
+        TILE_BIRDBATH1: { path: "assets/images/tile/birdbath1.png" },
+        TILE_BIRDBATH2: { path: "assets/images/tile/birdbath2.png" },
+        TILE_FOUNTAIN1: { path: "assets/images/tile/fountain1.png" },
+        TILE_FOUNTAIN2: { path: "assets/images/tile/fountain2.png" },
 
         TILE_WALLBOTTOM: { path: "assets/images/tile/wallbottom.png" },
         TILE_WALLBOTTOMLEFT: { path: "assets/images/tile/wallbottomleft.png" },
@@ -71,11 +84,10 @@ const AssetsEnum = {
         MONSTER_DRAGON: { path: "assets/images/monster/dragon.png" },
 
         //Projectile
-        PROJECTILE_BASIC: { path: "assets/images/projectile/basic.png" },
+        PROJECTILE_BASIC1: { path: "assets/images/projectile/basic.png" },
         PROJECTILE_BASIC2: { path: "assets/images/projectile/basic2.png" },
-
-        PROJECTILE_FROZEN: { path: "assets/images/projectile/frozen.png" },
-
+        PROJECTILE_FROZEN1: { path: "assets/images/projectile/frozen.png" },
+        PROJECTILE_FROZEN2: { path: "assets/images/projectile/frozen2.png" },
         //SOUNDS
         SOUND_BUTTONCLICK: { path: "assets/sound/buttonclick.mp3" },
 

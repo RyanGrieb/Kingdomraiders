@@ -36,10 +36,7 @@ export default class Projectile extends Entity {
         this.allowRotate = false;
 
         //Animation
-        this.currentIndex = 1;
-        this.minIndex = 1;
-        this.maxIndex = 3;
-        this.intervalID = setInterval(() => this.animate(), 150);
+        this.sprite.setAnimation(100, 2);
     }
 
     moveToTarget() {
@@ -72,17 +69,6 @@ export default class Projectile extends Entity {
 
         } else
             this.kill();
-    }
-
-    animate() {
-
-
-        console.log("Texture: " + this.currentIndex);
-
-        this.currentIndex += 1;
-
-        if (this.currentIndex === this.maxIndex)
-            this.currentIndex = 1;
     }
 
     kill() {

@@ -36,7 +36,7 @@ export default class EntityMap {
     //MPPlayer
     getMPPlayerByID(id) {
         for (var i = 0; i < this.entityMap.length; i++) {
-            if (this.entityMap[i].type.name.includes("_PLAYER")) {
+            if (this.entityMap[i].type.name.includes("PLAYER")) {
                 if (this.entityMap[i].id === id)
                     return this.entityMap[i];
             }

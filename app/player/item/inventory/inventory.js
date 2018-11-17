@@ -20,16 +20,11 @@ export default class Inventory {
 
         this.openOverlay();
         this.requestCurrentItems();
-        this.requestStats();
     }
 
     requestCurrentItems() {
         //Make a server request.
         game.getNetwork.sendMessage(JSON.stringify({ type: "RequestInventory" }));
-    }
-
-    requestStats(){
-        game.getNetwork.sendMessage(JSON.stringify({ type: "RequestStats" }));
     }
 
     receiveInventoryUpdate(json) {
@@ -259,6 +254,7 @@ export default class Inventory {
 
     //We have this since techniclally this window is considred already always open in parent classes.
     toggle() {
+        console.log(this.windowOpen);
         if (this.windowOpen)
             this.closeInventory();
         else
@@ -267,6 +263,7 @@ export default class Inventory {
     }
 
     openInventory() {
+        var playerStats = game.getPlayer.playerProfile.stats;
         this.windowOpen = true;
 
         var inventoryBackground = new CustomSprite("INVENTORY_BACKGROUND", game.WIDTH / 2 - 350 / 2, game.HEIGHT / 2 - 175, 350, 350)
@@ -277,24 +274,24 @@ export default class Inventory {
         lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
         this.openInventoryObjects.push(lblInvName);
 
-        var lblInvPlayer = new CustomSprite("DEFAULT_PLAYER", (game.WIDTH / 2 - 350 / 2) + 25, (game.HEIGHT / 2) - 120, 96, 96);
+        var lblInvPlayer = new CustomSprite(game.getPlayer.className, (game.WIDTH / 2 - 350 / 2) + 25, (game.HEIGHT / 2) - 120, 96, 96);
         lblInvPlayer.customSprite.parentGroup = game.getUI.parentGroup.positive4;
         this.openInventoryObjects.push(lblInvPlayer);
 
 
-        var lblInvName = new CustomText("txtHealthStat", "Max Health: 100", "#ffffff", game.WIDTH / 2, game.HEIGHT / 2 - 115, 85, -1);
+        var lblInvName = new CustomText("txtHealthStat", "Max Health: " + playerStats.health, "#ffffff", game.WIDTH / 2, game.HEIGHT / 2 - 115, 85, -1);
         lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
         this.openInventoryObjects.push(lblInvName);
 
-        var lblInvName = new CustomText("txtManaStat", "Max Mana: 100", "#ffffff", game.WIDTH / 2 + 100, game.HEIGHT / 2 - 115, 85, -1);
+        var lblInvName = new CustomText("txtManaStat", "Max Mana: " + playerStats.mana, "#ffffff", game.WIDTH / 2 + 100, game.HEIGHT / 2 - 115, 85, -1);
         lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
         this.openInventoryObjects.push(lblInvName);
 
-        var lblInvName = new CustomText("txtSpeedStat", "Speed: 1", "#ffffff", game.WIDTH / 2, game.HEIGHT / 2 - 90, 85, -1);
+        var lblInvName = new CustomText("txtSpeedStat", "Speed: " + playerStats.speed, "#ffffff", game.WIDTH / 2, game.HEIGHT / 2 - 90, 85, -1);
         lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
         this.openInventoryObjects.push(lblInvName);
 
-        var lblInvName = new CustomText("txtDexStat", "Dexterity: 1", "#ffffff", game.WIDTH / 2 + 100, game.HEIGHT / 2 - 90, 85, -1);
+        var lblInvName = new CustomText("txtDexStat", "Dexterity: " + playerStats.dex, "#ffffff", game.WIDTH / 2 + 100, game.HEIGHT / 2 - 90, 85, -1);
         lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
         this.openInventoryObjects.push(lblInvName);
 

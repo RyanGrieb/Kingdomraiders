@@ -26,6 +26,10 @@ export default class PlayerMovement {
 
         //Update movement every 100ms.
         setInterval(this.sendMovementUpdate, 100);
+
+        //Animation tick
+        this.animationTick = 0;
+        this.animationNumber = 1;
     }
 
     updatePosition(x, y) {
@@ -190,6 +194,18 @@ export default class PlayerMovement {
 
                 if (this.heldKeys[i].y != null)
                     this.velocity.y = this.heldKeys[i].y;
+
+                //Set our sprite direction
+                var animationNum = game.getPlayer.entity.sprite.animation.currentAnimationNumber;
+                if (heldKey == "W")
+                    game.getPlayer.entity.sprite.setTexture("PLAYER_WARRIOR_UP" + animationNum);
+                if (heldKey == "A")
+                    game.getPlayer.entity.sprite.setTexture("PLAYER_WARRIOR_LEFT" + animationNum);
+                if (heldKey == "S")
+                    game.getPlayer.entity.sprite.setTexture("PLAYER_WARRIOR_DOWN" + animationNum);
+                if (heldKey == "D")
+                    game.getPlayer.entity.sprite.setTexture("PLAYER_WARRIOR_RIGHT" + animationNum);
+
             }
 
             //Camera rotation
@@ -222,6 +238,13 @@ export default class PlayerMovement {
 
         //Set camera rotation
         game.getUI.getCurrentScreen.camera.setRotation(this.cameraRotation.left, this.cameraRotation.right);
+    }
+
+    handleMovementAnimation() {
+        if (this.heldKeys.length > 0)
+            game.getPlayer.entity.sprite.setAnimation(150, 2);
+        else if (game.getPlayer.entity.sprite.animation.isEnabled)
+            game.getPlayer.entity.sprite.removeAnimation();
     }
 
     sendMovementUpdate() {
@@ -311,6 +334,7 @@ export default class PlayerMovement {
     update() {
         if (game.getPlayer.inGame) {
             this.handleMovement();
+            this.handleMovementAnimation();
         }
     }
 

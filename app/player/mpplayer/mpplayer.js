@@ -8,7 +8,7 @@ import CustomText from "../../ui/custom/customtext";
 export default class MPPlayer extends Entity {
 
     constructor(json) {
-        super({ name: "DEFAULT_PLAYER" }, json.x, json.y, 42, 42);
+        super({ name: "PLAYER_WARRIOR_DOWN1" }, json.x, json.y, 42, 42);
 
         this.movement = new MPPlayerMovement(this);
 

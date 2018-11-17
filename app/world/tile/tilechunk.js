@@ -92,9 +92,15 @@ export default class TileChunk {
                 entity.allowRotate = tileType.rotate;
                 entity.sprite.customSprite.parentGroup = game.getUI.getParentGroupFromNumber(tileType.group);
 
+                //Add a collider to the entity.
                 if (tileType.collider !== undefined) {
                     entity.addCollision(tileType.collider.x, tileType.collider.y, tileType.collider.w, tileType.collider.h);
                     entity.setPosition(entity.x - tileType.collider.x, entity.y - tileType.collider.y);
+                }
+
+                //Add animation to the entity.
+                if (tileType.animation !== undefined) {
+                    entity.sprite.setAnimation(tileType.animation.tick, tileType.animation.cycles);
                 }
 
 

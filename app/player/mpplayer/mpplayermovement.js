@@ -10,6 +10,8 @@ export default class MPPlayerMovement {
 
         this.finalTarget = undefined;
         this.rotation = 0;
+
+        this.textureName = mpPlayer.sprite.name;
     }
 
     recivePosition(json) {
@@ -30,15 +32,16 @@ export default class MPPlayerMovement {
         //If the player is lagging behind or tabbed out...
         if (Math.abs(distanceX) > 96 || Math.abs(distanceY) > 96) {
             //(We set our rotation to 0, since were adding a non rotated-location)
-          //  this.mpPlayer.rotation = 0;
-           // this.mpPlayer.setPosition(this.finalTarget.x, this.finalTarget.y);
-           // return;
+            //  this.mpPlayer.rotation = 0;
+            // this.mpPlayer.setPosition(this.finalTarget.x, this.finalTarget.y);
+            // return;
         }
 
         var hypotnuse = Math.sqrt(((distanceX * distanceX) + (distanceY * distanceY)));
 
         if (hypotnuse === 0)
             return;
+
 
 
         distanceX = (distanceX / hypotnuse);
@@ -68,12 +71,43 @@ export default class MPPlayerMovement {
 
             //But for our screenX&Y, we apply our offset values.
             this.mpPlayer.sprite.setVelocity(-velXOffset, velYOffset);
-        }
+
+            this.giveAnimationDirection(-velXOffset, velYOffset);
+        } else
+            if (this.mpPlayer.sprite.animation.isEnabled)
+                this.mpPlayer.sprite.removeAnimation();
+    }
+
+    giveAnimationDirection(velX, velY) {
+        this.mpPlayer.sprite.setAnimation(150, 2);
+        velY = Math.ceil(velY);
+
+        var texture = "PLAYER_WARRIOR_";
+        if (velX > 0 && Math.abs(velX) > Math.abs(velY))
+            texture += "RIGHT" + this.mpPlayer.sprite.animation.currentAnimationNumber;
+        if (velX < 0 && Math.abs(velX) > Math.abs(velY))
+            texture += "LEFT" + this.mpPlayer.sprite.animation.currentAnimationNumber;
+        if (velY > 0 && Math.abs(velY) > Math.abs(velX))
+            texture += "DOWN" + this.mpPlayer.sprite.animation.currentAnimationNumber;
+        if (velY < 0 && Math.abs(velY) > Math.abs(velX))
+            texture += "UP" + this.mpPlayer.sprite.animation.currentAnimationNumber;
+
+        //  console.log(this.mpPlayer.sprite.animation.currentAnimationNumber);
+        if (texture === "PLAYER_WARRIOR_")
+            return;
+
+        this.textureName = texture;
+
+        this.mpPlayer.sprite.setTexture(this.textureName);
+    }
+
+    giveAnimation() {
 
     }
 
     update() {
-        if (this.finalTarget !== undefined)
+        if (this.finalTarget !== undefined) {
             this.moveToFinalTarget();
+        }
     }
 }

@@ -34,11 +34,12 @@ export default class Player {
     }
 
     spawnToGame() {
+        this.playerProfile.requestStats();
         this.inventory = new Inventory();
         this.playerChat = new PlayerChat();
 
         //Should be changed when we go into character select
-        this.className = "DEFAULT_PLAYER";
+        this.className = "PLAYER_WARRIOR_DOWN1";
         //this.x = 128;
         //this.y = 32;
         this.w = 42;

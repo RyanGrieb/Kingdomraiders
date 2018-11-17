@@ -8,12 +8,27 @@ export default class PlayerProfile {
         //Will be updated by server.
         this.stats = {
             dex: 10,
-            speed: 5,
-            health: 100,
-            mana: 100,
+            speed: 0,
+            health: 0,
+            mana: 0,
         }
     }
 
+    requestStats() {
+        game.getNetwork.sendMessage(JSON.stringify({ type: "RequestStats" }));
+    }
+
+    recieveStats(json) {
+        this.stats.dex = json.dex;
+        this.stats.speed = json.speed;
+        this.stats.health = json.health;
+        this.stats.mana = json.mana;
+    }
+
+    convertDexToDelay(dex) {
+        var delay = 100;
+        return delay - dex;
+    }
 
     requestToLogin() {
         var email = game.getUI.getObjectByName("txtEmail").getText;
