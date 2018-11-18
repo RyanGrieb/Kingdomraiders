@@ -1,11 +1,13 @@
 import game from "index";
 import ProjectileManager from "./projectile/projectilemanager";
+import MonsterManager from "./monster/monstermanager";
 
 export default class EntityMap {
     constructor() {
         this.entityMap = [];
 
         this.projectileManager = new ProjectileManager();
+        this.monsterManager = new MonsterManager();
     }
 
     removeObject(obj) {

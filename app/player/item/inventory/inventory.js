@@ -19,6 +19,7 @@ export default class Inventory {
         this.inventorySize = 23;
 
         this.openOverlay();
+        
         this.requestCurrentItems();
     }
 

@@ -65,6 +65,7 @@ export default class PlayerListener {
     }
 
     handleJoinResponse(json) {
+        game.getPlayer.id = json.id;
         game.getPlayer.movement.updatePosition(json.x, json.y);
         game.getUI.setScreen(new GameScreen());
     }
@@ -78,7 +79,9 @@ export default class PlayerListener {
     }
 
     handleRequestInventory(json) {
-        game.getPlayer.inventory.receiveInventoryUpdate(json);
+        //We do this check to stop an errors when the player is lagging.
+        if (game.getPlayer.inGame)
+            game.getPlayer.inventory.receiveInventoryUpdate(json);
     }
 
     handleRequestStats(json) {

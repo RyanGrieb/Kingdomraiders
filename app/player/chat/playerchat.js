@@ -27,7 +27,7 @@ export default class PlayerChat {
             };
 
             this.chatBox.unselect();
-            this.chatBox.customText.text = "";
+            this.chatBox.customText.text = [];
 
             game.getNetwork.sendMessage(JSON.stringify(msg));
 
@@ -51,13 +51,11 @@ export default class PlayerChat {
 
     }
 
-    kill() {
-        for (var j = 0; j < game.getUI.uiObjects.length; j++) {
-            if (game.getUI.uiObjects[j] === this.chatBox) {
-                game.getUI.uiObjects[j].kill();
-                game.getUI.uiObjects.splice(j, 1);
-            }
-        }
+    close() {
+        //Remove messages
+        for (var i = 0; i < this.messages.length; i++)
+            this.messages[i].kill();
+
     }
 
     get isSelected() {

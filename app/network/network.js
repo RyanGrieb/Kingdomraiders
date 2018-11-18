@@ -4,6 +4,7 @@ import MapListener from "./listeners/map/maplistener";
 import PlayerListener from "./listeners/player/playerlistener";
 
 import MenuScreen from "../ui/scene/menuscreen";
+import MonsterListener from "./listeners/entity/monsterlistener";
 
 export default class Network {
     constructor() {
@@ -12,7 +13,7 @@ export default class Network {
         //Our listeners lists
         this.listeners = [];
 
-        this.listeners.push(new PlayerListener(), new AccountListener(), new MapListener());
+        this.listeners.push(new PlayerListener(), new AccountListener(), new MapListener(), new MonsterListener());
     }
 
     connect() {

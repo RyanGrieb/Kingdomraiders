@@ -7,9 +7,12 @@ import Entity from "../entity/entity";
 
 export default class TileChunk {
     constructor(chunk, topChunk, x, y) {
-        //console.log(topChunk);
         //Misc helper variables
         this.camera = game.getUI.getCurrentScreen.getCamera;
+
+        //If the player is lagging out.
+        if (this.camera === undefined)
+            return;
 
         //Start of the main body
         this.container = new PIXI.Container();

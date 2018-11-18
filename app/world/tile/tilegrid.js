@@ -161,6 +161,8 @@ export default class TileGrid {
 
     getTileFromLocation(x, y) {
         var chunk = this.getChunkFromLocation(x, y);
+        if (chunk === undefined)
+            return undefined;
 
         return chunk.getTileFromLocation(x, y);
     }

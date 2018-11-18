@@ -138,12 +138,13 @@ export default class Entity {
                 this.collider.collided = true;
             }
             else
-                if (tilesUpDown[i].tileType.collision) {
+                if (tilesUpDown[i] !== undefined)
+                    if (tilesUpDown[i].tileType.collision) {
 
-                    velocity.y = 0;
-                    this.collider.collided = true;
+                        velocity.y = 0;
+                        this.collider.collided = true;
 
-                }
+                    }
 
         for (var i = 0; i < tilesLeftRight.length; i++)
             if (tilesLeftRight[i] instanceof Entity) {
@@ -151,12 +152,13 @@ export default class Entity {
                 this.collider.collided = true;
             }
             else
-                if (tilesLeftRight[i].tileType.collision) {
+                if (tilesLeftRight[i] !== undefined)
+                    if (tilesLeftRight[i].tileType.collision) {
 
-                    velocity.x = 0;
-                    this.collider.collided = true;
+                        velocity.x = 0;
+                        this.collider.collided = true;
 
-                }
+                    }
 
         return velocity;
     }

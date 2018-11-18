@@ -297,30 +297,34 @@ export default class PlayerMovement {
             }
         }
 
+
         for (var i = 0; i < tilesUpDown.length; i++)
             if (tilesUpDown[i] instanceof Entity)
                 offsetY = 0;
             else
-                if (tilesUpDown[i].tileType.collision || tilesUpDown[i].tileType.collision === undefined) {
-                    var tileY = tilesUpDown[i].y + 32;
+                if (tilesUpDown[i] !== undefined)
+                    if (tilesUpDown[i].tileType.collision || tilesUpDown[i].tileType.collision === undefined) {
+                        var tileY = tilesUpDown[i].y + 32;
 
-                    offsetY = 0;
-                }
+                        offsetY = 0;
+                    }
+
 
         for (var i = 0; i < tilesLeftRight.length; i++)
             if (tilesLeftRight[i] instanceof Entity)
                 offsetX = 0;
             else
-                if (tilesLeftRight[i].tileType.collision || tilesLeftRight[i].tileType.collision === undefined) {
-                    //Find better way to tell which side of the tile we want
-                    //!!!!!!! maybe a method tile.getXFromSide(,colliderY)??????!!!!!!!!!!!!!!!!!
-                    var tileX = (offsetX < 0) ? tilesLeftRight[i].x + 32 : tilesLeftRight[i].x;
+                if (tilesLeftRight[i] !== undefined)
+                    if (tilesLeftRight[i].tileType.collision || tilesLeftRight[i].tileType.collision === undefined) {
+                        //Find better way to tell which side of the tile we want
+                        //!!!!!!! maybe a method tile.getXFromSide(,colliderY)??????!!!!!!!!!!!!!!!!!
+                        var tileX = (offsetX < 0) ? tilesLeftRight[i].x + 32 : tilesLeftRight[i].x;
 
-                    //Figure out why tilesUpDown gets called when we collide right.
-                    // offsetX = tileX - collider.x;
-                    offsetX = 0;
+                        //Figure out why tilesUpDown gets called when we collide right.
+                        // offsetX = tileX - collider.x;
+                        offsetX = 0;
 
-                }
+                    }
 
         //Instead of setting velocity we just chang our x&y values here, b/c we don't want to move the customsprite insdie.
         game.getPlayer.entity.setGameVelocity(offsetX, offsetY);

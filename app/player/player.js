@@ -9,6 +9,7 @@ import Inventory from "./item/inventory/inventory";
 import Entity from "../world/entity/entity";
 import PlayerSettings from "./profile/playersettings";
 import PlayerChat from "./chat/playerchat";
+import MPPlayer from "./mpplayer/mpplayer";
 
 
 export default class Player {
@@ -26,6 +27,7 @@ export default class Player {
 
         this.loggedIn = false;
         this.inGame = false;
+        this.id = -1;
     }
 
     joinGame() {
@@ -63,6 +65,9 @@ export default class Player {
         this.inventory.close();
         this.inventory = undefined;
 
+        this.playerChat.close();
+        this.playerChat = undefined;
+
         this.entity.kill();
         this.entity = undefined;
 
@@ -76,8 +81,11 @@ export default class Player {
             this.movement.update();
             this.buildMode.update();
             this.inventory.update();
+            console.log(this.id);
+            for (var i = 0; i < game.getEntityMap.entityMap.length; i++)
+                if (game.getEntityMap.entityMap[i] instanceof MPPlayer)
+                    console.log(game.getEntityMap.entityMap[i].id+"!");
         }
-
     }
 
     get isLoggedIn() {
