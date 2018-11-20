@@ -14,6 +14,10 @@ export default class MonsterListener {
             case "MonsterTarget":
                 this.handleMonsterTarget(json);
                 break;
+
+            case "MonsterRemoveTarget":
+            this.handleMonsterRemoveTarget(json);
+            break;
         }
     }
 
@@ -23,5 +27,9 @@ export default class MonsterListener {
 
     handleMonsterTarget(json) {
         game.getEntityMap.monsterManager.recieveMonsterTarget(json);
+    }
+
+    handleMonsterRemoveTarget(json){
+        game.getEntityMap.monsterManager.recieveMonsterRemoveTarget(json);
     }
 }

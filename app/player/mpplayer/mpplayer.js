@@ -87,11 +87,11 @@ export default class MPPlayer extends Entity {
 
 
     get getX() {
-        return (this.sprite.customSprite.x + (game.getPlayer.getX - this.camera.position.x));
+        return this.x;
     }
 
     get getY() {
-        return (this.sprite.customSprite.y + (game.getPlayer.getY - this.camera.position.y));
+        return this.y;
     }
 
 }

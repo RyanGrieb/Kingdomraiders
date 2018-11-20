@@ -81,10 +81,6 @@ export default class Player {
             this.movement.update();
             this.buildMode.update();
             this.inventory.update();
-            console.log(this.id);
-            for (var i = 0; i < game.getEntityMap.entityMap.length; i++)
-                if (game.getEntityMap.entityMap[i] instanceof MPPlayer)
-                    console.log(game.getEntityMap.entityMap[i].id+"!");
         }
     }
 

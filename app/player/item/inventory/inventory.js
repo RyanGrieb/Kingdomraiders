@@ -107,7 +107,7 @@ export default class Inventory {
                     mouseY > this.items[i].sprite.y &&
                     mouseY < this.items[i].sprite.y + this.items[i].sprite.height) {
                     this.items[i].dragged = true;
-                    this.items[i].sprite.parentGroup = game.getUI.parentGroup.positive5;
+                    this.items[i].sprite.parentGroup = game.getUI.parentGroup.positive6;
                 }
 
 
@@ -122,7 +122,7 @@ export default class Inventory {
                     //Moves the sprite to the nearst slot.
                     var nearestSlot = this.getNearestSlot();
                     this.items[i].dragged = false;
-                    this.items[i].sprite.parentGroup = game.getUI.parentGroup.positive4;
+                    this.items[i].sprite.parentGroup = game.getUI.parentGroup.positive5;
 
                     //If it's dropped outside a slot.
                     if (nearestSlot === undefined) {
@@ -230,25 +230,25 @@ export default class Inventory {
 
     openOverlay() {
         var inventoryOverlay = new CustomSprite("INVENTORY_OVERLAY", game.WIDTH / 2 - 325 / 2, game.HEIGHT - 75, 325, 55)
-        inventoryOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive4;
+        inventoryOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive5;
         this.overlayObjects.push(inventoryOverlay);
 
         var healthbarOverlay = new CustomSprite("PLAYER_HEALTHBAR", game.WIDTH / 2 - 300 / 2, game.HEIGHT - 110, 300, 10);
-        healthbarOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive4;
+        healthbarOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive5;
         this.overlayObjects.push(healthbarOverlay);
 
         var manabarOverlay = new CustomSprite("PLAYER_MANABAR", game.WIDTH / 2 - 300 / 2, game.HEIGHT - 95, 300, 10);
-        manabarOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive4;
+        manabarOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive5;
         this.overlayObjects.push(manabarOverlay);
 
 
         var healthLabelOverlay = new CustomText("txtHealthLabel", "100 / 100", "#ffffff", game.WIDTH / 2 - 50 / 2, game.HEIGHT - 106, 80, 15);
-        healthLabelOverlay.customText.parentGroup = game.getUI.parentGroup.positive4;
+        healthLabelOverlay.customText.parentGroup = game.getUI.parentGroup.positive5;
         healthLabelOverlay.customText.x = game.WIDTH / 2 - healthLabelOverlay.customText.width / 2;
         this.overlayObjects.push(healthLabelOverlay);
 
         var manaLabelOverlay = new CustomText("txtManaLabel", "100 / 100", "#ffffff", game.WIDTH / 2 - 50 / 2, game.HEIGHT - 91, 80, 15);
-        manaLabelOverlay.customText.parentGroup = game.getUI.parentGroup.positive4;
+        manaLabelOverlay.customText.parentGroup = game.getUI.parentGroup.positive5;
         manaLabelOverlay.customText.x = game.WIDTH / 2 - manaLabelOverlay.customText.width / 2;
         this.overlayObjects.push(manaLabelOverlay);
     }
@@ -268,32 +268,32 @@ export default class Inventory {
         this.windowOpen = true;
 
         var inventoryBackground = new CustomSprite("INVENTORY_BACKGROUND", game.WIDTH / 2 - 350 / 2, game.HEIGHT / 2 - 175, 350, 350)
-        inventoryBackground.customSprite.parentGroup = game.getUI.parentGroup.positive4;
+        inventoryBackground.customSprite.parentGroup = game.getUI.parentGroup.positive5;
         this.openInventoryObjects.push(inventoryBackground);
 
         var lblInvName = new CustomText("txtInvName", game.getPlayer.playerProfile.name + "'s Inventory", "#ffffff", game.WIDTH / 2, game.HEIGHT / 2 - 165, 100, -1);
-        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
+        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive5;
         this.openInventoryObjects.push(lblInvName);
 
         var lblInvPlayer = new CustomSprite(game.getPlayer.className, (game.WIDTH / 2 - 350 / 2) + 25, (game.HEIGHT / 2) - 120, 96, 96);
-        lblInvPlayer.customSprite.parentGroup = game.getUI.parentGroup.positive4;
+        lblInvPlayer.customSprite.parentGroup = game.getUI.parentGroup.positive5;
         this.openInventoryObjects.push(lblInvPlayer);
 
 
         var lblInvName = new CustomText("txtHealthStat", "Max Health: " + playerStats.health, "#ffffff", game.WIDTH / 2, game.HEIGHT / 2 - 115, 85, -1);
-        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
+        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive5;
         this.openInventoryObjects.push(lblInvName);
 
         var lblInvName = new CustomText("txtManaStat", "Max Mana: " + playerStats.mana, "#ffffff", game.WIDTH / 2 + 100, game.HEIGHT / 2 - 115, 85, -1);
-        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
+        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive5;
         this.openInventoryObjects.push(lblInvName);
 
         var lblInvName = new CustomText("txtSpeedStat", "Speed: " + playerStats.speed, "#ffffff", game.WIDTH / 2, game.HEIGHT / 2 - 90, 85, -1);
-        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
+        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive5;
         this.openInventoryObjects.push(lblInvName);
 
         var lblInvName = new CustomText("txtDexStat", "Dexterity: " + playerStats.dex, "#ffffff", game.WIDTH / 2 + 100, game.HEIGHT / 2 - 90, 85, -1);
-        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive4;
+        lblInvName.customText.parentGroup = game.getUI.parentGroup.positive5;
         this.openInventoryObjects.push(lblInvName);
 
         //Display our items

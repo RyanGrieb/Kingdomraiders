@@ -14,7 +14,7 @@ export default class Item {
         this.sprite.height = 32;
         this.dragged = false;
 
-        this.sprite.parentGroup = game.getUI.parentGroup.positive4;
+        this.sprite.parentGroup = game.getUI.parentGroup.positive5;
 
       //  game.stage.addChild(this.sprite);
     }

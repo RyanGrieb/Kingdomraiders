@@ -9,20 +9,20 @@ export default class FPSOverlay {
 
 
         this.fpsDisplay = (new CustomText("txtFPSInfo", "FPS: 0", "#ffffff", 35, 25, 100, 100));
-        this.fpsDisplay.customText.parentGroup = game.getUI.parentGroup.positive4;
+        this.fpsDisplay.customText.parentGroup = game.getUI.parentGroup.positive5;
 
         this.positionDisplay = (new CustomText("txtFPSInfo", "X: " + parseInt(game.getPlayer.getX) + ", Y: " +
             parseInt(game.getPlayer.getY), "#ffffff", 200, 25, 100, 100));
-        this.positionDisplay.customText.parentGroup = game.getUI.parentGroup.positive4;
+        this.positionDisplay.customText.parentGroup = game.getUI.parentGroup.positive5;
 
         this.loadedChunks = (new CustomText("loadedChunkInfo", "Loaded Chunks: 0", "#ffffff", 70, 55, 100, 100));
-        this.loadedChunks.customText.parentGroup = game.getUI.parentGroup.positive4;
+        this.loadedChunks.customText.parentGroup = game.getUI.parentGroup.positive5;
 
         this.loadedEntities = (new CustomText("loadedEntityInfo", "Loaded Entities: 0", "#ffffff", 200, 55, 100, 100));
-        this.loadedEntities.customText.parentGroup = game.getUI.parentGroup.positive4;
+        this.loadedEntities.customText.parentGroup = game.getUI.parentGroup.positive5;
 
         this.rotationInfo = (new CustomText("rotationInfo", "Rotation: 0", "#ffffff", 55, 80, 100, 100));
-        this.rotationInfo.customText.parentGroup = game.getUI.parentGroup.positive4;
+        this.rotationInfo.customText.parentGroup = game.getUI.parentGroup.positive5;
     }
 
     clearObjects() {

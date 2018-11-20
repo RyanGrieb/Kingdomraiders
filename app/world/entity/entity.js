@@ -52,6 +52,7 @@ export default class Entity {
         }
     }
 
+    //Kindof a static method, not sure what to do with it.
     getScreenPosition(x, y) {
         var screenX = (x + (this.camera.position.x - game.getPlayer.getX) - 21) + (this.w / 2);
         var screenY = (y + (this.camera.position.y - game.getPlayer.getY) - 21) + (this.h / 2);
@@ -131,7 +132,7 @@ export default class Entity {
                 tilesLeftRight.push(game.getTileGrid.getTileFromLocation((colliderXOffset + velocity.x), colliderYOffset));
             }
         }
-        //Todo: remove the repating things.
+        //Todo: remove the repeating things.
         for (var i = 0; i < tilesUpDown.length; i++)
             if (tilesUpDown[i] instanceof Entity) {
                 velocity.y = 0;

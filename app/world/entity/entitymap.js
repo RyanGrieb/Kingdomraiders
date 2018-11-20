@@ -1,6 +1,7 @@
 import game from "index";
 import ProjectileManager from "./projectile/projectilemanager";
 import MonsterManager from "./monster/monstermanager";
+import MPPlayer from "../../player/mpplayer/mpplayer";
 
 export default class EntityMap {
     constructor() {
@@ -43,6 +44,17 @@ export default class EntityMap {
                     return this.entityMap[i];
             }
         }
+    }
+
+    get getAllPlayers() {
+        var allPlayers = [];
+        for (var i = 0; i < this.entityMap.length; i++)
+            if (this.entityMap[i] instanceof MPPlayer)
+                allPlayers.push(this.entityMap[i]);
+
+        allPlayers.push(game.getPlayer);
+
+        return allPlayers;
     }
 
 }
