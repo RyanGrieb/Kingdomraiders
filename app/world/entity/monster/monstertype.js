@@ -3,10 +3,11 @@ const MonsterType = {
     //TODO: add other attributes
     list: {
         DEMON: {
-            name: "MONSTER_DEMON", speed: 2, w: 128, h: 128,
-            animation: { tick: 100, cycles: 2 },
+            name: "MONSTER_DEMON1", speed: 2, w: 128, h: 128,
+            animation: { tick: 500, cycles: 2 },
         },
-        DRAGON: { name: "MONSTER_DRAGON", speed: 2, w: 256, h: 256, },
+       // DRAGON: { name: "MONSTER_DRAGON", speed: 2, w: 256, h: 256, },
+       GOUL: { name: "MONSTER_GOUL", speed: 2, w: 96, h: 96, },
 
 
 

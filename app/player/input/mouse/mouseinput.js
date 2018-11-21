@@ -11,6 +11,7 @@ export default class MouseInput {
         //On mouse clck, call..
         $("body").mousedown(() => this.onMouseClick());
         $("body").mouseup(() => this.onMouseRelease());
+        $("body").mouseleave(() => this.onMouseLeave());
         // $("body").mousemove(() => this.onMouseMove());
     }
 
@@ -26,8 +27,8 @@ export default class MouseInput {
     }
 
     fireProjectile() {
-            if (game.getUI.isAllWindowsClosed && !game.getPlayer.inventory.windowOpen)
-                game.getEntityMap.projectileManager.setClientsideShooter();
+        if (game.getUI.isAllWindowsClosed && !game.getPlayer.inventory.windowOpen)
+            game.getEntityMap.projectileManager.setClientsideShooter();
     }
 
     stopProjectile() {
@@ -56,6 +57,13 @@ export default class MouseInput {
             game.getPlayer.inventory.onMouseRelease();
 
             this.disableBuild();
+            this.stopProjectile();
+        }
+    }
+
+    onMouseLeave() {
+        if (game.getPlayer.inGame) {
+
             this.stopProjectile();
         }
     }

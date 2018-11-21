@@ -17,7 +17,7 @@ export default class Monster extends Entity {
         this.sprite.setParentGroup(game.getUI.parentGroup.positive3);
 
         if (type.animation !== undefined) {
-            //  this.sprite.setAnimation(type.animation.tick, type.animation.cycles);
+            this.sprite.setAnimation(type.animation.tick, type.animation.cycles);
         }
 
         this.targetPlayer = undefined;
@@ -45,6 +45,10 @@ export default class Monster extends Entity {
         this.finalTargetY = json.y;
     }
 
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //PROBLEM: DURING LAG SOMETIMES MONSTER FOLLOWS PLAYER FOREVER
+    //
     trackPlayer() {
         //If we have aboslutley no target. stop.
         if (this.targetPlayer === undefined && this.finalTargetX === undefined && this.finalTargetY === undefined)

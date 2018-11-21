@@ -14,16 +14,16 @@ export default class BuildWindow extends CustomWindow {
     constructor() {
         super("BuildWindow");
 
-        this.setParentGroup(game.getUI.parentGroup.positive4);
+        this.setParentGroup(game.getUI.parentGroup.positive5);
 
         this.index = 0;
     }
 
     open() {
-        var body = new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (400 / 2), (game.HEIGHT - 150), 400, 100);
+        var body = new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (400 / 2), (game.HEIGHT - 220), 400, 100);
         this.addUI(body);
 
-        this.selectedTile = new CustomSprite("TILE_GRASS", (game.WIDTH / 2) - (64 / 2), (game.HEIGHT - 133), 64, 64);
+        this.selectedTile = new CustomSprite("TILE_GRASS", (game.WIDTH / 2) - (64 / 2), (game.HEIGHT - 203), 64, 64);
         this.addUI(this.selectedTile);
     }
 

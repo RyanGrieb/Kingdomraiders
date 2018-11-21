@@ -80,7 +80,9 @@ const AssetsEnum = {
         //ENTITY
 
         //Monster
-        MONSTER_DEMON: { path: "assets/images/monster/demon.png" },
+        MONSTER_DEMON1: { path: "assets/images/monster/demon.png" },
+        MONSTER_DEMON2: { path: "assets/images/monster/demon2.png" },
+        MONSTER_GOUL: { path: "assets/images/monster/goul.png" },
         MONSTER_DRAGON: { path: "assets/images/monster/dragon.png" },
 
         //Projectile
