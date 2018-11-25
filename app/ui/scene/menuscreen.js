@@ -44,6 +44,7 @@ export default class MenuScreen extends Screen {
     }
 
     setLoggedIn() {
+        //Add a check for these to see if they exist already. !!!
         game.getUI.removeObject("btnLogin");
         game.getUI.removeObject("btnRegister");
 

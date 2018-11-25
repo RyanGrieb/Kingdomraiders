@@ -153,6 +153,16 @@ export default class TextBox extends UIObject {
         this.customText.parentGroup = parentGroup;
     }
 
+    setPosition(x, y) {
+        super.setPosition(x, y);
+        this.customSprite.setPosition(x, y);
+        this.customText.x = x;
+        this.customText.y = y;
+
+        if (this.selectGraphic != undefined)
+            this.selectGraphic.setPosition(x, y);
+    }
+
     get getText() {
         return this.customText.text;
     }

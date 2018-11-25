@@ -12,6 +12,7 @@ export default class MouseInput {
         $("body").mousedown(() => this.onMouseClick());
         $("body").mouseup(() => this.onMouseRelease());
         $("body").mouseleave(() => this.onMouseLeave());
+        window.onresize = () => this.onWindowResize();
         // $("body").mousemove(() => this.onMouseMove());
     }
 
@@ -66,6 +67,12 @@ export default class MouseInput {
 
             this.stopProjectile();
         }
+    }
+
+    onWindowResize() {
+       // game.WIDTH = $("body").innerWidth();
+       // game.HEIGHT = $("body").innerHeight();
+
     }
 
     onMouseMove() {

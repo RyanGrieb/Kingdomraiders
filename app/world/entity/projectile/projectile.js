@@ -40,7 +40,8 @@ export default class Projectile extends Entity {
     }
 
     moveToTarget() {
-        if (--this.duration > 0 && !this.collider.collided) {
+        //Move to target
+        if (--this.duration > 0 && !this.collider.collided && game.getEntityMap.monsterManager.getMonsterFromLocation(this.x, this.y, this.w, this.h) === undefined) {
 
             //console.log((this.angle * (180 / Math.PI)));
             if (!this.sprite.customSprite.visible)

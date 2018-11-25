@@ -10,6 +10,10 @@ export default class UIObject {
         this.h = h;
     }
 
+    setPosition(x, y) {
+        this.x = x;
+        this.y = y;
+    }
 
     mouseInside() {
         var mouseX = game.renderer.plugins.interaction.mouse.global.x;

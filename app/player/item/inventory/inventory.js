@@ -233,11 +233,11 @@ export default class Inventory {
         inventoryOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive5;
         this.overlayObjects.push(inventoryOverlay);
 
-        var healthbarOverlay = new CustomSprite("PLAYER_HEALTHBAR", game.WIDTH / 2 - 300 / 2, game.HEIGHT - 110, 300, 10);
+        var healthbarOverlay = new CustomSprite("RED_HEALTHBAR", game.WIDTH / 2 - 300 / 2, game.HEIGHT - 110, 300, 10);
         healthbarOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive5;
         this.overlayObjects.push(healthbarOverlay);
 
-        var manabarOverlay = new CustomSprite("PLAYER_MANABAR", game.WIDTH / 2 - 300 / 2, game.HEIGHT - 95, 300, 10);
+        var manabarOverlay = new CustomSprite("MANABAR", game.WIDTH / 2 - 300 / 2, game.HEIGHT - 95, 300, 10);
         manabarOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive5;
         this.overlayObjects.push(manabarOverlay);
 

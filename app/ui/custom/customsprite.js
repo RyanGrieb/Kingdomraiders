@@ -29,6 +29,7 @@ export default class CustomSprite extends UIObject {
 
     //Set screen & game position values (x,y values are screen values though.)
     setPosition(x, y) {
+        super.setPosition(x, y);
         // this.x = x;
         // this.y = y;
 

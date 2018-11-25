@@ -16,7 +16,15 @@ export default class MonsterListener {
                 break;
 
             case "MonsterRemoveTarget":
-            this.handleMonsterRemoveTarget(json);
+                this.handleMonsterRemoveTarget(json);
+                break;
+
+            case "MonsterSetHealth":
+                this.handleMonsterSetHealth(json);
+                break;
+
+            case "MonsterKill":
+            this.handleMonsterKill(json);
             break;
         }
     }
@@ -29,7 +37,15 @@ export default class MonsterListener {
         game.getEntityMap.monsterManager.recieveMonsterTarget(json);
     }
 
-    handleMonsterRemoveTarget(json){
+    handleMonsterRemoveTarget(json) {
         game.getEntityMap.monsterManager.recieveMonsterRemoveTarget(json);
+    }
+
+    handleMonsterSetHealth(json) {
+        game.getEntityMap.monsterManager.recieveSetHealth(json);
+    }
+
+    handleMonsterKill(json){
+        game.getEntityMap.monsterManager.recieveKillMonster(json);
     }
 }

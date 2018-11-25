@@ -16,6 +16,8 @@ export default class LoadingScreen extends Screen {
         this.graphics = new PIXI.Graphics();
 
         this.renderProgressBar();
+
+        this.timeout = setTimeout(() => this.displayConnectionTimeout(), 7000);
     }
 
     open() {
@@ -57,6 +59,8 @@ export default class LoadingScreen extends Screen {
 
         this.loadingtext.destroy();
         this.graphics.destroy();
+
+        clearTimeout(this.timeout);
     }
 
     renderProgressBar() {
@@ -83,6 +87,11 @@ export default class LoadingScreen extends Screen {
         game.stage.addChild(this.graphics);
 
         this.loadingtext.text = "Loading: " + parseInt(this.loader.progress) + "%";
+    }
+
+    displayConnectionTimeout() {
+        this.loadingtext.text = "Server is down, sorry. 🙁";
+        this.loadingtext.x = (game.WIDTH / 2 - this.loadingtext.width / 2);
     }
 
     update() {

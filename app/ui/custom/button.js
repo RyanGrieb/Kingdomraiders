@@ -50,6 +50,14 @@ export default class Button extends UIObject {
         this.buttonText.customText.parentGroup = parentGroup;
     }
 
+    setPosition(x, y) {
+        super.setPosition(x, y);
+
+        this.customSprite.x = x;
+        this.customSprite.y = y;
+        this.buttonText.setPosition(x, y);
+    }
+
     get getTexture() {
         return this.texture;
     }

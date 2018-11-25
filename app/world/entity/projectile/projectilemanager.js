@@ -1,6 +1,7 @@
 import game from "index";
 import ProjectileType from "./projectiletype";
 import Projectile from "./projectile";
+import { setTimeout } from "timers";
 
 export default class ProjectileManager {
 
@@ -13,12 +14,13 @@ export default class ProjectileManager {
         setInterval(() => this.sendTargetUpdate(), 100);
 
         //Prevents client from spamming his mouse.
-        this.clientSideMouseDelay = 0;
+       // this.clientSideMouseDelay = 0;
     }
 
     //Clientside methods.
     setClientsideShooter() {
-        if (this.clientSideMouseDelay <= 0)     //If the player isn't already shooting.
+
+       // if (this.clientSideMouseDelay <= 0)     //If the player isn't already shooting.
             if (game.getPlayer.inventory.getWeapon !== undefined)    //If were holding a valid wepaon, lets start shooting!.
                 if (game.getPlayer.inventory.getWeapon.itemType.projectile !== undefined) {
 
@@ -47,8 +49,8 @@ export default class ProjectileManager {
 
                         targetX: game.renderer.plugins.interaction.mouse.global.x,
                         targetY: game.renderer.plugins.interaction.mouse.global.y,
-                        serversideTargetX: mouseX,
-                        serversideTargetY: mouseY,
+                        //serversideTargetX: mouseX,
+                        //serversideTargetY: mouseY,
                     };
                     this.shooters.push(shooterObj);
 
@@ -70,7 +72,7 @@ export default class ProjectileManager {
 
             for (var i = 0; i < this.shooters.length; i++)
                 if (this.shooters[i].id === undefined) {
-                    this.clientSideMouseDelay = this.shooters[i].delay;
+                   // this.clientSideMouseDelay = this.shooters[i].delay;
                     this.shooters.splice(i, 1);
                 }
 
@@ -94,7 +96,7 @@ export default class ProjectileManager {
                 this.removeClientsideShooter();
             return;
         }
-
+        
         var radians = (Math.PI / 180) * (this.camera.rotation);
         var cos = Math.cos(radians);
         var sin = Math.sin(radians);
@@ -270,7 +272,8 @@ export default class ProjectileManager {
 
 
         //Recues our clientSideMouseDelay
-        if (this.clientSideMouseDelay > 0)
-            this.clientSideMouseDelay--;
+       // if (this.clientSideMouseDelay > 0)
+       //     this.clientSideMouseDelay--;
+            
     }
 }

@@ -10,9 +10,7 @@ export default class MonsterManager {
     }
 
     recieveMonsterSpawn(json) {
-        // console.log("Monster :" + json.monsterID + " at " + json.x + "," + json.y);
-        var monster = new Monster(json.monsterID, MonsterType.getMonsterFromName(json.name), json.x, json.y);
-
+        var monster = new Monster(json.monsterID, MonsterType.getMonsterFromName(json.name), json.health, json.x, json.y);
         game.getEntityMap.entityMap.push(monster);
     }
 
@@ -34,4 +32,42 @@ export default class MonsterManager {
         }
     }
 
+    recieveSetHealth(json) {
+        for (var i = 0; i < game.getEntityMap.entityMap.length; i++) {
+            if (game.getEntityMap.entityMap[i] instanceof Monster)
+                if (game.getEntityMap.entityMap[i].monsterID === json.monsterID)
+                    game.getEntityMap.entityMap[i].setHealth(json.health);
+        }
+    }
+
+    recieveKillMonster(json) {
+        for (var i = 0; i < game.getEntityMap.entityMap.length; i++) {
+            if (game.getEntityMap.entityMap[i] instanceof Monster)
+                if (game.getEntityMap.entityMap[i].monsterID === json.monsterID) {
+                    game.getEntityMap.entityMap[i].kill();
+                    game.getEntityMap.entityMap.splice(i, 1);
+                }
+
+        }
+    }
+
+    getMonsterFromLocation(x, y, w, h) {
+        for (let i = 0; i < 4; i++) {
+            //Add all four corners of the collider.
+            let xCorner = (i == 0 || i == 2) ? (x) : (x + 32);
+            let yCorner = (i == 0 || i == 1) ? (y) : (y + 32);
+
+            //TODO: add monster collider.
+            for (let i = 0; i < game.getEntityMap.entityMap.length; i++)
+                if (game.getEntityMap.entityMap[i] instanceof Monster) {
+                    var monster = game.getEntityMap.entityMap[i];
+                    if (xCorner > monster.x && xCorner < (monster.x + monster.w))
+                        if (yCorner > monster.y && yCorner < (monster.y + monster.h)) {
+                            return monster;
+                        }
+
+                }
+        }
+        return undefined;
+    }
 }

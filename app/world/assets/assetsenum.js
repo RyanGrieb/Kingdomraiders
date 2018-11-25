@@ -11,8 +11,9 @@ const AssetsEnum = {
 
         INVENTORY_OVERLAY: { path: "assets/images/ui/inventoryOverlay.png" },
         INVENTORY_BACKGROUND: { path: "assets/images/ui/playerInventory.png" },
-        PLAYER_HEALTHBAR: { path: "assets/images/ui/healthbarBackground.png" },
-        PLAYER_MANABAR: { path: "assets/images/ui/manabar.png" },
+        RED_HEALTHBAR: { path: "assets/images/ui/redhealthbar.png" },
+        GREEN_HEALTHBAR: { path: "assets/images/ui/greenhealthbar.png" },
+        MANABAR: { path: "assets/images/ui/manabar.png" },
 
 
         //PLAYER

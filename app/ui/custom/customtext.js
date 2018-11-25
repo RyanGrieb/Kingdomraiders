@@ -50,6 +50,13 @@ export default class CustomText extends UIObject {
         // this.customText.setOrigin(0.5, 0.5);
     }
 
+    setPosition(x, y) {
+        super.setPosition(x, y);
+        
+        this.customText.x = x;
+        this.customText.y = y;
+    }
+
     kill() {
         this.customText.destroy({ texture: true, baseTexture: true });
     }
