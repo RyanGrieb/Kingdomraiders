@@ -9,7 +9,7 @@ export default class MouseInput {
     constructor() {
 
         //On mouse clck, call..
-        $("body").mousedown(() => this.onMouseClick());
+        $("body").mousedown((e) => this.onMouseClick(e));
         $("body").mouseup(() => this.onMouseRelease());
         $("body").mouseleave(() => this.onMouseLeave());
         window.onresize = () => this.onWindowResize();
@@ -42,14 +42,17 @@ export default class MouseInput {
         TextBox.onHover();
     }
 
-    onMouseClick() {
+    onMouseClick(event) {
         TextBox.onClick();
 
         if (game.getPlayer.inGame) {
             game.getPlayer.inventory.onMouseClick();
 
             this.enableBuild();
-            this.fireProjectile();
+
+            //Specficily a left click
+            if (event.which === 1)
+                this.fireProjectile();
         }
     }
 
@@ -70,8 +73,8 @@ export default class MouseInput {
     }
 
     onWindowResize() {
-       // game.WIDTH = $("body").innerWidth();
-       // game.HEIGHT = $("body").innerHeight();
+        // game.WIDTH = $("body").innerWidth();
+        // game.HEIGHT = $("body").innerHeight();
 
     }
 

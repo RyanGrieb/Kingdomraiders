@@ -3,6 +3,8 @@ import TextBox from "ui/custom/textbox";
 import game from "index";
 import LoginWindow from "../../../ui/window/types/loginwindow";
 import EscapeWindow from "../../../ui/window/types/escapewindow";
+import MenuScreen from "../../../ui/scene/menuscreen";
+import GameScreen from "../../../ui/scene/gamescreen";
 
 export default class KeyboardInput {
     constructor() {
@@ -78,6 +80,13 @@ export default class KeyboardInput {
                 game.getPlayer.playerChat.sendMessage();
             }
         }
+
+        //debug
+        //  if(e.key == "y")
+        //  game.getUI.setScreen(new MenuScreen());
+        //
+        //  if(e.key == "u")
+        //  game.getUI.setScreen(new GameScreen());
 
     }
 

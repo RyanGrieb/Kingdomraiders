@@ -12,6 +12,10 @@ export default class PlayerMovement {
         this.previousX = 0;
         this.previousY = 0;
 
+        //Server side location 
+        this.serverSideX = 0;
+        this.serverSideY = 0;
+
         //The Players current velocity..
         this.velocity = {
             x: 0,
@@ -45,6 +49,11 @@ export default class PlayerMovement {
             Player.prototype.spawnX = x;
             Player.prototype.spawnY = y;
         }
+    }
+
+    setServerSidePosition(x, y) {
+        this.serverSideX = x;
+        this.serverSideY = y;
     }
 
 
@@ -278,56 +287,13 @@ export default class PlayerMovement {
 
 
         //Collision (TODO: SEPERATE METHOD)
-        var collider = game.getPlayer.entity.collider;
-        var currentX = game.getPlayer.getX;
-        var currentY = game.getPlayer.getY;
+        var playerCollider = game.getPlayer.entity.collider;
+        //console.log(playerCollider.x);
 
-        var tilesUpDown = [];
-        var tilesLeftRight = [];
-
-        for (var i = 0; i < 4; i++) {
-            //Add all four corners of the collider.
-            var colliderXOffset = (i == 0 || i == 2) ? (collider.x) : (collider.x + collider.w);
-            var colliderYOffset = (i == 0 || i == 1) ? (collider.y) : (collider.y + collider.h);
-
-            if (game.getTileGrid.getChunkFromLocation(currentX, currentY) !== undefined) {
-
-                tilesUpDown.push(game.getTileGrid.getTileFromLocation(colliderXOffset, (colliderYOffset + offsetY)));
-                tilesLeftRight.push(game.getTileGrid.getTileFromLocation((colliderXOffset + offsetX), colliderYOffset));
-            }
-        }
-
-
-        for (var i = 0; i < tilesUpDown.length; i++)
-            if (tilesUpDown[i] instanceof Entity)
-                offsetY = 0;
-            else
-                if (tilesUpDown[i] !== undefined)
-                    if (tilesUpDown[i].tileType.collision || tilesUpDown[i].tileType.collision === undefined) {
-                        var tileY = tilesUpDown[i].y + 32;
-
-                        offsetY = 0;
-                    }
-
-
-        for (var i = 0; i < tilesLeftRight.length; i++)
-            if (tilesLeftRight[i] instanceof Entity)
-                offsetX = 0;
-            else
-                if (tilesLeftRight[i] !== undefined)
-                    if (tilesLeftRight[i].tileType.collision || tilesLeftRight[i].tileType.collision === undefined) {
-                        //Find better way to tell which side of the tile we want
-                        //!!!!!!! maybe a method tile.getXFromSide(,colliderY)??????!!!!!!!!!!!!!!!!!
-                        var tileX = (offsetX < 0) ? tilesLeftRight[i].x + 32 : tilesLeftRight[i].x;
-
-                        //Figure out why tilesUpDown gets called when we collide right.
-                        // offsetX = tileX - collider.x;
-                        offsetX = 0;
-
-                    }
+        var velocity = game.getPlayer.entity.checkCollision(offsetX, offsetY);
 
         //Instead of setting velocity we just chang our x&y values here, b/c we don't want to move the customsprite insdie.
-        game.getPlayer.entity.setGameVelocity(offsetX, offsetY);
+        game.getPlayer.entity.setGameVelocity(velocity.x, velocity.y);
         //game.getPlayer.entity.setVelocity(offsetX, offsetY);
     }
 

@@ -112,54 +112,59 @@ export default class Entity {
         this.rotation = rotation;
     }
 
-
-    checkCollision(x, y) {
+    checkCollision(velX, velY) {
         this.collider.collided = false;
-        var velocity = { x: x, y: y };
-        //Collision (TODO: SEPERATE METHOD)
+        var velocity = { x: velX, y: velY };
 
-        var tilesUpDown = [];
-        var tilesLeftRight = [];
 
-        for (var i = 0; i < 4; i++) {
-            //Add all four corners of the collider.
-            var colliderXOffset = (i == 0 || i == 2) ? (this.collider.x) : (this.collider.x + this.collider.w);
-            var colliderYOffset = (i == 0 || i == 1) ? (this.collider.y) : (this.collider.y + this.collider.h);
+        //Scans surrounding tiles based on width&height.
+        for (var cX = -this.w * 2; cX < this.w * 2; cX += 32)
+            for (var cY = -this.h * 2; cY < this.h * 2; cY += 32) {
 
-            if (game.getTileGrid.getChunkFromLocation(this.x, this.y) !== undefined) {
+                var tile = game.getTileGrid.getTileFromLocation((this.x + cX), (this.y + cY));
+                if (tile === undefined)
+                    continue;
+                //Determine if we use a collider or not. (Kindaof a shitty way to check but more organized).
+                var tileX = (tile.collider === undefined) ? tile.x : tile.collider.x;
+                var tileY = (tile.collider === undefined) ? tile.y : tile.collider.y;
+                var tileW = (tile.collider === undefined) ? tile.w : tile.collider.w;
+                var tileH = (tile.collider === undefined) ? tile.h : tile.collider.h;
 
-                tilesUpDown.push(game.getTileGrid.getTileFromLocation(colliderXOffset, (colliderYOffset + velocity.y)));
-                tilesLeftRight.push(game.getTileGrid.getTileFromLocation((colliderXOffset + velocity.x), colliderYOffset));
-            }
-        }
-        //Todo: remove the repeating things.
-        for (var i = 0; i < tilesUpDown.length; i++)
-            if (tilesUpDown[i] instanceof Entity) {
-                velocity.y = 0;
-                this.collider.collided = true;
-            }
-            else
-                if (tilesUpDown[i] !== undefined)
-                    if (tilesUpDown[i].tileType.collision) {
+                var isProjectile = this.type.name.includes("PROJECTILE");
 
-                        velocity.y = 0;
-                        this.collider.collided = true;
 
+                //If we collided to the left/right.
+                if (this.collider.x + velX < (tileX + tileW) && (this.collider.x + this.collider.w + velX) > tileX)
+                    if (this.collider.y < (tileY + tileH) && (this.collider.y + this.collider.h) > tileY) {
+                        
+                        if (tile instanceof Entity) {
+                            velocity.x = 0;
+                            this.collider.collided = true;
+                            break;
+                        } else
+                            if (tile.tileType.collision || (!isProjectile && tile.tileType.collision === undefined)) { //If it's a normal tile, make sure to check if we allow collision on it?
+                                velocity.x = 0;
+                                this.collider.collided = true;
+                                break;
+                            }
                     }
+                    else //If we collided top & bottom
+                        if (this.collider.x < (tileX + tileW) && (this.collider.x + this.collider.w) > tileX)
+                            if (this.collider.y + velY < (tileY + tileH) && (this.collider.y + this.collider.h + velY) > tileY) {
 
-        for (var i = 0; i < tilesLeftRight.length; i++)
-            if (tilesLeftRight[i] instanceof Entity) {
-                velocity.x = 0;
-                this.collider.collided = true;
+                                if (tile instanceof Entity) {
+                                    velocity.y = 0;
+                                    this.collider.collided = true;
+                                    break;
+                                } else
+                                    if (tile.tileType.collision || (!isProjectile && tile.tileType.collision === undefined)) { //If it's a normal tile, make sure to check if we allow collision on it?
+                                        velocity.y = 0;
+                                        this.collider.collided = true;
+                                        break;
+                                    }
+                            }
+
             }
-            else
-                if (tilesLeftRight[i] !== undefined)
-                    if (tilesLeftRight[i].tileType.collision) {
-
-                        velocity.x = 0;
-                        this.collider.collided = true;
-
-                    }
 
         return velocity;
     }
@@ -175,6 +180,7 @@ export default class Entity {
 
     kill() {
         this.sprite.kill();
+        this.collider = undefined;
     }
 
     update() {

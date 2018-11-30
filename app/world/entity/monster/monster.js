@@ -5,6 +5,8 @@ import AssetEnum from "../../assets/assetsenum";
 import { setTimeout } from "timers";
 import { togglePauseAll } from "pixi-sound";
 import CustomSprite from "../../../ui/custom/customsprite";
+import Player from "../../../player/player";
+import MPPlayer from "../../../player/mpplayer/mpplayer";
 
 export default class Monster extends Entity {
     constructor(monsterID, type, health, x, y) {
@@ -34,16 +36,13 @@ export default class Monster extends Entity {
             this.sprite.setAnimation(type.animation.tick, type.animation.cycles);
         }
 
-        this.targetPlayer = undefined;
-        this.finalTargetX = undefined;
-        this.finalTargetY = undefined;
+        this.targetX = undefined;
+        this.targetY = undefined;
     }
 
     //Recieve the order to track a player. (We don't look for the player clientside using our position due to latency).
     setPlayerToTrack(id) {
         //We add a delay to preven overestimatation from the client.
-        //setTimeout(() => {
-
         for (var i = 0; i < game.getEntityMap.getAllPlayers.length; i++) {
             if (game.getEntityMap.getAllPlayers[i].id === id) {
                 this.targetPlayer = game.getEntityMap.getAllPlayers[i];
@@ -64,9 +63,15 @@ export default class Monster extends Entity {
         if (this.targetPlayer === undefined && this.finalTargetX === undefined && this.finalTargetY === undefined)
             return;
 
+        //Checks if we use the players serverside position, or just a mpplayer position. (mpplayer's position is already serverside).
+        if (this.targetPlayer !== undefined) {
+            var playerX = (this.targetPlayer instanceof MPPlayer) ? this.targetPlayer.getX : this.targetPlayer.movement.serverSideX;
+            var playerY = (this.targetPlayer instanceof MPPlayer) ? this.targetPlayer.getY : this.targetPlayer.movement.serverSideY;
+        }
+
         //Switches between targetplayer & the final target if there is one.
-        var targetX = (this.finalTargetX === undefined) ? this.targetPlayer.getX - this.w / 2 : this.finalTargetX;
-        var targetY = (this.finalTargetY === undefined) ? this.targetPlayer.getY - this.h / 2 : this.finalTargetY;
+        var targetX = (this.finalTargetX === undefined) ? playerX - this.w / 2 : this.finalTargetX;
+        var targetY = (this.finalTargetY === undefined) ? playerY - this.h / 2 : this.finalTargetY;
 
         var distanceX = (targetX - this.x);
         var distanceY = (targetY - this.y);
@@ -109,6 +114,8 @@ export default class Monster extends Entity {
                 this.finalTargetY = undefined;
             }
         }
+
+       //console.log(Math.round(this.x) + "," + Math.round(this.y));
     }
 
     setHealth(amount) {

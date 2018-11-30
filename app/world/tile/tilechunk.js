@@ -191,12 +191,24 @@ export default class TileChunk {
     //Figure out why I need to subtract 64 to get the correct position
     getTileFromLocation(x, y) {
         //Top Tiles
-        for (var i = 0; i < this.topEntities.length; i++)
+        /*for (var i = 0; i < this.topEntities.length; i++)
             if (this.topEntities[i].collider !== undefined) {
                 if (x > this.topEntities[i].collider.x && x < this.topEntities[i].collider.x + this.topEntities[i].collider.w &&
                     y > this.topEntities[i].collider.y && y < this.topEntities[i].collider.y + this.topEntities[i].collider.h)
                     return this.topEntities[i];
+            }*/
+
+        for (var i = 0; i < this.topEntities.length; i++) {
+            var topEntity = this.topEntities[i];
+
+            if (topEntity.collider !== undefined) {
+
+                if (x > topEntity.x && x < (topEntity.x + topEntity.w))
+                    if (y > topEntity.y && y < (topEntity.y + topEntity.h))
+                        return topEntity;
             }
+        }
+
 
         //Bottom Tiles
         for (var i = 0; i < this.tiles.length; i++) {

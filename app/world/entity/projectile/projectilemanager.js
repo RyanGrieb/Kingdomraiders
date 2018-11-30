@@ -14,56 +14,56 @@ export default class ProjectileManager {
         setInterval(() => this.sendTargetUpdate(), 100);
 
         //Prevents client from spamming his mouse.
-       // this.clientSideMouseDelay = 0;
+        // this.clientSideMouseDelay = 0;
     }
 
     //Clientside methods.
     setClientsideShooter() {
 
-       // if (this.clientSideMouseDelay <= 0)     //If the player isn't already shooting.
-            if (game.getPlayer.inventory.getWeapon !== undefined)    //If were holding a valid wepaon, lets start shooting!.
-                if (game.getPlayer.inventory.getWeapon.itemType.projectile !== undefined) {
+        // if (this.clientSideMouseDelay <= 0)     //If the player isn't already shooting.
+        if (game.getPlayer.inventory.getWeapon !== undefined)    //If were holding a valid wepaon, lets start shooting!.
+            if (game.getPlayer.inventory.getWeapon.itemType.projectile !== undefined) {
 
 
-                    var radians = (Math.PI / 180) * (this.camera.rotation);
-                    var cos = Math.cos(radians);
-                    var sin = Math.sin(radians);
+                var radians = (Math.PI / 180) * (this.camera.rotation);
+                var cos = Math.cos(radians);
+                var sin = Math.sin(radians);
 
-                    //Basic mouse pos.
-                    var mX = game.renderer.plugins.interaction.mouse.global.x;
-                    var mY = game.renderer.plugins.interaction.mouse.global.y;
+                //Basic mouse pos.
+                var mX = game.renderer.plugins.interaction.mouse.global.x;
+                var mY = game.renderer.plugins.interaction.mouse.global.y;
 
-                    //Mouse /w rotation offset.
-                    var mouseX = this.camera.position.x + (cos * (mX - this.camera.position.x) + sin * (mY - this.camera.position.y));
-                    var mouseY = this.camera.position.y + (-sin * (mX - this.camera.position.x) + cos * (mY - this.camera.position.y));
+                //Mouse /w rotation offset.
+                var mouseX = this.camera.position.x + (cos * (mX - this.camera.position.x) + sin * (mY - this.camera.position.y));
+                var mouseY = this.camera.position.y + (-sin * (mX - this.camera.position.x) + cos * (mY - this.camera.position.y));
 
-                    //We convert our mousevalue to a gameX&Y value to be converted back from the other clients online.
-                    var targetX = (mouseX + (game.getPlayer.getX - this.camera.position.x)) + 21;
-                    var targetY = (mouseY + (game.getPlayer.getY - this.camera.position.y)) + 21;
+                //We convert our mousevalue to a gameX&Y value to be converted back from the other clients online.
+                var targetX = (mouseX + (game.getPlayer.getX - this.camera.position.x)) + 21;
+                var targetY = (mouseY + (game.getPlayer.getY - this.camera.position.y)) + 21;
 
-                    var shooterObj = {
-                        id: undefined,
-                        projectile: game.getPlayer.inventory.getWeapon.itemType.projectile,
-                        delay: game.getPlayer.playerProfile.convertDexToDelay(game.getPlayer.playerProfile.stats.dex),
-                        currentDelay: game.getPlayer.playerProfile.convertDexToDelay(game.getPlayer.playerProfile.stats.dex),
+                var shooterObj = {
+                    id: undefined,
+                    projectile: game.getPlayer.inventory.getWeapon.itemType.projectile,
+                    delay: game.getPlayer.playerProfile.convertDexToDelay(game.getPlayer.playerProfile.stats.dex),
+                    currentDelay: game.getPlayer.playerProfile.convertDexToDelay(game.getPlayer.playerProfile.stats.dex),
 
-                        targetX: game.renderer.plugins.interaction.mouse.global.x,
-                        targetY: game.renderer.plugins.interaction.mouse.global.y,
-                        //serversideTargetX: mouseX,
-                        //serversideTargetY: mouseY,
-                    };
-                    this.shooters.push(shooterObj);
+                    targetX: game.renderer.plugins.interaction.mouse.global.x,
+                    targetY: game.renderer.plugins.interaction.mouse.global.y,
+                    //serversideTargetX: mouseX,
+                    //serversideTargetY: mouseY,
+                };
+                this.shooters.push(shooterObj);
 
-                    var msg = {
-                        type: "AddShooter",
-                        entityType: "Player",
-                        targetX: targetX,
-                        targetY: targetY,
-                    };
+                var msg = {
+                    type: "AddShooter",
+                    entityType: "Player",
+                    targetX: targetX,
+                    targetY: targetY,
+                };
 
-                    game.getNetwork.sendMessage(JSON.stringify(msg));
+                game.getNetwork.sendMessage(JSON.stringify(msg));
 
-                }
+            }
     }
 
     removeClientsideShooter() {
@@ -72,7 +72,7 @@ export default class ProjectileManager {
 
             for (var i = 0; i < this.shooters.length; i++)
                 if (this.shooters[i].id === undefined) {
-                   // this.clientSideMouseDelay = this.shooters[i].delay;
+                    // this.clientSideMouseDelay = this.shooters[i].delay;
                     this.shooters.splice(i, 1);
                 }
 
@@ -96,7 +96,7 @@ export default class ProjectileManager {
                 this.removeClientsideShooter();
             return;
         }
-        
+
         var radians = (Math.PI / 180) * (this.camera.rotation);
         var cos = Math.cos(radians);
         var sin = Math.sin(radians);
@@ -118,8 +118,8 @@ export default class ProjectileManager {
         var offsettedTargetY = (mouseY + (game.getPlayer.getY - this.camera.position.y)) + 21;
 
         for (var i = 0; i < this.shooters.length; i++)
-            if (this.shooters[i].id === undefined)
-                if (this.shooters[i].serversideTargetX !== mouseX || this.shooters[i].serversideTargetY !== mouseY) {
+            if (this.shooters[i].id === undefined) //TODO; make this more effiecient, wehre the server translate the mouse pos /w screen size
+                if (this.shooters[i].serversideTargetX !== offsettedTargetX || this.shooters[i].serversideTargetY !== offsettedTargetY) {
                     var msg = {
                         type: "ShooterUpdate",
                         entityType: "Player",
@@ -131,8 +131,8 @@ export default class ProjectileManager {
 
                     this.shooters[i].targetX = Math.round(mX);
                     this.shooters[i].targetY = Math.round(mY);
-                    this.shooters[i].serversideTargetX = mouseX;
-                    this.shooters[i].serversideTargetY = mouseY;
+                    this.shooters[i].serversideTargetX = offsettedTargetX;
+                    this.shooters[i].serversideTargetY = offsettedTargetY;
                 }
     }
 
@@ -272,8 +272,8 @@ export default class ProjectileManager {
 
 
         //Recues our clientSideMouseDelay
-       // if (this.clientSideMouseDelay > 0)
-       //     this.clientSideMouseDelay--;
-            
+        // if (this.clientSideMouseDelay > 0)
+        //     this.clientSideMouseDelay--;
+
     }
 }

@@ -9,6 +9,8 @@ export default class Tile {
         this.texture = tileType.name;
         this.x = x;
         this.y = y;
+        this.w = 32;
+        this.h = 32;
 
         this.sprite = new PIXI.Sprite(AssetEnum.getObjectFromName("TILE_" + tileType.name).texture);
         this.sprite.x = x;

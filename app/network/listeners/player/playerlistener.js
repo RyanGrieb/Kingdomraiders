@@ -17,8 +17,14 @@ export default class PlayerListener {
                 this.handleJoinResponse(json);
                 break;
 
+            //SETS x,y position of player
             case "PositionUpdate":
                 this.handlePositionUpdate(json);
+                break;
+
+            //Recives x,y server side position 
+            case "SSMovement":
+                this.handleServerSideMovement(json);
                 break;
 
             case "ChatMessage":
@@ -72,6 +78,10 @@ export default class PlayerListener {
 
     handlePositionUpdate(json) {
         game.getPlayer.movement.updatePosition(json.x, json.y);
+    }
+
+    handleServerSideMovement(json) {
+        game.getPlayer.movement.setServerSidePosition(json.x, json.y);
     }
 
     handleChatMessage(json) {

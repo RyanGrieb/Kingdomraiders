@@ -83,7 +83,7 @@ export default class Projectile extends Entity {
     }
 
     update() {
-        //console.log(Math.round(this.sprite.collider.x) + "," + Math.round(this.sprite.collider.y));
+        //console.log(Math.round(this.collider.x) + "," + Math.round(this.collider.y));
         //console.log(Math.round(this.sprite.getGamePositionX) + "," + Math.round(this.sprite.getGamePositionY));
         super.update();
 
