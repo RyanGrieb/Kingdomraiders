@@ -190,13 +190,7 @@ export default class TileChunk {
 
     //Figure out why I need to subtract 64 to get the correct position
     getTileFromLocation(x, y) {
-        //Top Tiles
-        /*for (var i = 0; i < this.topEntities.length; i++)
-            if (this.topEntities[i].collider !== undefined) {
-                if (x > this.topEntities[i].collider.x && x < this.topEntities[i].collider.x + this.topEntities[i].collider.w &&
-                    y > this.topEntities[i].collider.y && y < this.topEntities[i].collider.y + this.topEntities[i].collider.h)
-                    return this.topEntities[i];
-            }*/
+        var tiles = [];
 
         for (var i = 0; i < this.topEntities.length; i++) {
             var topEntity = this.topEntities[i];
@@ -205,7 +199,7 @@ export default class TileChunk {
 
                 if (x > topEntity.x && x < (topEntity.x + topEntity.w))
                     if (y > topEntity.y && y < (topEntity.y + topEntity.h))
-                        return topEntity;
+                        tiles.push(topEntity);
             }
         }
 
@@ -213,11 +207,10 @@ export default class TileChunk {
         //Bottom Tiles
         for (var i = 0; i < this.tiles.length; i++) {
             if (Math.abs(x - this.tiles[i].x) < 32 && Math.abs(y - this.tiles[i].y) < 32)
-                return this.tiles[i];
+                tiles.push(this.tiles[i]);
         }
 
-
-        return undefined;
+        return tiles;
     }
 
     get outsideScreen() {

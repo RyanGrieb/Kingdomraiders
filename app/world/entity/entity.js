@@ -1,6 +1,7 @@
 import game from "index";
 import AssetsEnum from "../assets/assetsenum";
 import CustomSprite from "../../ui/custom/customsprite";
+import Tile from "../tile/tile";
 
 export default class Entity {
 
@@ -116,54 +117,59 @@ export default class Entity {
         this.collider.collided = false;
         var velocity = { x: velX, y: velY };
 
+        //Problem: get tile from locations incorretly returns the entity ontop of others tiles
+        //Solution: Have the get tile from location return an array of tiles & entities.
 
         //Scans surrounding tiles based on width&height.
         for (var cX = -this.w * 2; cX < this.w * 2; cX += 32)
             for (var cY = -this.h * 2; cY < this.h * 2; cY += 32) {
 
-                var tile = game.getTileGrid.getTileFromLocation((this.x + cX), (this.y + cY));
-                if (tile === undefined)
+                var tiles = game.getTileGrid.getTileFromLocation((this.x + cX), (this.y + cY));
+                if (tiles === undefined)
                     continue;
-                //Determine if we use a collider or not. (Kindaof a shitty way to check but more organized).
-                var tileX = (tile.collider === undefined) ? tile.x : tile.collider.x;
-                var tileY = (tile.collider === undefined) ? tile.y : tile.collider.y;
-                var tileW = (tile.collider === undefined) ? tile.w : tile.collider.w;
-                var tileH = (tile.collider === undefined) ? tile.h : tile.collider.h;
+                    
+                for (var i = 0; i < tiles.length; i++) {
+                    var tile = tiles[i];
+                    //Determine if we use a collider or not. (Kindaof a shitty way to check but more organized).
+                    var tileX = (tile.collider === undefined) ? tile.x : tile.collider.x;
+                    var tileY = (tile.collider === undefined) ? tile.y : tile.collider.y;
+                    var tileW = (tile.collider === undefined) ? tile.w : tile.collider.w;
+                    var tileH = (tile.collider === undefined) ? tile.h : tile.collider.h;
 
-                var isProjectile = this.type.name.includes("PROJECTILE");
+                    var isProjectile = this.type.name.includes("PROJECTILE");
 
+                    //If we collided to the left/right.
+                    if (this.collider.x + velX < (tileX + tileW) && (this.collider.x + this.collider.w + velX) > tileX)
+                        if (this.collider.y < (tileY + tileH) && (this.collider.y + this.collider.h) > tileY) {
 
-                //If we collided to the left/right.
-                if (this.collider.x + velX < (tileX + tileW) && (this.collider.x + this.collider.w + velX) > tileX)
-                    if (this.collider.y < (tileY + tileH) && (this.collider.y + this.collider.h) > tileY) {
-                        
-                        if (tile instanceof Entity) {
-                            velocity.x = 0;
-                            this.collider.collided = true;
-                            break;
-                        } else
-                            if (tile.tileType.collision || (!isProjectile && tile.tileType.collision === undefined)) { //If it's a normal tile, make sure to check if we allow collision on it?
+                            if (tile instanceof Entity) {
                                 velocity.x = 0;
                                 this.collider.collided = true;
                                 break;
-                            }
-                    }
-                    else //If we collided top & bottom
-                        if (this.collider.x < (tileX + tileW) && (this.collider.x + this.collider.w) > tileX)
-                            if (this.collider.y + velY < (tileY + tileH) && (this.collider.y + this.collider.h + velY) > tileY) {
-
-                                if (tile instanceof Entity) {
-                                    velocity.y = 0;
+                            } else
+                                if (tile.tileType.collision || (!isProjectile && tile.tileType.collision === undefined)) { //If it's a normal tile, make sure to check if we allow collision on it?
+                                    velocity.x = 0;
                                     this.collider.collided = true;
                                     break;
-                                } else
-                                    if (tile.tileType.collision || (!isProjectile && tile.tileType.collision === undefined)) { //If it's a normal tile, make sure to check if we allow collision on it?
+                                }
+                        }
+                        else //If we collided top & bottom
+                            if (this.collider.x < (tileX + tileW) && (this.collider.x + this.collider.w) > tileX)
+                                if (this.collider.y + velY < (tileY + tileH) && (this.collider.y + this.collider.h + velY) > tileY) {
+
+                                    if (tile instanceof Entity) {
                                         velocity.y = 0;
                                         this.collider.collided = true;
                                         break;
-                                    }
-                            }
+                                    } else
+                                        if (tile.tileType.collision || (!isProjectile && tile.tileType.collision === undefined)) { //If it's a normal tile, make sure to check if we allow collision on it?
+                                            velocity.y = 0;
+                                            this.collider.collided = true;
+                                            break;
+                                        }
+                                }
 
+                }
             }
 
         return velocity;
