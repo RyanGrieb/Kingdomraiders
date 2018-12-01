@@ -84,6 +84,7 @@ const AssetsEnum = {
         MONSTER_DEMON1: { path: "assets/images/monster/demon.png" },
         MONSTER_DEMON2: { path: "assets/images/monster/demon2.png" },
         MONSTER_GOUL: { path: "assets/images/monster/goul.png" },
+        MONSTER_MOUSE: { path: "assets/images/monster/mouse.png" },
         MONSTER_DRAGON: { path: "assets/images/monster/dragon.png" },
 
         //Projectile

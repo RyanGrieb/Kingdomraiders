@@ -23,6 +23,14 @@ export default class FPSOverlay {
 
         this.rotationInfo = (new CustomText("rotationInfo", "Rotation: 0", "#ffffff", 55, 80, 100, 100));
         this.rotationInfo.customText.parentGroup = game.getUI.parentGroup.positive5;
+
+
+        this.pingInfo = (new CustomText("pingInfo", "Ping: 0ms", "#ffffff", 200, 80, 100, 100));
+        this.pingInfo.customText.parentGroup = game.getUI.parentGroup.positive5;
+    }
+
+    recieveMessage(length) {
+        this.currentBytes += length;
     }
 
     clearObjects() {
@@ -31,6 +39,7 @@ export default class FPSOverlay {
         this.loadedChunks.kill();
         this.loadedEntities.kill();
         this.rotationInfo.kill();
+        this.pingInfo.kill();
     }
 
     update() {
@@ -45,7 +54,7 @@ export default class FPSOverlay {
         this.loadedChunks.setText("Loaded Chunks: " + game.getTileGrid.tileMap.length);
         //this.loadedEntities.setText("Loaded Entities: " + game.getEntityMap.entityMap.length);
         this.rotationInfo.setText("Rotation: " + game.getUI.getCurrentScreen.getCamera.rotation);
-
+        this.pingInfo.setText("Ping: " + game.getNetwork.latencey.ping + "ms");
     }
 
 }

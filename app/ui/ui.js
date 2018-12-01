@@ -11,6 +11,8 @@ export default class UserInterface {
         this.createParentGroups();
 
         //Universal update method
+        this.lastDeltaTime = Date.now();
+        this.deltaTime = 0;
         game.ticker.add(() => this.update());
 
         //Fix Browser resize offset.
@@ -159,6 +161,16 @@ export default class UserInterface {
 
     update() {
         this.currentScreen.update();
+
+        this.updateDeltaTime();
+    }
+
+    //Delta Time stuff
+    updateDeltaTime() {
+        if (this.lastDeltaTime) {
+            this.deltaTime = (Date.now() - this.lastDeltaTime) / 16.66666;
+        }
+        this.lastDeltaTime = Date.now();
     }
 
     onResize() {

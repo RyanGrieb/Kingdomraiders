@@ -27,28 +27,6 @@ export default class MPPlayer extends Entity {
     }
 
     setPosition(x, y) {
-        //Converts our x value to where we put it on our screen.
-        //var unrotatedXOffset = x + (this.camera.position.x - game.getPlayer.getX);
-        // var unrotatedYOffset = y + (this.camera.position.y - game.getPlayer.getY);
-        // var rotatedXOffset = unrotatedXOffset;
-        // var rotatedYOffset = unrotatedYOffset;
-
-        //Sets our roation around the camera angle. (This is called before update() to prevent glitching due to delay)
-        /*  console.log(this.rotation + "::" + this.camera.rotation);
-          if (this.rotation != this.camera.rotation) {
-              var radians = (Math.PI / 180) * (this.rotation - this.camera.rotation);
-  
-              //Sprite rotatation offset
-              var cos = Math.cos(radians);
-              var sin = Math.sin(radians);
-              rotatedXOffset = this.camera.position.x + (cos * (unrotatedXOffset - this.camera.position.x) + sin * (unrotatedYOffset - this.camera.position.y));
-              rotatedYOffset = this.camera.position.y + (-sin * (unrotatedXOffset - this.camera.position.x) + cos * (unrotatedYOffset - this.camera.position.y))
-  
-              this.rotation = this.camera.rotation;
-          }*/
-
-        //console.log(rotatedXOffset + "," + rotatedYOffset);
-
         this.sprite.setPosition(x, y);
     }
 

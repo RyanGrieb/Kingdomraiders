@@ -28,8 +28,9 @@ export default class PlayerMovement {
             right: false
         }
 
-        //Update movement every 100ms.
-        setInterval(this.sendMovementUpdate, 100);
+
+        setInterval(this.sendMovementUpdate, 100); //Update movement every 100ms.
+        setInterval(() => this.updateServerSidePosition(), 100); //Mirrors the server position of our player.
 
         //Animation tick
         this.animationTick = 0;
@@ -51,11 +52,11 @@ export default class PlayerMovement {
         }
     }
 
-    setServerSidePosition(x, y) {
-        this.serverSideX = x;
-        this.serverSideY = y;
-    }
 
+    updateServerSidePosition() {
+        this.serverSideX = game.getPlayer.getX;
+        this.serverSideY = game.getPlayer.getY;
+    }
 
     handleInput(e) {
         switch (e.keyCode) {

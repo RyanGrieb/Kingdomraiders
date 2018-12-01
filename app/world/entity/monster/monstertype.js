@@ -13,7 +13,7 @@ const MonsterType = {
         },
         // DRAGON: { name: "MONSTER_DRAGON", speed: 2, w: 256, h: 256, },
         GOUL: {
-            name: "MONSTER_GOUL", speed: 2, w: 96, h: 96,
+            name: "MONSTER_GOUL", w: 96, h: 96,
 
             stats: {
                 health: 100,
@@ -21,6 +21,14 @@ const MonsterType = {
             }
         },
 
+        MOUSE: {
+            name: "MONSTER_MOUSE", w: 32, h: 32,
+
+            stats: {
+                health: 100,
+                speed: 3,
+            }
+        },
 
 
         ERROR: { name: "ERROR" },

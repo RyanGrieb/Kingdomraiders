@@ -28,6 +28,13 @@ export default class Button extends UIObject {
                 this.playSound();
         });
 
+        //Mobile toutch
+        this.customSprite.on("touchend", (event) => {
+            var clicked = game.getPlayer.getInput.getButtonInput.checkButton(this.name);
+            if (clicked)
+                this.playSound();
+        });
+
 
         //BUTTON TEXT
         this.buttonText = new CustomText("txtBtn" + name, text, "#ffffff", x + w / 2, y + h / 2, txtW, txtH);

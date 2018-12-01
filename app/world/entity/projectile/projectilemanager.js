@@ -70,12 +70,17 @@ export default class ProjectileManager {
         //If any of our windows are open, don't send a remove packet, unless we are shooting still.
         if (game.getUI.isAllWindowsClosed && !game.getPlayer.inventory.windowOpen || this.getShooterByID(undefined) !== undefined) {
 
+            var clientsideShooterIndex = undefined;
             for (var i = 0; i < this.shooters.length; i++)
-                if (this.shooters[i].id === undefined) {
-                    // this.clientSideMouseDelay = this.shooters[i].delay;
-                    this.shooters.splice(i, 1);
-                }
+                if (this.shooters[i].id === undefined)
+                    clientsideShooterIndex = i;
 
+
+            //If we already remove our clientside shooter, just stop.
+            if (clientsideShooterIndex === undefined)
+                return;
+
+            this.shooters.splice(clientsideShooterIndex, 1);
             var msg = {
                 type: "RemoveShooter",
                 entityType: "Player",
@@ -166,6 +171,7 @@ export default class ProjectileManager {
             targetX: targetXOffset,
             targetY: targetYOffset,
         };
+
         this.shooters.push(shooterObj);
 
     }
