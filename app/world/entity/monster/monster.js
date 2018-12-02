@@ -56,6 +56,8 @@ export default class Monster extends Entity {
         this.targetPlayer = undefined;
         this.finalTargetX = json.x;
         this.finalTargetY = json.y;
+
+        game.getEntityMap.projectileManager.removeShooter("Monster", this.monsterID);
     }
 
     trackPlayer() {
@@ -115,7 +117,17 @@ export default class Monster extends Entity {
             }
         }
 
-       //console.log(Math.round(this.x) + "," + Math.round(this.y));
+        //console.log(Math.round(this.x) + "," + Math.round(this.y));
+    }
+
+    updateProjectileTarget() {
+        if (this.targetPlayer !== undefined) {
+
+            var targetX = (this.targetPlayer instanceof MPPlayer) ? this.targetPlayer.sprite.customSprite.x : this.targetPlayer.entity.sprite.customSprite.x;
+            var targetY = (this.targetPlayer instanceof MPPlayer) ? this.targetPlayer.sprite.customSprite.y : this.targetPlayer.entity.sprite.customSprite.y;
+
+            game.getEntityMap.projectileManager.setTargetOfEntity("Monster", this.monsterID, targetX, targetY);
+        }
     }
 
     setHealth(amount) {
@@ -160,6 +172,8 @@ export default class Monster extends Entity {
 
     update() {
         super.update();
+
+        this.updateProjectileTarget();
         this.trackPlayer();
     }
 

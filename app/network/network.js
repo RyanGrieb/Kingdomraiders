@@ -7,6 +7,7 @@ import MenuScreen from "../ui/scene/menuscreen";
 import MonsterListener from "./listeners/entity/monsterlistener";
 import LoadingScreen from "../ui/scene/loadingscreen";
 import Latencey from "./latencey";
+import ProjectileListener from "./listeners/entity/projectilelistener";
 
 export default class Network {
     constructor() {
@@ -15,7 +16,7 @@ export default class Network {
         //Our listeners lists
         this.listeners = [];
 
-        this.listeners.push(new PlayerListener(), new AccountListener(), new MapListener(), new MonsterListener());
+        this.listeners.push(new PlayerListener(), new AccountListener(), new MapListener(), new MonsterListener(), new ProjectileListener());
 
         this.latencey = new Latencey();
     }

@@ -43,6 +43,7 @@ export default class ProjectileManager {
 
                 var shooterObj = {
                     id: undefined,
+                    entityType: "Player",
                     projectile: game.getPlayer.inventory.getWeapon.itemType.projectile,
                     delay: game.getPlayer.playerProfile.convertDexToDelay(game.getPlayer.playerProfile.stats.dex),
                     currentDelay: game.getPlayer.playerProfile.convertDexToDelay(game.getPlayer.playerProfile.stats.dex),
@@ -148,7 +149,6 @@ export default class ProjectileManager {
         var sin = Math.sin(radians);
 
         var id = json.id;
-        var mpPlayer = game.getEntityMap.getMPPlayerByID(id);
 
         //Modify our offsets to our targetX&Y
         var targetX = json.targetX;
@@ -165,13 +165,13 @@ export default class ProjectileManager {
 
         var shooterObj = {
             id: id,
+            entityType: json.entityType,
             projectile: ProjectileType.getProjectileFromID(json.projectileID),
             delay: game.getPlayer.playerProfile.convertDexToDelay(json.dex), //Need to change to get it from json.delay.
-            currentDelay: game.getPlayer.playerProfile.convertDexToDelay(json.dex),
+            currentDelay: json.currentDelay,
             targetX: targetXOffset,
             targetY: targetYOffset,
         };
-
         this.shooters.push(shooterObj);
 
     }
@@ -180,7 +180,6 @@ export default class ProjectileManager {
         var radians = (Math.PI / 180) * (this.camera.rotation);
         var cos = Math.cos(radians);
         var sin = Math.sin(radians);
-
 
         //Convert back to a screen position
         var targetX = (json.targetX - (game.getPlayer.getX - this.camera.position.x)) - 21;
@@ -192,16 +191,18 @@ export default class ProjectileManager {
 
 
         for (var i = 0; i < this.shooters.length; i++)
-            if (this.shooters[i].id === json.id) {
-                this.shooters[i].targetX = targetXOffset;
-                this.shooters[i].targetY = targetYOffset;
-            }
+            if (this.shooters[i].entityType === json.entityType)
+                if (this.shooters[i].id === json.id) {
+                    this.shooters[i].targetX = targetXOffset;
+                    this.shooters[i].targetY = targetYOffset;
+                }
     }
 
-    removeShooter(id) {
+    removeShooter(entityType, id) {
         for (var i = 0; i < this.shooters.length; i++)
-            if (this.shooters[i].id === id)
-                this.shooters.splice(i, 1);
+            if (this.shooters[i].entityType === entityType)
+                if (this.shooters[i].id === id)
+                    this.shooters.splice(i, 1);
     }
 
     getShooterByID(id) {
@@ -237,33 +238,61 @@ export default class ProjectileManager {
 
     }
 
-    update() {
+    setTargetOfEntity(entityType, id, targetX, targetY) {
+        for (var i = 0; i < this.shooters.length; i++)
+            if (this.shooters[i].entityType === entityType)
+                if (this.shooters[i].id === id) {
+                    this.shooters[i].targetX = targetX;
+                    this.shooters[i].targetY = targetY;
+                }
+    }
 
+    update() {
         //Fires our shooters projectile every x ms..
         for (var i = 0; i < this.shooters.length; i++) {
             var x = 0;
             var y = 0;
+            var w = 1;
+            var h = 1;
 
-            if (this.shooters[i].id === undefined) {
+            if (this.shooters[i].id === undefined) { //Clientside shooter.
                 x = game.getPlayer.getX;
                 y = game.getPlayer.getY;
+                w = 0;
+                h = 0;
             } else {
 
-                //
-                if (game.getEntityMap.getMPPlayerByID(this.shooters[i].id) === undefined) {
-                    this.removeShooter(this.shooters[i].id);
-                    continue;
+                //MPPlayers shooters
+                if (this.shooters[i].entityType === "Player") {
+                    if (game.getEntityMap.getMPPlayerByID(this.shooters[i].id) === undefined) {
+                        this.removeShooter("Player", this.shooters[i].id);
+                        continue;
+                    }
+
+                    x = game.getEntityMap.getMPPlayerByID(this.shooters[i].id).x;
+                    y = game.getEntityMap.getMPPlayerByID(this.shooters[i].id).y;
+                    w = game.getEntityMap.getMPPlayerByID(this.shooters[i].id).w - 32;
+                    h = game.getEntityMap.getMPPlayerByID(this.shooters[i].id).h - 32;
                 }
 
+                //Monster Shooters
+                if (this.shooters[i].entityType === "Monster") {
+                    if (game.getEntityMap.getMonsterFromID(this.shooters[i].id) === undefined) {
+                        this.removeShooter("Monster", this.shooters[i].id);
+                        continue;
+                    }
 
-                x = game.getEntityMap.getMPPlayerByID(this.shooters[i].id).x;
-                y = game.getEntityMap.getMPPlayerByID(this.shooters[i].id).y;
+                    x = game.getEntityMap.getMonsterFromID(this.shooters[i].id).x;
+                    y = game.getEntityMap.getMonsterFromID(this.shooters[i].id).y;
+                    w = game.getEntityMap.getMonsterFromID(this.shooters[i].id).w - 32;
+                    h = game.getEntityMap.getMonsterFromID(this.shooters[i].id).h - 32;
+                }
             }
 
 
             if (this.shooters[i].currentDelay >= this.shooters[i].delay) {
-                Projectile.fire(this.shooters[i].projectile,
-                    x, y,
+                Projectile.fire(this.shooters[i], this.shooters[i].projectile,
+                    x + w / 2, y + h / 2,
                     this.shooters[i].targetX, this.shooters[i].targetY);
 
                 this.shooters[i].currentDelay = 0;

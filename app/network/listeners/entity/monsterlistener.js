@@ -26,6 +26,10 @@ export default class MonsterListener {
             case "MonsterKill":
             this.handleMonsterKill(json);
             break;
+
+            case "MonsterShoot":
+            this.handleMonsterStartShoot(json);
+            break;
         }
     }
 
@@ -47,5 +51,9 @@ export default class MonsterListener {
 
     handleMonsterKill(json){
         game.getEntityMap.monsterManager.recieveKillMonster(json);
+    }
+
+    handleMonsterStartShoot(json){
+        game.getEntityMap.monsterManager.recieveStartShoot(json);
     }
 }

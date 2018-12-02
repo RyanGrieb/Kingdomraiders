@@ -2,6 +2,7 @@ import game from "index";
 import ProjectileManager from "./projectile/projectilemanager";
 import MonsterManager from "./monster/monstermanager";
 import MPPlayer from "../../player/mpplayer/mpplayer";
+import Monster from "./monster/monster";
 
 export default class EntityMap {
     constructor() {
@@ -39,11 +40,21 @@ export default class EntityMap {
     //MPPlayer
     getMPPlayerByID(id) {
         for (var i = 0; i < this.entityMap.length; i++) {
-            if (this.entityMap[i].type.name.includes("PLAYER")) {
+            if (this.entityMap[i].type.name.includes("PLAYER")) { //We use this to include clientsideplayer.
                 if (this.entityMap[i].id === id)
                     return this.entityMap[i];
             }
         }
+    }
+
+    //Monster
+    getMonsterFromID(id) {
+        for (var i = 0; i < game.getEntityMap.entityMap.length; i++)
+            if (game.getEntityMap.entityMap[i] instanceof Monster)
+                if (game.getEntityMap.entityMap[i].monsterID === id)
+                    return game.getEntityMap.entityMap[i];
+
+        return undefined;
     }
 
     get getAllPlayers() {

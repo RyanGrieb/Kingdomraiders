@@ -50,18 +50,6 @@ export default class PlayerListener {
             case "MPMovementTarget":
                 this.handleMPMovementTarget(json);
                 break;
-
-            case "MPAddShooter":
-                this.handleMPAddShooter(json);
-                break;
-
-            case "MPShooterUpdate":
-                this.handleMPShooterUpdate(json);
-                break;
-
-            case "MPRemoveShooter":
-                this.handleMPRemoveShooter(json);
-                break;
         }
     }
 
@@ -108,22 +96,5 @@ export default class PlayerListener {
         //Move the mpplayer to the target /w velocity.
         if (game.getPlayer.inGame) //temp.. remove later.
             game.getEntityMap.getMPPlayerByID(json.id).recivePosition(json);
-    }
-
-    handleMPAddShooter(json) {
-        //Server should be checking for us !!!
-        if (game.getPlayer.inGame)
-            game.getEntityMap.projectileManager.recieveShooter(json);
-
-    }
-
-    handleMPShooterUpdate(json) {
-        if (game.getPlayer.inGame)
-            game.getEntityMap.projectileManager.recieveShooterUpdate(json);
-    }
-
-    handleMPRemoveShooter(json) {
-        if (game.getPlayer.inGame)
-            game.getEntityMap.projectileManager.removeShooter(json.id);
     }
 }

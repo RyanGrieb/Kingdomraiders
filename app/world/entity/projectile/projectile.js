@@ -3,11 +3,15 @@ import Entity from "../entity";
 import game from "index";
 import ProjectileType from "./projectiletype";
 import { setInterval, clearInterval } from "timers";
+import Monster from "../monster/monster";
 
 export default class Projectile extends Entity {
 
-    constructor(projType, x, y, targetX, targetY) {
+    constructor(owner, projType, x, y, targetX, targetY) {
         super(projType, x, y, 32, 32);
+        
+        this.owner = owner;
+
         this.addCollision(8, 5, 16, 22);
 
         this.duration = 40;
@@ -41,7 +45,8 @@ export default class Projectile extends Entity {
 
     moveToTarget() {
         //Move to target
-        if (--this.duration > 0 && !this.collider.collided && game.getEntityMap.monsterManager.getMonsterFromLocation(this.x, this.y, this.w, this.h) === undefined) {
+        if (--this.duration > 0 && !this.collider.collided &&
+            (game.getEntityMap.monsterManager.getMonsterFromLocation(this.x, this.y, this.w, this.h) === undefined || (this.owner.entityType === "Monster"))) {
 
             //console.log((this.angle * (180 / Math.PI)));
             if (!this.sprite.customSprite.visible)
@@ -90,8 +95,8 @@ export default class Projectile extends Entity {
         this.moveToTarget();
     }
 
-    static fire(projType, x, y, targetX, targetY) {
-        game.getEntityMap.entityMap.push(new Projectile(projType, x, y, targetX, targetY));
+    static fire(owner, projType, x, y, targetX, targetY) {
+        game.getEntityMap.entityMap.push(new Projectile(owner, projType, x, y, targetX, targetY));
     }
 
 }
