@@ -2,19 +2,19 @@ import game from "index";
 import Player from "../../player";
 import { setInterval } from "timers";
 import Entity from "../../../world/entity/entity";
+import { CONST } from "pixi.js";
 
 export default class PlayerMovement {
     constructor() {
 
         this.heldKeys = [];
 
+        //Last tile/entity collided
+        this.previousCollision = undefined;
+
         //Previous location sent by the packet
         this.previousX = 0;
         this.previousY = 0;
-
-        //Server side location 
-        this.serverSideX = 0;
-        this.serverSideY = 0;
 
         //The Players current velocity..
         this.velocity = {
@@ -29,8 +29,7 @@ export default class PlayerMovement {
         }
 
 
-        setInterval(this.sendMovementUpdate, 100); //Update movement every 100ms.
-        setInterval(() => this.updateServerSidePosition(), 100); //Mirrors the server position of our player.
+        setInterval(this.sendMovementUpdate, 1); //Update movement every 100ms.
 
         //Animation tick
         this.animationTick = 0;
@@ -50,12 +49,6 @@ export default class PlayerMovement {
             Player.prototype.spawnX = x;
             Player.prototype.spawnY = y;
         }
-    }
-
-
-    updateServerSidePosition() {
-        this.serverSideX = game.getPlayer.getX;
-        this.serverSideY = game.getPlayer.getY;
     }
 
     handleInput(e) {
@@ -292,6 +285,21 @@ export default class PlayerMovement {
         //console.log(playerCollider.x);
 
         var velocity = game.getPlayer.entity.checkCollision(offsetX, offsetY);
+
+        //Display labels for doungeons (TODO: move in a better spot)
+        if (velocity.entity !== undefined) {
+            if (velocity.entity.type.name.includes("DUNGEON")) {
+                velocity.entity.addLabel("Enter [SPACE]");
+                this.previousCollision = velocity.entity;
+            }
+        } else if (this.previousCollision !== undefined) {
+            this.previousCollision.removeLabel();
+            this.previousCollision = undefined;
+        }
+
+
+
+
 
         //Instead of setting velocity we just chang our x&y values here, b/c we don't want to move the customsprite insdie.
         game.getPlayer.entity.setGameVelocity(velocity.x, velocity.y);

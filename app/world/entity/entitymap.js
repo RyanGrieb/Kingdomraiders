@@ -47,6 +47,16 @@ export default class EntityMap {
         }
     }
 
+    getPlayerFromLocation(x, y) {
+        for (var i = 0; i < this.getAllPlayers.length; i++) {
+            var player = this.getAllPlayers[i];
+            if (Math.abs(x - player.getX) < player.getWidth && Math.abs(y - player.getY) < player.getHeight)
+                return player;
+        }
+
+        return undefined;
+    }
+
     //Monster
     getMonsterFromID(id) {
         for (var i = 0; i < game.getEntityMap.entityMap.length; i++)
@@ -56,6 +66,7 @@ export default class EntityMap {
 
         return undefined;
     }
+
 
     get getAllPlayers() {
         var allPlayers = [];

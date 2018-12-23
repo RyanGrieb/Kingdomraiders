@@ -2,6 +2,7 @@ import game from "index";
 import AssetsEnum from "../assets/assetsenum";
 import CustomSprite from "../../ui/custom/customsprite";
 import Tile from "../tile/tile";
+import CustomText from "../../ui/custom/customtext";
 
 export default class Entity {
 
@@ -16,10 +17,10 @@ export default class Entity {
         this.y = y;
         this.w = w;
         this.h = h;
-
         var screenPosition = this.getScreenPosition(this.x, this.y);
         this.sprite = new CustomSprite(this.type.name, screenPosition.x, screenPosition.y, this.w, this.h);
         this.sprite.setAnchor(type.anchorX, type.anchorY);
+        this.label = undefined;
 
         this.allowRotate = true;
         this.rotation = 0;
@@ -38,6 +39,20 @@ export default class Entity {
         }
     }
 
+    addLabel(text) {
+        if (this.label === undefined) { //subtract it by the height /
+            this.label = new CustomText(this.type.name + "Label", text, "#ffffff", this.sprite.customSprite.x, this.sprite.customSprite.y - (this.h - 7), 100, 100);
+            this.label.setParentGroup(game.getUI.parentGroup.positive3);
+        }
+    }
+
+    removeLabel() {
+        if (this.label !== undefined) {
+            this.label.kill();
+            this.label = undefined;
+        }
+    }
+
     setPosition(x, y) {
         //Set the custom sprite position /w screenX&Y..
         var screenPosition = this.getScreenPosition(x, y);
@@ -50,6 +65,10 @@ export default class Entity {
         if (this.collider !== undefined) {
             this.collider.x = x + this.collider.xOffset;
             this.collider.y = y + this.collider.yOffset;
+        }
+
+        if (this.label !== undefined) {
+            this.label.setPosition(x, y);
         }
     }
 
@@ -68,6 +87,10 @@ export default class Entity {
         if (this.collider !== undefined) {
             this.collider.x += x;
             this.collider.y += y;
+        }
+
+        if (this.label !== undefined) {
+            this.label.setPosition(this.label.x + x, this.label.y + y);
         }
     }
 
@@ -88,6 +111,9 @@ export default class Entity {
         //For some reason, the x axis is moving 
         this.sprite.setVelocity(-camPosOffsetX, -camPosOffsetY);
 
+        if (this.label !== undefined)
+            this.label.setVelocity(-camPosOffsetX, -camPosOffsetY);
+
 
 
         //Camera rotation (Moves the sprite's around the player)
@@ -98,10 +124,16 @@ export default class Entity {
             //Sprite rotatation offset
             var cos = Math.cos(radians);
             var sin = Math.sin(radians);
-            var newX = (cos * (this.sprite.customSprite.x - this.camera.position.x)) + (sin * (this.sprite.customSprite.y - this.camera.position.y)) + this.camera.position.x;
-            var newY = (cos * (this.sprite.customSprite.y - this.camera.position.y)) - (sin * (this.sprite.customSprite.x - this.camera.position.x)) + this.camera.position.y;
+            let newX = (cos * (this.sprite.customSprite.x - this.camera.position.x)) + (sin * (this.sprite.customSprite.y - this.camera.position.y)) + this.camera.position.x;
+            let newY = (cos * (this.sprite.customSprite.y - this.camera.position.y)) - (sin * (this.sprite.customSprite.x - this.camera.position.x)) + this.camera.position.y;
 
             this.sprite.setPosition(newX, newY);
+
+            //Label pivot
+            if (this.label !== undefined) {
+                this.label.setPosition(newX - this.label.customText.width / 2, newY - this.h);
+            }
+
 
             if (!this.allowRotate)
                 this.sprite.customSprite.rotation -= (radians);
@@ -127,7 +159,7 @@ export default class Entity {
                 var tiles = game.getTileGrid.getTileFromLocation((this.x + cX), (this.y + cY));
                 if (tiles === undefined)
                     continue;
-                    
+
                 for (var i = 0; i < tiles.length; i++) {
                     var tile = tiles[i];
                     //Determine if we use a collider or not. (Kindaof a shitty way to check but more organized).
@@ -143,6 +175,7 @@ export default class Entity {
                         if (this.collider.y < (tileY + tileH) && (this.collider.y + this.collider.h) > tileY) {
 
                             if (tile instanceof Entity) {
+                                velocity.entity = tile;
                                 velocity.x = 0;
                                 this.collider.collided = true;
                                 break;
@@ -158,6 +191,7 @@ export default class Entity {
                                 if (this.collider.y + velY < (tileY + tileH) && (this.collider.y + this.collider.h + velY) > tileY) {
 
                                     if (tile instanceof Entity) {
+                                        velocity.entity = tile;
                                         velocity.y = 0;
                                         this.collider.collided = true;
                                         break;
@@ -184,8 +218,17 @@ export default class Entity {
             this.sprite.visible = true;
     }
 
+    get getWidth() {
+        return this.w;
+    }
+
+    get getHeight() {
+        return this.h;
+    }
+
     kill() {
         this.sprite.kill();
+        this.removeLabel();
         this.collider = undefined;
     }
 

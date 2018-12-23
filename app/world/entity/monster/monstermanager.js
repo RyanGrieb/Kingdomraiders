@@ -18,7 +18,7 @@ export default class MonsterManager {
         for (var i = 0; i < game.getEntityMap.entityMap.length; i++) {
             if (game.getEntityMap.entityMap[i] instanceof Monster)
                 if (game.getEntityMap.entityMap[i].monsterID === json.monsterID)
-                    game.getEntityMap.entityMap[i].setPlayerToTrack(json.targetPlayer);
+                    game.getEntityMap.entityMap[i].setTarget(json.targetX, json.targetY);
 
         }
     }

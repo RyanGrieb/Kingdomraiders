@@ -37,6 +37,13 @@ export default class CustomSprite extends UIObject {
         this.customSprite.y = y;
     }
 
+    setSize(w, h) {
+        super.setSize(w, h);
+        
+        this.customSprite.width = w;
+        this.customSprite.height = h;
+    }
+
     setVelocity(x, y) {
         // this.x = x;
         //this.y = y;

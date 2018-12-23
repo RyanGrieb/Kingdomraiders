@@ -34,6 +34,10 @@ export default class PlayerListener {
                 this.handleRequestStats(json);
                 break;
 
+            case "PlayerSetHealth":
+                this.handlePlayerSetHealth(json);
+                break;
+
             //MPPlayer based packets
             case "MPJoinGame":
                 this.handleMPJoinResponse(json);
@@ -49,6 +53,10 @@ export default class PlayerListener {
 
             case "MPMovementTarget":
                 this.handleMPMovementTarget(json);
+                break;
+
+            case "debug":
+                console.log("Server: " + json.x + "," + json.y + " \nClient: " + Math.round(game.getPlayer.getX) + "," + Math.round(game.getPlayer.getY));
                 break;
         }
     }
@@ -75,6 +83,11 @@ export default class PlayerListener {
 
     handleRequestStats(json) {
         game.getPlayer.playerProfile.recieveStats(json);
+    }
+
+    handlePlayerSetHealth(json) {
+        if (game.getPlayer.inGame)
+            game.getPlayer.playerProfile.setHealth(json.health);
     }
 
     //MPPlayer based response

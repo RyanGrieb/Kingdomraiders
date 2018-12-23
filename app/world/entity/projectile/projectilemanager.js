@@ -242,6 +242,11 @@ export default class ProjectileManager {
         for (var i = 0; i < this.shooters.length; i++)
             if (this.shooters[i].entityType === entityType)
                 if (this.shooters[i].id === id) {
+
+                    //Convert back to a screen position
+                    targetX = (targetX - (game.getPlayer.getX - this.camera.position.x)) - 21;
+                    targetY = (targetY - (game.getPlayer.getY - this.camera.position.y)) - 21;
+
                     this.shooters[i].targetX = targetX;
                     this.shooters[i].targetY = targetY;
                 }

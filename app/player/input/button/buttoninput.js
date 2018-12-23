@@ -41,9 +41,12 @@ export default class ButtonInput {
                 },
                 btnRegister: {
                     action: () => {
-                        game.getUI.toggleWindow(new RegisterWindow());
-
-
+                        if (game.getUI.getWindowByName("LoginWindow") !== undefined) {
+                            if (!game.getUI.getWindowByName("LoginWindow").lockedInput)
+                                game.getUI.toggleWindow(new RegisterWindow());
+                        } else
+                            game.getUI.toggleWindow(new RegisterWindow());
+                            
                         return true;
                     }
                 },
@@ -59,9 +62,8 @@ export default class ButtonInput {
                 //Login Screen
                 btnSignIn: {
                     action: () => {
-                        game.getPlayer.playerProfile.requestToLogin();
-                        //game.getUI.getWindowByName("LoginWindow").requestToLogin();
-
+                        if (!game.getUI.getWindowByName("LoginWindow").lockedInput)
+                            game.getPlayer.playerProfile.requestToLogin();
                         return true;
                     }
                 },

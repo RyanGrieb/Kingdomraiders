@@ -32,7 +32,10 @@ export default class Player {
 
     joinGame() {
         //Send packet requesting to join game
-        game.getNetwork.sendMessage(JSON.stringify({ type: "JoinGame" }));
+        if (!this.joinRequested)
+            game.getNetwork.sendMessage(JSON.stringify({ type: "JoinGame" }));
+
+        this.joinRequested = true;
     }
 
     spawnToGame() {
@@ -55,6 +58,7 @@ export default class Player {
         this.entity.sprite.customSprite.parentGroup = game.getUI.parentGroup.positive3;
 
 
+        this.joinRequested = false;
         this.inGame = true;
     }
 
@@ -112,5 +116,13 @@ export default class Player {
             return this.spawnY;
 
         return this.entity.y;
+    }
+
+    get getWidth() {
+        return this.w;
+    }
+
+    get getHeight() {
+        return this.h;
     }
 }

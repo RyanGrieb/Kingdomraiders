@@ -19,7 +19,7 @@ export default class Inventory {
         this.inventorySize = 23;
 
         this.openOverlay();
-        
+
         this.requestCurrentItems();
     }
 
@@ -233,6 +233,10 @@ export default class Inventory {
         inventoryOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive5;
         this.overlayObjects.push(inventoryOverlay);
 
+        var healthbarBackgroundOverlay = new CustomSprite("BLACK_HEALTHBAR", game.WIDTH / 2 - 300 / 2, game.HEIGHT - 110, 300, 10);
+        healthbarBackgroundOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive5;
+        this.overlayObjects.push(healthbarBackgroundOverlay);
+
         var healthbarOverlay = new CustomSprite("RED_HEALTHBAR", game.WIDTH / 2 - 300 / 2, game.HEIGHT - 110, 300, 10);
         healthbarOverlay.customSprite.parentGroup = game.getUI.parentGroup.positive5;
         this.overlayObjects.push(healthbarOverlay);
@@ -251,6 +255,18 @@ export default class Inventory {
         manaLabelOverlay.customText.parentGroup = game.getUI.parentGroup.positive5;
         manaLabelOverlay.customText.x = game.WIDTH / 2 - manaLabelOverlay.customText.width / 2;
         this.overlayObjects.push(manaLabelOverlay);
+    }
+
+    setHealthbar(amount) {
+        //Healthbar
+        var healthbar = this.overlayObjects[2];
+        var newWidth = (healthbar.w * (amount / game.getPlayer.playerProfile.stats.maxHealth));
+        healthbar.customSprite.width = newWidth;
+
+        //Healthbar text
+        var healthbarLabel = this.overlayObjects[4];
+        healthbarLabel.setText(amount + "/" + game.getPlayer.playerProfile.stats.maxHealth);
+        healthbarLabel.customText.x = game.WIDTH / 2 - healthbarLabel.customText.width / 2;
     }
 
     //We have this since techniclally this window is considred already always open in parent classes.

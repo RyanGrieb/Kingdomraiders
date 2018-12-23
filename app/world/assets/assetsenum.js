@@ -13,6 +13,7 @@ const AssetsEnum = {
         INVENTORY_BACKGROUND: { path: "assets/images/ui/playerInventory.png" },
         RED_HEALTHBAR: { path: "assets/images/ui/redhealthbar.png" },
         GREEN_HEALTHBAR: { path: "assets/images/ui/greenhealthbar.png" },
+        BLACK_HEALTHBAR: { path: "assets/images/ui/blackhealthbar.png" },
         MANABAR: { path: "assets/images/ui/manabar.png" },
 
 
@@ -77,6 +78,9 @@ const AssetsEnum = {
         TILE_WOODWALLTOPLEFT: { path: "assets/images/tile/woodwalltopleft.png" },
         TILE_WOODWALLTOPRIGHT: { path: "assets/images/tile/woodwalltopright.png" },
         TILE_WOODWALLSIDE: { path: "assets/images/tile/woodwallside.png" },
+        //Dungeon Tile Entrances
+        TILE_DUNGEON_DEFAULT1: { path: "assets/images/dunegon/default.png" },
+        TILE_DUNGEON_DEFAULT2: { path: "assets/images/dunegon/default2.png" },
 
         //ENTITY
 
@@ -92,8 +96,10 @@ const AssetsEnum = {
         PROJECTILE_BASIC2: { path: "assets/images/projectile/basic2.png" },
         PROJECTILE_FROZEN1: { path: "assets/images/projectile/frozen.png" },
         PROJECTILE_FROZEN2: { path: "assets/images/projectile/frozen2.png" },
+
         //SOUNDS
         SOUND_BUTTONCLICK: { path: "assets/sound/buttonclick.mp3" },
+        SOUND_PLAYERHURT: { path: "assets/sound/playerhurt.mp3" },
 
     },
 

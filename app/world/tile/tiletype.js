@@ -53,7 +53,11 @@ const TileType = {
         WOODWALLTOPRIGHT: { name: "WOODWALLTOPRIGHT", replace: true, collision: true, width: 32, height: 32, group: 3, collider: { x: 0, y: 0, w: 32, h: 32 }, },
         WOODWALLSIDE: { name: "WOODWALLSIDE", collision: true },
 
-
+        //DUNGEON_DEFAULT: { name: "DUNGEON_DEFAULT", replace: true, rotate: true, width: 64, height: 64, group: 3, collider: { x: 0, y: 0, w: 64, h: 64 }, },
+        DUNGEON_DEFAULT1: {
+            name: "DUNGEON_DEFAULT1", replace: true, rotate: true, width: 64, height: 64, group: 3, anchorX: 0.5, anchorY: 0.5, collider: { x: 0, y: 0, w: 64, h: 64 },
+            animation: { tick: 500, cycles: 2 },
+        },
         ERROR: { name: "ERROR" },
     },
 

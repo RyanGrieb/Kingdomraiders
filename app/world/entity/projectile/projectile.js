@@ -9,12 +9,12 @@ export default class Projectile extends Entity {
 
     constructor(owner, projType, x, y, targetX, targetY) {
         super(projType, x, y, 32, 32);
-        
+
         this.owner = owner;
 
         this.addCollision(8, 5, 16, 22);
 
-        this.duration = 40;
+        this.duration = 80;
 
         var radians = (Math.PI / 180) * this.camera.rotation;
         var cos = Math.cos(radians);
@@ -46,8 +46,8 @@ export default class Projectile extends Entity {
     moveToTarget() {
         //Move to target
         if (--this.duration > 0 && !this.collider.collided &&
-            (game.getEntityMap.monsterManager.getMonsterFromLocation(this.x, this.y, this.w, this.h) === undefined || (this.owner.entityType === "Monster"))) {
-
+            (game.getEntityMap.monsterManager.getMonsterFromLocation(this.x, this.y, this.w, this.h) === undefined || (this.owner.entityType === "Monster")) &&
+            (game.getEntityMap.getPlayerFromLocation(this.x, this.y) === undefined || this.owner.entityType === "Player")) {
             //console.log((this.angle * (180 / Math.PI)));
             if (!this.sprite.customSprite.visible)
                 this.sprite.customSprite.visible = true;
@@ -73,8 +73,15 @@ export default class Projectile extends Entity {
 
             this.sprite.setVelocity(-velXOffset, velYOffset);
 
-        } else
+        } else {
+            
+                var player = game.getEntityMap.getPlayerFromLocation(this.x, this.y);
+                if (player !== undefined) {
+                //console.log("Hit: " + Math.round(player.getX) + "," + Math.round(player.getY));
+            }
             this.kill();
+        }
+
     }
 
     kill() {
@@ -88,7 +95,7 @@ export default class Projectile extends Entity {
     }
 
     update() {
-        //console.log(Math.round(this.collider.x) + "," + Math.round(this.collider.y));
+        // console.log(Math.round(this.collider.x) + "," + Math.round(this.collider.y));
         //console.log(Math.round(this.sprite.getGamePositionX) + "," + Math.round(this.sprite.getGamePositionY));
         super.update();
 

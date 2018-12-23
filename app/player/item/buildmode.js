@@ -29,7 +29,6 @@ export default class BuildMode {
         var y = (mouseY + (game.getPlayer.getY - camera.position.y)) + 21;
         var id = game.getUI.getWindowByName("BuildWindow").selectedTileID;
         var tileType = TileType.getTileFromID(id);
-
         this.sendBuildRequest(x, y, id);
     }
 

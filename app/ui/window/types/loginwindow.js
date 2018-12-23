@@ -11,6 +11,8 @@ export default class LoginWindow extends CustomWindow {
 
     constructor() {
         super("LoginWindow");
+
+        this.lockedInput = false;
     }
 
     open() {
@@ -51,7 +53,17 @@ export default class LoginWindow extends CustomWindow {
         document.querySelector('body').style.cursor = 'auto';
     }
 
+    lockInput() {
+        game.getUI.getObjectByName("txtErrorMessage").setText("Please Wait...");
+        this.lockedInput = true;
+    }
+
+    unlockInput() {
+        this.lockedInput = false;
+    }
+
     handleResponse(error) {
         game.getUI.getObjectByName("txtErrorMessage").setText("Error: " + error.reason);
+        this.lockedInput = false;
     }
 }

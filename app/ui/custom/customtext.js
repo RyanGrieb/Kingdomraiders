@@ -52,9 +52,15 @@ export default class CustomText extends UIObject {
 
     setPosition(x, y) {
         super.setPosition(x, y);
-        
+
         this.customText.x = x;
         this.customText.y = y;
+    }
+
+    setVelocity(x, y) {
+        super.setPosition(this.x + x, this.y + y);
+        this.customText.x += x;
+        this.customText.y += y;
     }
 
     kill() {

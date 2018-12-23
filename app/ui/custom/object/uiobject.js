@@ -15,6 +15,11 @@ export default class UIObject {
         this.y = y;
     }
 
+    setSize(w, h) {
+        this.w = w;
+        this.h = h;
+    }
+
     mouseInside() {
         var mouseX = game.renderer.plugins.interaction.mouse.global.x;
         var mouseY = game.renderer.plugins.interaction.mouse.global.y;

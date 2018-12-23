@@ -1,4 +1,5 @@
 import game from "index";
+import AssetsEnum from "../../world/assets/assetsenum";
 
 export default class PlayerProfile {
 
@@ -9,6 +10,7 @@ export default class PlayerProfile {
         this.stats = {
             dex: 10,
             speed: 0,
+            maxHealth: 0,
             health: 0,
             mana: 0,
         }
@@ -21,6 +23,7 @@ export default class PlayerProfile {
     recieveStats(json) {
         this.stats.dex = json.dex;
         this.stats.speed = json.speed;
+        this.stats.maxHealth = json.health;
         this.stats.health = json.health;
         this.stats.mana = json.mana;
     }
@@ -30,7 +33,18 @@ export default class PlayerProfile {
         return delay - dex;
     }
 
+    setHealth(amount) {
+        this.stats.health = amount;
+        game.getPlayer.inventory.setHealthbar(this.stats.health);
+
+        var sound = PIXI.sound.Sound.from(AssetsEnum.list.SOUND_BUTTONCLICK.sound);
+        sound.volume = 0.3;
+        sound.play();
+    }
+
     requestToLogin() {
+        game.getUI.getWindowByName("LoginWindow").lockInput();
+
         var email = game.getUI.getObjectByName("txtEmail").getText;
         var password = game.getUI.getObjectByName("txtPassword").getText;
 

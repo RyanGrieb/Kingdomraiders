@@ -41,42 +41,27 @@ export default class Monster extends Entity {
     }
 
     //Recieve the order to track a player. (We don't look for the player clientside using our position due to latency).
-    setPlayerToTrack(id) {
-        //We add a delay to preven overestimatation from the client.
-        for (var i = 0; i < game.getEntityMap.getAllPlayers.length; i++) {
-            if (game.getEntityMap.getAllPlayers[i].id === id) {
-                this.targetPlayer = game.getEntityMap.getAllPlayers[i];
-            }
-        }
-        // }, 100);
+    setTarget(x, y) {
+        this.targetX = x;
+        this.targetY = y;
     }
 
     stopTracking(json) {
         //Our final target.
-        this.targetPlayer = undefined;
+        this.targetX = undefined;
+        this.targetY = undefined;
         this.finalTargetX = json.x;
         this.finalTargetY = json.y;
 
         game.getEntityMap.projectileManager.removeShooter("Monster", this.monsterID);
     }
 
-    trackPlayer() {
-        //If we have aboslutley no target. stop.
-        if (this.targetPlayer === undefined && this.finalTargetX === undefined && this.finalTargetY === undefined)
-            return;
+    trackTarget() {
 
-        //Checks if we use the players serverside position, or just a mpplayer position. (mpplayer's position is already serverside).
-        if (this.targetPlayer !== undefined) {
-            var playerX = (this.targetPlayer instanceof MPPlayer) ? this.targetPlayer.getX : this.targetPlayer.movement.serverSideX;
-            var playerY = (this.targetPlayer instanceof MPPlayer) ? this.targetPlayer.getY : this.targetPlayer.movement.serverSideY;
-        }
+        game.getEntityMap.projectileManager.setTargetOfEntity("Monster", this.monsterID, this.targetX, this.targetY);
 
-        //Switches between targetplayer & the final target if there is one.
-        var targetX = (this.finalTargetX === undefined) ? playerX - this.w / 2 : this.finalTargetX;
-        var targetY = (this.finalTargetY === undefined) ? playerY - this.h / 2 : this.finalTargetY;
-
-        var distanceX = (targetX - this.x);
-        var distanceY = (targetY - this.y);
+        var distanceX = (this.targetX - this.x) - this.w / 2;
+        var distanceY = (this.targetY - this.y) - this.h / 2;
 
         var hypotnuse = Math.sqrt(((distanceX * distanceX) + (distanceY * distanceY)));
 
@@ -120,16 +105,6 @@ export default class Monster extends Entity {
         //console.log(Math.round(this.x) + "," + Math.round(this.y));
     }
 
-    updateProjectileTarget() {
-        if (this.targetPlayer !== undefined) {
-
-            var targetX = (this.targetPlayer instanceof MPPlayer) ? this.targetPlayer.sprite.customSprite.x : this.targetPlayer.entity.sprite.customSprite.x;
-            var targetY = (this.targetPlayer instanceof MPPlayer) ? this.targetPlayer.sprite.customSprite.y : this.targetPlayer.entity.sprite.customSprite.y;
-
-            game.getEntityMap.projectileManager.setTargetOfEntity("Monster", this.monsterID, targetX, targetY);
-        }
-    }
-
     setHealth(amount) {
         var maxHealth = this.type.stats.health;
         this.health -= amount;
@@ -171,10 +146,9 @@ export default class Monster extends Entity {
     }
 
     update() {
+        //console.log(Math.round(this.x) + "," + Math.round(this.y));
         super.update();
-
-        this.updateProjectileTarget();
-        this.trackPlayer();
+        this.trackTarget();
     }
 
     kill() {
