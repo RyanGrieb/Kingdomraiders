@@ -297,13 +297,21 @@ export default class PlayerMovement {
             this.previousCollision = undefined;
         }
 
-
-
-
-
         //Instead of setting velocity we just chang our x&y values here, b/c we don't want to move the customsprite insdie.
         game.getPlayer.entity.setGameVelocity(velocity.x, velocity.y);
         //game.getPlayer.entity.setVelocity(offsetX, offsetY);
+    }
+
+    interact() {
+        if (this.previousCollision !== undefined)
+            if (this.previousCollision.type.name.includes("DUNGEON")) {
+                var msg = {
+                    type: "EnterDungeon",
+                    x: this.previousCollision.x,
+                    y: this.previousCollision.y,
+                };
+                game.getNetwork.sendMessage(JSON.stringify(msg));
+            }
     }
 
     clearKeys() {

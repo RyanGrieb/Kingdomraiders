@@ -4,6 +4,7 @@ import game from "index";
 import ProjectileType from "./projectiletype";
 import { setInterval, clearInterval } from "timers";
 import Monster from "../monster/monster";
+import { SystemRenderer } from "pixi.js";
 
 export default class Projectile extends Entity {
 
@@ -74,23 +75,21 @@ export default class Projectile extends Entity {
             this.sprite.setVelocity(-velXOffset, velYOffset);
 
         } else {
-            
-                var player = game.getEntityMap.getPlayerFromLocation(this.x, this.y);
-                if (player !== undefined) {
+
+            var player = game.getEntityMap.getPlayerFromLocation(this.x, this.y);
+            if (player !== undefined) {
                 //console.log("Hit: " + Math.round(player.getX) + "," + Math.round(player.getY));
             }
+
             this.kill();
+            if (game.getPlayer.inGame)
+                game.getEntityMap.removeObject(this);
         }
 
     }
 
     kill() {
-        //Bad solution, but stops stray projectiles from staying on screen during screen switch.
-        if (game.getPlayer.inGame)
-            game.getEntityMap.removeObject(this);
-
         super.kill();
-
         clearInterval(this.intervalID);
     }
 

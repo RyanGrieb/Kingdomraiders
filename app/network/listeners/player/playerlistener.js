@@ -43,6 +43,10 @@ export default class PlayerListener {
                 this.handleMPJoinResponse(json);
                 break;
 
+            case "MPTeleport":
+                this.handleMPTeleport(json);
+                break;
+
             case "MPLeaveGame":
                 this.handleMPLeaveResponse(json);
                 break;
@@ -93,6 +97,11 @@ export default class PlayerListener {
     //MPPlayer based response
     handleMPJoinResponse(json) {
         game.getEntityMap.entityMap.push(new MPPlayer(json));
+    }
+
+    handleMPTeleport(json) {
+        if (game.getEntityMap.getMPPlayerByID(json.id) !== undefined)
+            game.getEntityMap.getMPPlayerByID(json.id).teleport(json.x, json.y);
     }
 
     handleMPLeaveResponse(json) {

@@ -26,6 +26,15 @@ export default class MPPlayer extends Entity {
         this.kill();
     }
 
+    //Different from set position, as were chaning the sprite & true positions
+    teleport(x, y) {
+        console.log("hi");
+        this.setClientsidePosition(x, y);
+
+        var screenPos = this.getScreenPosition(x, y);
+        this.setPosition(screenPos.x, screenPos.y);
+    }
+
     setPosition(x, y) {
         this.sprite.setPosition(x, y);
     }

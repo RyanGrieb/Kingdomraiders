@@ -59,6 +59,12 @@ export default class Entity {
         this.sprite.setPosition(screenPosition.x, screenPosition.y);
 
         //Set our gameX&Y values.
+        this.setClientsidePosition(x, y);
+    }
+
+    //Doesnt change the actual sprite position
+    setClientsidePosition(x, y) {
+        //Set our gameX&Y values.
         this.x = x;
         this.y = y;
 
@@ -111,8 +117,8 @@ export default class Entity {
         //For some reason, the x axis is moving 
         this.sprite.setVelocity(-camPosOffsetX, -camPosOffsetY);
 
-        if (this.label !== undefined)
-            this.label.setVelocity(-camPosOffsetX, -camPosOffsetY);
+        // if (this.label !== undefined)
+        //     this.label.setVelocity(-camPosOffsetX, -camPosOffsetY);
 
 
 
@@ -131,7 +137,7 @@ export default class Entity {
 
             //Label pivot
             if (this.label !== undefined) {
-                this.label.setPosition(newX - this.label.customText.width / 2, newY - this.h);
+                // this.label.setPosition(newX - this.label.customText.width / 2, newY - this.h);
             }
 
 
@@ -140,7 +146,10 @@ export default class Entity {
 
         }
 
-        //..
+        //Reset the label position to mirror the entity
+        if (this.label !== undefined) {
+            this.label.setPosition(this.sprite.customSprite.x - (this.label.customText.width / 2), this.sprite.customSprite.y - (this.h - 7));
+        }
 
         this.rotation = rotation;
     }

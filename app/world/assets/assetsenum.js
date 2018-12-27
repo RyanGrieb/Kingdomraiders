@@ -81,6 +81,8 @@ const AssetsEnum = {
         //Dungeon Tile Entrances
         TILE_DUNGEON_DEFAULT1: { path: "assets/images/dunegon/default.png" },
         TILE_DUNGEON_DEFAULT2: { path: "assets/images/dunegon/default2.png" },
+        TILE_DUNGEON_HOMEWORLD1: { path: "assets/images/dunegon/homeworld.png" },
+        TILE_DUNGEON_HOMEWORLD2: { path: "assets/images/dunegon/homeworld2.png" },
 
         //ENTITY
 
