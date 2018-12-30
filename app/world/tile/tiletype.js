@@ -9,11 +9,13 @@ const TileType = {
         GRASS2: { name: "GRASS2", collision: false },
         FLOOR: { name: "FLOOR", collision: false },
         WOODFLOOR: { name: "WOODFLOOR", collision: false },
+
         PATH: { name: "PATH", collision: false },
         LIGHTPATH: { name: "LIGHTPATH", collision: false },
 
         WATER: { name: "WATER", collision: undefined }, //An undefined collision means the player colliders but the projectile doesn't.
         SAND: { name: "SAND", collision: false },
+        VOID: {name: "VOID", collision: true},
 
         TREE: { name: "TREE", replace: true, rotate: true, width: 32, height: 32, group: 3 },
         BIGTREE: { name: "BIGTREE", replace: true, rotate: true, width: 128, height: 128, group: 6, anchorX: 0.5, anchorY: 1, collider: { x: 50, y: 45, w: 32, h: 30 }, },

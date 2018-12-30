@@ -28,6 +28,8 @@ export default class PlayerMovement {
             right: false
         }
 
+        //Locked movement
+        this.lockMovement = true;
 
         setInterval(this.sendMovementUpdate, 1); //Update movement every 100ms.
 
@@ -312,6 +314,7 @@ export default class PlayerMovement {
                 };
                 game.getNetwork.sendMessage(JSON.stringify(msg));
             }
+        this.previousCollision = undefined;
     }
 
     clearKeys() {
@@ -320,7 +323,9 @@ export default class PlayerMovement {
 
     update() {
         if (game.getPlayer.inGame) {
-            this.handleMovement();
+            //if (!this.lockMovement)
+                this.handleMovement();
+
             this.handleMovementAnimation();
         }
     }

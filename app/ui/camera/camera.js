@@ -35,6 +35,10 @@ export default class Camera {
             this.rotation -= this.baseRotation;
     }
 
+    resetRotation() {
+        this.rotation = 0;
+    }
+
     update() {
         var targetPivotX = game.getPlayer.getX;
         var targetPivotY = game.getPlayer.getY;

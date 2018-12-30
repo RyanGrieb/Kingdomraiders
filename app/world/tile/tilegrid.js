@@ -14,16 +14,30 @@ export default class TileGrid {
         this.stopChunkRenderer = false;
         //..
 
+        //Chunk loading variables for loadtime.
+        this.requestedChunkAmount = 0;
+        this.receivedChunkAmount = 0;
+
         this.initMap(game.getPlayer.getX + game.getPlayer.w / 2, game.getPlayer.getY + game.getPlayer.h / 2);
     }
 
 
     initMap(x, y) {
+        //Reset player rotation to prevent improper chunk locations
+        //game.getUI.getCurrentScreen.camera.resetRotation();
+        this.previousChunk = null;
+
+        //Lock player movement while loading.
+        game.getPlayer.movement.lockMovement = true;
+
         for (var targetX = (x - game.WIDTH / 2) - this.getChunkSize; targetX < x + (game.WIDTH / 2)
             + this.getChunkSize; targetX += this.getChunkSize)
             for (var targetY = ((y - game.HEIGHT / 2) - (this.getChunkSize * 2)); targetY <= y + (game.HEIGHT / 2)
-                + this.getChunkSize; targetY += this.getChunkSize)
+                + this.getChunkSize; targetY += this.getChunkSize) {
                 this.requestMapFromLocation(targetX, targetY);
+
+                this.requestedChunkAmount++;
+            }
     }
 
 
@@ -108,7 +122,6 @@ export default class TileGrid {
     }
 
     requestMapFromLocation(x, y) {
-
         var msg = {
             type: "ChunkRequest",
             x: Math.round(x / 32),
@@ -140,6 +153,20 @@ export default class TileGrid {
             this.tileMap.push(tileChunk)
 
             //was 75 20
+
+
+            if (this.requestedChunkAmount != 0) {
+                this.receivedChunkAmount++;
+
+                if (this.requestedChunkAmount === this.receivedChunkAmount) {
+
+                    //Unlock player movement.
+                    game.getPlayer.movement.lockMovement = false;
+                    this.requestedChunkAmount = 0;
+                    this.receivedChunkAmount = 0;
+                }
+            }
+
         }, time);
     }
 
@@ -163,7 +190,7 @@ export default class TileGrid {
         var chunk = this.getChunkFromLocation(x, y);
         if (chunk === undefined)
             return undefined;
-            
+
         return chunk.getTileFromLocation(x, y);
     }
 
@@ -200,6 +227,8 @@ export default class TileGrid {
         //For offseting the map w/ camera
         for (var i = 0; i < this.tileMap.length; i++)
             this.tileMap[i].update();
+
+        //console.log(this.requestedChunkAmount + "," + this.receivedChunkAmount);
     }
 
     get getScaledChunkSize() {

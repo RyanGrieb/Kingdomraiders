@@ -47,6 +47,7 @@ const AssetsEnum = {
         TILE_LIGHTPATH: { path: "assets/images/tile/lightpath.png" },
         TILE_WATER: { path: "assets/images/tile/water.png" },
         TILE_SAND: { path: "assets/images/tile/sand.png" },
+        TILE_VOID: { path: "assets/images/tile/void.png" },
 
         TILE_TREE: { path: "assets/images/tile/tree.png" },
         TILE_BIGTREE: { path: "assets/images/tile/treebig.png" },
