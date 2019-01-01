@@ -41,6 +41,7 @@ const AssetsEnum = {
         TILE_ERROR: { path: "assets/images/tile/error.png" },
         TILE_GRASS: { path: "assets/images/tile/grass.png" },
         TILE_GRASS2: { path: "assets/images/tile/grass2.png" },
+        TILE_CORRUPTEDGRASS: { path: "assets/images/tile/corruptedgrass.png" },
         TILE_FLOOR: { path: "assets/images/tile/floor.png" },
         TILE_WOODFLOOR: { path: "assets/images/tile/woodfloor.png" },
         TILE_PATH: { path: "assets/images/tile/path.png" },
