@@ -15,9 +15,8 @@ const TileType = {
 
         WATER: { name: "WATER", collision: undefined }, //An undefined collision means the player colliders but the projectile doesn't.
         SAND: { name: "SAND", collision: false },
-        VOID: {name: "VOID", collision: true},
+        VOID: { name: "VOID", collision: true },
 
-        TREE: { name: "TREE", replace: true, rotate: true, width: 32, height: 32, group: 3 },
         BIGTREE: { name: "BIGTREE", replace: true, rotate: true, width: 128, height: 128, group: 6, anchorX: 0.5, anchorY: 1, collider: { x: 50, y: 45, w: 32, h: 30 }, },
         BIGTREE2: { name: "BIGTREE2", replace: true, rotate: true, width: 128, height: 128, group: 6, anchorX: 0.5, anchorY: 1, collider: { x: 50, y: 45, w: 32, h: 30 }, },
         STATUE: { name: "STATUE", replace: true, rotate: true, width: 64, height: 64, group: 6, collider: { x: 8, y: 10, w: 50, h: 55 }, },
@@ -65,7 +64,7 @@ const TileType = {
             name: "DUNGEON_HOMEWORLD1", replace: true, rotate: true, width: 64, height: 64, group: 3, anchorX: 0.5, anchorY: 0.5, collider: { x: 0, y: 0, w: 64, h: 64 },
             animation: { tick: 500, cycles: 2 },
         },
-        
+
         ERROR: { name: "ERROR" },
     },
 
@@ -75,10 +74,13 @@ const TileType = {
     },
 
     getIDFromName(name) {
-        var index = -1;
-        for (var tilename in this.list)
+        var index = 0;
+        for (var tilename in this.list) {
             if (name === tilename)
-                return ++index;
+                return index;
+
+            index++;
+        }
 
     }
 

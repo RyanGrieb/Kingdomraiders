@@ -12,6 +12,7 @@ export default class MouseInput {
         $("body").mousedown((e) => this.onMouseClick(e));
         $("body").mouseup(() => this.onMouseRelease());
         $("body").mouseleave(() => this.onMouseLeave());
+        $("body").bind("mousewheel", (e) => this.onMouseScroll(e));
         window.onresize = () => this.onWindowResize();
         // $("body").mousemove(() => this.onMouseMove());
     }
@@ -48,6 +49,10 @@ export default class MouseInput {
         if (game.getPlayer.inGame) {
             game.getPlayer.inventory.onMouseClick();
 
+            //Our build inputs
+            if (game.getUI.getWindowByName("BuildWindow") !== undefined)
+                game.getUI.getWindowByName("BuildWindow").onClick();
+
             this.enableBuild();
 
             //Specficily a left click
@@ -69,6 +74,17 @@ export default class MouseInput {
         if (game.getPlayer.inGame) {
 
             this.stopProjectile();
+        }
+    }
+    onMouseScroll(e) {
+        if (e.originalEvent.wheelDelta / 120 > 0) {
+            //Up
+            if (game.getUI.getWindowByName("BuildWindow") !== undefined)
+                game.getUI.getWindowByName("BuildWindow").previousTile();
+        } else {
+            //Down
+            if (game.getUI.getWindowByName("BuildWindow") !== undefined)
+                game.getUI.getWindowByName("BuildWindow").nextTile();
         }
     }
 

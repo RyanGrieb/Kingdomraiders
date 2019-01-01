@@ -13,13 +13,19 @@ export default class BuildMode {
         if (game.getUI.isAnyWindowOpenExcept("BuildWindow") || !game.getUI.isWindowOpen("BuildWindow"))
             return;
 
+        var mX = game.renderer.plugins.interaction.mouse.global.x;
+        var mY = game.renderer.plugins.interaction.mouse.global.y;
+
+        //If mouse is inside the buildwindow
+        var buildWindow = game.getUI.getWindowByName("BuildWindow");
+        if (mX >= buildWindow.x && mX <= (buildWindow.x + buildWindow.w))
+            if (mY >= buildWindow.y && mY <= (buildWindow.y + buildWindow.h))
+                return;
+
         var camera = game.getUI.getCurrentScreen.getCamera;
         var radians = (Math.PI / 180) * (camera.rotation);
         var cos = Math.cos(radians);
         var sin = Math.sin(radians);
-
-        var mX = game.renderer.plugins.interaction.mouse.global.x;
-        var mY = game.renderer.plugins.interaction.mouse.global.y;
 
         var mouseX = camera.position.x + (cos * (mX - camera.position.x) + sin * (mY - camera.position.y))
         var mouseY = camera.position.y + (-sin * (mX - camera.position.x) + cos * (mY - camera.position.y))
@@ -33,6 +39,9 @@ export default class BuildMode {
     }
 
     sendBuildRequest(x, y, id) {
+        if (TileType.getTileFromID(id) === undefined)
+            return;
+
         //Send build packet.
         var msg = {
             type: "BuildRequest",

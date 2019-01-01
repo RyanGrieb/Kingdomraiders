@@ -12,7 +12,7 @@ export default class EscapeWindow extends CustomWindow {
     constructor() {
         super("EscapeWindow");
 
-        this.setParentGroup(game.getUI.parentGroup.positive4);
+        this.setParentGroup(game.getUI.parentGroup.positive5);
     }
 
     open() {

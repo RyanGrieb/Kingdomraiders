@@ -31,7 +31,7 @@ export default class UserInterface {
             positive4: new PIXI.display.Group(4, false),
             positive5: new PIXI.display.Group(5, false),
             positive6: new PIXI.display.Group(6, false),
-
+            positive7: new PIXI.display.Group(7, false),
         }
 
         for (var group in this.parentGroup) {

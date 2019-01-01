@@ -15,7 +15,6 @@ export default class CustomSprite extends UIObject {
         this.customSprite.width = w;
         this.customSprite.height = h;
 
-
         game.stage.addChild(this.customSprite);
 
         //Animation
@@ -39,7 +38,7 @@ export default class CustomSprite extends UIObject {
 
     setSize(w, h) {
         super.setSize(w, h);
-        
+
         this.customSprite.width = w;
         this.customSprite.height = h;
     }
