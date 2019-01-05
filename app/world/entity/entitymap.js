@@ -1,14 +1,14 @@
 import game from "index";
-import ProjectileManager from "./projectile/projectilemanager";
 import MonsterManager from "./monster/monstermanager";
 import MPPlayer from "../../player/mpplayer/mpplayer";
 import Monster from "./monster/monster";
+import ProjectileManager from "./projectile/projectilemanager";
 
 export default class EntityMap {
     constructor() {
         this.entityMap = [];
 
-        this.projectileManager = new ProjectileManager();
+        this.projectileManager2 = new ProjectileManager();
         this.monsterManager = new MonsterManager();
     }
 
@@ -29,8 +29,6 @@ export default class EntityMap {
     update() {
         for (var i = 0; i < this.entityMap.length; i++)
             this.entityMap[i].update();
-
-        this.projectileManager.update();
     }
 
     //Broad

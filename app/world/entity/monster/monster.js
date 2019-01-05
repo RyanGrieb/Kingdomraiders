@@ -44,24 +44,27 @@ export default class Monster extends Entity {
     setTarget(x, y) {
         this.targetX = x;
         this.targetY = y;
+        //Check if the distance is a lot (40 min)
+        //console.log(x - this.x);
+       // this.setPosition(x, y);
     }
 
     stopTracking(json) {
         //Our final target.
-        this.targetX = undefined;
-        this.targetY = undefined;
-        this.finalTargetX = json.x;
-        this.finalTargetY = json.y;
+        this.targetX = json.x;
+        this.targetY = json.y;
+        //this.finalTargetX = json.x;
+        //this.finalTargetY = json.y;
 
         game.getEntityMap.projectileManager.removeShooter("Monster", this.monsterID);
     }
 
     trackTarget() {
 
-        game.getEntityMap.projectileManager.setTargetOfEntity("Monster", this.monsterID, this.targetX, this.targetY);
+        //game.getEntityMap.projectileManager.setTargetOfEntity("Monster", this.monsterID, this.targetX, this.targetY);
 
-        var distanceX = (this.targetX - this.x) - this.w / 2;
-        var distanceY = (this.targetY - this.y) - this.h / 2;
+        var distanceX = (this.targetX - this.x);
+        var distanceY = (this.targetY - this.y);
 
         var hypotnuse = Math.sqrt(((distanceX * distanceX) + (distanceY * distanceY)));
 

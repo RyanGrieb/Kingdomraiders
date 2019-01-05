@@ -11,8 +11,8 @@ export default class MonsterListener {
                 this.handleMonsterSpawn(json);
                 break;
 
-            case "MonsterTarget":
-                this.handleMonsterTarget(json);
+            case "MonsterPositionUpdate":
+                this.handleMonsterPositionUpdate(json);
                 break;
 
             case "MonsterRemoveTarget":
@@ -37,8 +37,8 @@ export default class MonsterListener {
         game.getEntityMap.monsterManager.recieveMonsterSpawn(json);
     }
 
-    handleMonsterTarget(json) {
-        game.getEntityMap.monsterManager.recieveMonsterTarget(json);
+    handleMonsterPositionUpdate(json) {
+        game.getEntityMap.monsterManager.recieveMonsterPosition(json);
     }
 
     handleMonsterRemoveTarget(json) {

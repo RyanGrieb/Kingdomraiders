@@ -20,6 +20,9 @@ export default class MPPlayerMovement {
             x: json.x,
             y: json.y,
         }
+
+        //ROTATION CASUES WEIRD STUFF TO HAPPEN
+        //this.mpPlayer.teleport(json.x, json.y);
     }
 
     moveToFinalTarget() {

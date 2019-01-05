@@ -11,7 +11,6 @@ import EntityMap from "../../world/entity/entitymap";
 import Monster from "../../world/entity/monster/monster";
 import MonsterType from "../../world/entity/monster/monstertype";
 import Entity from "../../world/entity/entity";
-import EntityType from "../../world/entity/entitytype";
 import Projectile from "../../world/entity/projectile/projectile";
 import ProjectileType from "../../world/entity/projectile/projectiletype";
 

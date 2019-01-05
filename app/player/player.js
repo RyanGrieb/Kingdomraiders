@@ -51,6 +51,7 @@ export default class Player {
         this.h = 42;
 
         this.entity = new Entity({ name: this.className }, this.spawnX, this.spawnY, this.w, this.h);
+        this.entity.addEntityShoot("Player", this.entity);
         //Updates the camera offset..
         this.entity.addCollision(8, 5, 27, 30);
 
@@ -60,6 +61,35 @@ export default class Player {
 
         this.joinRequested = false;
         this.inGame = true;
+    }
+
+    //Maybe should be in mouse Input?
+    updateShootTarget() {
+        if (this.inventory.getWeapon !== undefined)    //If were holding a valid wepaon, lets start shooting!.
+            if (this.inventory.getWeapon.itemType.projectile !== undefined) {
+                //Basic mouse pos.
+                var mX = game.renderer.plugins.interaction.mouse.global.x;
+                var mY = game.renderer.plugins.interaction.mouse.global.y;
+
+                var camera = game.getUI.getCurrentScreen.getCamera;
+                var radians = (Math.PI / 180) * (camera.rotation);
+                var cos = Math.cos(radians);
+                var sin = Math.sin(radians);
+
+                //Mouse /w rotation offset.
+                var mouseX = camera.position.x + (cos * (mX - camera.position.x) + sin * (mY - camera.position.y));
+                var mouseY = camera.position.y + (-sin * (mX - camera.position.x) + cos * (mY - camera.position.y));
+
+                var projectile = game.getPlayer.inventory.getWeapon.itemType.projectile;
+                var delay = game.getPlayer.playerProfile.convertDexToDelay(game.getPlayer.playerProfile.stats.dex);
+                this.entity.entityShoot.setTarget(projectile, delay, mouseX, mouseY);
+
+                //Manually update the entityShoot class since we don't update entity
+                this.entity.entityShoot.update();
+
+                if (this.entity.entityShoot.shooting)
+                    this.entity.entityShoot.setClientsideDirection();
+            }
     }
 
     kill() {
@@ -85,6 +115,8 @@ export default class Player {
             this.movement.update();
             this.buildMode.update();
             this.inventory.update();
+
+            this.updateShootTarget();
         }
     }
 

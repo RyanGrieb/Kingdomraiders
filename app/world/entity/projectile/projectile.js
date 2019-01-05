@@ -5,14 +5,13 @@ import ProjectileType from "./projectiletype";
 import { setInterval, clearInterval } from "timers";
 import Monster from "../monster/monster";
 import { SystemRenderer } from "pixi.js";
+import Player from "../../../player/player";
 
 export default class Projectile extends Entity {
 
-    constructor(owner, projType, x, y, targetX, targetY) {
+    constructor(ownerName, projType, x, y, targetX, targetY) {
         super(projType, x, y, 32, 32);
-
-        this.owner = owner;
-
+        this.ownerName = ownerName;
         this.addCollision(8, 5, 16, 22);
 
         this.duration = 80;
@@ -22,8 +21,10 @@ export default class Projectile extends Entity {
         var sin = Math.sin(radians);
 
         //Translates roation to a mouse value.
-        this.targetX = this.camera.position.x + (cos * (targetX - this.camera.position.x) + sin * (targetY - this.camera.position.y));
-        this.targetY = this.camera.position.y + (-sin * (targetX - this.camera.position.x) + cos * (targetY - this.camera.position.y));
+        this.targetX = targetX;
+        this.targetY = targetY;
+        //this.targetX = this.camera.position.x + (cos * (targetX - this.camera.position.x) + sin * (targetY - this.camera.position.y));
+        //this.targetY = this.camera.position.y + (-sin * (targetX - this.camera.position.x) + cos * (targetY - this.camera.position.y));
 
         //Creates an angle from our target & position
         //TODO: subtract targetX by 16-cos (angle from mouse below...?)
@@ -47,8 +48,8 @@ export default class Projectile extends Entity {
     moveToTarget() {
         //Move to target
         if (--this.duration > 0 && !this.collider.collided &&
-            (game.getEntityMap.monsterManager.getMonsterFromLocation(this.x, this.y, this.w, this.h) === undefined || (this.owner.entityType === "Monster")) &&
-            (game.getEntityMap.getPlayerFromLocation(this.x, this.y) === undefined || this.owner.entityType === "Player")) {
+            (game.getEntityMap.monsterManager.getMonsterFromLocation(this.x, this.y, this.w, this.h) === undefined || (this.ownerName === "Monster")) &&
+            (game.getEntityMap.getPlayerFromLocation(this.x, this.y) === undefined || this.ownerName === "Player")) {
             //console.log((this.angle * (180 / Math.PI)));
             if (!this.sprite.customSprite.visible)
                 this.sprite.customSprite.visible = true;
@@ -101,8 +102,8 @@ export default class Projectile extends Entity {
         this.moveToTarget();
     }
 
-    static fire(owner, projType, x, y, targetX, targetY) {
-        game.getEntityMap.entityMap.push(new Projectile(owner, projType, x, y, targetX, targetY));
+    static fire(ownerName, projType, x, y, targetX, targetY) {
+        game.getEntityMap.entityMap.push(new Projectile(ownerName, projType, x, y, targetX, targetY));
     }
 
 }

@@ -23,18 +23,18 @@ export default class ProjectileListener {
 
     handleAddShooter(json) {
         if (game.getPlayer.inGame)
-            game.getEntityMap.projectileManager.recieveShooter(json);
+            game.getEntityMap.projectileManager2.recieveShooter(json);
     }
 
     handleShooterUpdate(json) {
         if (game.getPlayer.inGame)
-            game.getEntityMap.projectileManager.recieveShooterUpdate(json);
+            game.getEntityMap.projectileManager2.recieveShooterUpdate(json);
     }
 
 
     handleRemoveShooter(json) {
         if (game.getPlayer.inGame)
-            game.getEntityMap.projectileManager.removeShooter(json.entityType, json.id);
+            game.getEntityMap.projectileManager2.removeShooter(json);
     }
 
 }

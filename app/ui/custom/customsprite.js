@@ -7,14 +7,12 @@ export default class CustomSprite extends UIObject {
 
     constructor(spriteName, x, y, w, h) {
         super(spriteName, x, y, w, h);
-
         //Sprite
         this.customSprite = new PIXI.Sprite(AssetEnum.getObjectFromName(spriteName).texture);
         this.customSprite.x = x;
         this.customSprite.y = y;
         this.customSprite.width = w;
         this.customSprite.height = h;
-
         game.stage.addChild(this.customSprite);
 
         //Animation

@@ -11,6 +11,7 @@ export default class MPPlayer extends Entity {
         super({ name: "PLAYER_WARRIOR_DOWN1" }, json.x, json.y, 42, 42);
 
         this.movement = new MPPlayerMovement(this);
+        this.addEntityShoot("Player", this);
 
         this.id = json.id;
         this.name = json.name;
@@ -28,7 +29,6 @@ export default class MPPlayer extends Entity {
 
     //Different from set position, as were chaning the sprite & true positions
     teleport(x, y) {
-        console.log("hi");
         this.setClientsidePosition(x, y);
 
         var screenPos = this.getScreenPosition(x, y);

@@ -11,6 +11,7 @@ export default class PlayerMovement {
 
         //Last tile/entity collided
         this.previousCollision = undefined;
+        this.previouslyMoved = false;
 
         //Previous location sent by the packet
         this.previousX = 0;
@@ -31,7 +32,7 @@ export default class PlayerMovement {
         //Locked movement
         this.lockMovement = true;
 
-        setInterval(this.sendMovementUpdate, 1); //Update movement every 100ms.
+        //setInterval(() => this.sendMovementUpdate(), 1); //Update movement every 100ms.
 
         //Animation tick
         this.animationTick = 0;
@@ -238,9 +239,10 @@ export default class PlayerMovement {
         distanceY = (distanceY / hypotnuse) * 5;
 
         //Normalize like mpplayer.
-        if (hypotnuse !== 0)
+        if (hypotnuse !== 0) {
             this.setVelocity(distanceX, distanceY);
-
+            this.previouslyMoved = true;
+        }
         //Set camera rotation
         game.getUI.getCurrentScreen.camera.setRotation(this.cameraRotation.left, this.cameraRotation.right);
     }
@@ -253,19 +255,28 @@ export default class PlayerMovement {
     }
 
     sendMovementUpdate() {
+
         if (game.getPlayer.inGame)
-            if (game.getPlayer.getX !== this.previousX || game.getPlayer.getY !== this.previousY) {
+            if (this.previouslyMoved && this.velocity.x === 0 && this.velocity.y === 0 && this.heldKeys.length === 0) {
+                //Send stop movement packet.
+                //console.log("stop packet");
+                this.previouslyMoved = false;
+            } else
+                if (game.getPlayer.getX !== this.previousX || game.getPlayer.getY !== this.previousY) {
+                    //Send repeated movement update packets
 
-                var msg = {
-                    type: "MovementUpdate",
-                    x: Math.round(game.getPlayer.getX),
-                    y: Math.round(game.getPlayer.getY),
-                };
+                    var msg = {
+                        type: "MovementUpdate",
+                        x: Math.round(game.getPlayer.getX),
+                        y: Math.round(game.getPlayer.getY),
+                    };
 
-                game.getNetwork.sendMessage(JSON.stringify(msg));
-                this.previousX = game.getPlayer.getX;
-                this.previousY = game.getPlayer.getY;
-            }
+                    game.getNetwork.sendMessage(JSON.stringify(msg));
+                    this.previousX = game.getPlayer.getX;
+                    this.previousY = game.getPlayer.getY;
+
+                    //console.log("moving")
+                }
     }
 
     setVelocity(x, y) {
@@ -324,9 +335,11 @@ export default class PlayerMovement {
     update() {
         if (game.getPlayer.inGame) {
             //if (!this.lockMovement)
-                this.handleMovement();
+            this.handleMovement();
 
             this.handleMovementAnimation();
+
+            this.sendMovementUpdate();
         }
     }
 

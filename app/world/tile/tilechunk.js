@@ -2,7 +2,6 @@ import game from "index";
 
 import Tile from "./tile";
 import TileType from "./tiletype";
-import EntityType from "../entity/entitytype";
 import Entity from "../entity/entity";
 
 export default class TileChunk {

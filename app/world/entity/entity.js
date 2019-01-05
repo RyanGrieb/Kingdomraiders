@@ -3,6 +3,7 @@ import AssetsEnum from "../assets/assetsenum";
 import CustomSprite from "../../ui/custom/customsprite";
 import Tile from "../tile/tile";
 import CustomText from "../../ui/custom/customtext";
+import EntityShoot from "./entityshoot";
 
 export default class Entity {
 
@@ -26,6 +27,9 @@ export default class Entity {
         this.rotation = 0;
     }
 
+    addEntityShoot(name) {
+        this.entityShoot = new EntityShoot(name, this);
+    }
 
     addCollision(xOffset, yOffset, width, height) {
         this.collider = {
@@ -244,5 +248,8 @@ export default class Entity {
     update() {
         this.setCameraPivot(this.camera.rotation, this.camera.pivot.x, this.camera.pivot.y);
         this.removeOutsideofScreen();
+
+        if (this.entityShoot !== undefined)
+            this.entityShoot.update();
     }
 }

@@ -23,8 +23,8 @@ export default class Network {
 
     connect() {
 
-        //this.ws = new WebSocket("ws://45.31.152.207:5000");
-        this.ws = new WebSocket("ws://localhost:5000");
+        this.ws = new WebSocket("ws://45.31.152.207:5000");
+        //this.ws = new WebSocket("ws://localhost:5000");
 
         this.ws.onopen = () => this.onConnection();
 

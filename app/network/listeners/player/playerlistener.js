@@ -117,6 +117,9 @@ export default class PlayerListener {
     handleMPMovementTarget(json) {
         //Move the mpplayer to the target /w velocity.
         if (game.getPlayer.inGame) //temp.. remove later.
-            game.getEntityMap.getMPPlayerByID(json.id).recivePosition(json);
+            if (game.getEntityMap.getMPPlayerByID(json.id) !== undefined)
+                game.getEntityMap.getMPPlayerByID(json.id).recivePosition(json);
+
+
     }
 }

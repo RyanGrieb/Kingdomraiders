@@ -14,7 +14,7 @@ export default class MonsterManager {
         game.getEntityMap.entityMap.push(monster);
     }
 
-    recieveMonsterTarget(json) {
+    recieveMonsterPosition(json) {
         for (var i = 0; i < game.getEntityMap.entityMap.length; i++) {
             if (game.getEntityMap.entityMap[i] instanceof Monster)
                 if (game.getEntityMap.entityMap[i].monsterID === json.monsterID)

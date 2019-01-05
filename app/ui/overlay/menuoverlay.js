@@ -86,7 +86,7 @@ export default class MenuOverlay {
         } else
 
             if (randomNum >= 2 && randomNum < 5 && ((x - this.lastTreeLocation.x) > 162) || (y - this.lastTreeLocation.y) > 96) {
-                tileType = TileType.list.BIGTREE2;
+                tileType = TileType.list.BIGTREEOTHER;
                 this.lastTreeLocation.x = x;
                 this.lastTreeLocation.y = y;
             } else

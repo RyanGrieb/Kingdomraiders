@@ -7,6 +7,9 @@ export default class BuildMode {
 
     constructor() {
         this.buildEnabled = false;
+
+        this.previousID = undefined;
+        //previous
     }
 
     build() {
@@ -41,6 +44,14 @@ export default class BuildMode {
     sendBuildRequest(x, y, id) {
         if (TileType.getTileFromID(id) === undefined)
             return;
+
+        if (this.previousX === Math.floor(x / 32) && this.previousY === Math.floor(y / 32))
+            if (this.previousID === id)
+                return;
+        console.log("sent")
+        this.previousID = id;
+        this.previousX = Math.floor(x / 32);
+        this.previousY = Math.floor(y / 32);
 
         //Send build packet.
         var msg = {

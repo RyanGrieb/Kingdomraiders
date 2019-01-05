@@ -133,7 +133,7 @@ export default class TileGrid {
     }
 
     async receiveChunk(json) {
-        var time = (game.getPlayer.playerSettings.getSetting("asyncChunkLoading")) ? (Math.random() * 210) + 15 : 0;
+        var time = (game.getPlayer.playerSettings.getSetting("asyncChunkLoading")) && (game.getUI.getWindowByName("BuildWindow") === undefined) ? (Math.random() * 210) + 15 : 0;
 
         setTimeout(() => {
 
