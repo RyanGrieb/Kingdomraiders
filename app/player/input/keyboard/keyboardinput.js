@@ -84,6 +84,11 @@ export default class KeyboardInput {
             if (e.key == "Enter") {
                 game.getPlayer.playerChat.sendMessage();
             }
+
+            //Debug
+            if (e.key === "p") {
+                //game.getPlayer.entity.entityShoot.startShooting();
+            }
         }
 
         //debug

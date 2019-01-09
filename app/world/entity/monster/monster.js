@@ -16,6 +16,8 @@ export default class Monster extends Entity {
         var h = type.h;
         super(type, x, y, w, h);
 
+        this.addEntityShoot("Monster", this);
+
         //Healthbars
         this.health = health;
 
@@ -46,7 +48,7 @@ export default class Monster extends Entity {
         this.targetY = y;
         //Check if the distance is a lot (40 min)
         //console.log(x - this.x);
-       // this.setPosition(x, y);
+        // this.setPosition(x, y);
     }
 
     stopTracking(json) {
@@ -55,7 +57,7 @@ export default class Monster extends Entity {
         this.targetY = json.y;
         //this.finalTargetX = json.x;
         //this.finalTargetY = json.y;
-
+        console.log("called")
         game.getEntityMap.projectileManager.removeShooter("Monster", this.monsterID);
     }
 
@@ -98,11 +100,7 @@ export default class Monster extends Entity {
             this.healthbar.setVelocity(-velXOffset, velYOffset);
             this.healthbarBackground.setVelocity(-velXOffset, velYOffset);
         } else {
-            //We've reached our final target, remove everything relating to a target.
-            if (this.finalTargetX !== undefined || this.finalTargetY !== undefined) {
-                this.finalTargetX = undefined;
-                this.finalTargetY = undefined;
-            }
+            
         }
 
         //console.log(Math.round(this.x) + "," + Math.round(this.y));
@@ -152,6 +150,8 @@ export default class Monster extends Entity {
         //console.log(Math.round(this.x) + "," + Math.round(this.y));
         super.update();
         this.trackTarget();
+
+        //console.log(this.entityShoot.targetX + ',' + this.entityShoot.targetY)
     }
 
     kill() {

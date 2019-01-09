@@ -68,8 +68,8 @@ export default class Player {
         if (this.inventory.getWeapon !== undefined)    //If were holding a valid wepaon, lets start shooting!.
             if (this.inventory.getWeapon.itemType.projectile !== undefined) {
                 //Basic mouse pos.
-                var mX = game.renderer.plugins.interaction.mouse.global.x;
-                var mY = game.renderer.plugins.interaction.mouse.global.y;
+                var mX = (game.renderer.plugins.interaction.mouse.global.x + 8);
+                var mY = (game.renderer.plugins.interaction.mouse.global.y + 8);
 
                 var camera = game.getUI.getCurrentScreen.getCamera;
                 var radians = (Math.PI / 180) * (camera.rotation);
@@ -81,8 +81,8 @@ export default class Player {
                 var mouseY = camera.position.y + (-sin * (mX - camera.position.x) + cos * (mY - camera.position.y));
 
                 var projectile = game.getPlayer.inventory.getWeapon.itemType.projectile;
-                var delay = game.getPlayer.playerProfile.convertDexToDelay(game.getPlayer.playerProfile.stats.dex);
-                this.entity.entityShoot.setTarget(projectile, delay, mouseX, mouseY);
+                var attackDelay = game.getPlayer.playerProfile.stats.attackDelay;
+                this.entity.entityShoot.setTarget(projectile, attackDelay, mX, mY);
 
                 //Manually update the entityShoot class since we don't update entity
                 this.entity.entityShoot.update();

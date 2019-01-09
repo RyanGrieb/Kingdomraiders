@@ -60,7 +60,7 @@ export default class PlayerListener {
                 break;
 
             case "debug":
-                console.log("Server: " + json.x + "," + json.y + " \nClient: " + Math.round(game.getPlayer.getX) + "," + Math.round(game.getPlayer.getY));
+                //console.log("Server Proj: " + json.x + "," + json.y + " \nClient: " + Math.round(game.getPlayer.getX) + "," + Math.round(game.getPlayer.getY));
                 break;
         }
     }

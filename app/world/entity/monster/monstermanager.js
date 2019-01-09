@@ -52,22 +52,16 @@ export default class MonsterManager {
     }
 
     getMonsterFromLocation(x, y, w, h) {
-        for (let i = 0; i < 4; i++) {
-            //Add all four corners of the collider.
-            let xCorner = (i == 0 || i == 2) ? (x) : (x + 32);
-            let yCorner = (i == 0 || i == 1) ? (y) : (y + 32);
+        //TODO: add monster collider.
+        for (let i = 0; i < game.getEntityMap.entityMap.length; i++)
+            if (game.getEntityMap.entityMap[i] instanceof Monster) {
+                var monster = game.getEntityMap.entityMap[i];
+                if (x < (monster.x + monster.w) && (x + w) > monster.x)
+                    if (y < (monster.y + monster.h) && (y + h) > monster.y) {
+                        return monster;
+                    }
 
-            //TODO: add monster collider.
-            for (let i = 0; i < game.getEntityMap.entityMap.length; i++)
-                if (game.getEntityMap.entityMap[i] instanceof Monster) {
-                    var monster = game.getEntityMap.entityMap[i];
-                    if (xCorner > monster.x && xCorner < (monster.x + monster.w))
-                        if (yCorner > monster.y && yCorner < (monster.y + monster.h)) {
-                            return monster;
-                        }
-
-                }
-        }
+            }
         return undefined;
     }
 }

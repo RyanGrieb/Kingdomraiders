@@ -30,7 +30,9 @@ export default class MouseInput {
 
     fireProjectile() {
         if (game.getUI.isAllWindowsClosed && !game.getPlayer.inventory.windowOpen)
-            game.getPlayer.entity.entityShoot.startShooting();
+            if (game.getPlayer.inventory.getWeapon !== undefined)    //If were holding a valid wepaon, lets start shooting!.
+                if (game.getPlayer.inventory.getWeapon.itemType.projectile !== undefined)
+                    game.getPlayer.entity.entityShoot.startShooting();
     }
 
     stopProjectile() {

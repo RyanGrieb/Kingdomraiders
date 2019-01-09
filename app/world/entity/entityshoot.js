@@ -1,5 +1,7 @@
 import game from "index";
 import ProjectileType from "./projectile/projectiletype";
+import AssetsEnum from "../assets/assetsenum";
+import { setInterval, clearInterval } from "timers";
 
 export default class EntityShoot {
 
@@ -9,8 +11,8 @@ export default class EntityShoot {
 
         //Projectile variables
         this.projectileType = undefined;
-        this.delay = undefined;
-        this.currentDelay = undefined;
+        this.attackDelay = undefined;
+        this.prevTime;
 
         //Entity owner variables
         this.name = name;
@@ -21,28 +23,29 @@ export default class EntityShoot {
         //Misc interval boolean variables
         this.shooting = false;
         this.sentAddShooterPacket = false;
+
+        this.shootInterval = setInterval(() => this.shoot(), 1);
     }
 
     //Called mouse mouseclick
     startShooting() {
         this.shooting = true;
+        this.prevTime = new Date().getTime();
     }
 
     //Called when we haven't sent it yet & were ready to shoot
     sendAddShooterPacket() {
-        //We convert our mousevalue to a gameX&Y value to be converted back from the other clients online.
-        var targetX = (this.targetX + (game.getPlayer.getX - this.camera.position.x)) + 21;
-        var targetY = (this.targetY + (game.getPlayer.getY - this.camera.position.y)) + 21;
-
-        //Packet
         var msg = {
             type: "AddShooter",
             entityType: "Player",
-            targetX: targetX,
-            targetY: targetY,
+            targetX: Math.round(this.targetX),
+            targetY: Math.round(this.targetY),
+            time: this.prevTime,
         };
 
         game.getNetwork.sendMessage(JSON.stringify(msg));
+        //Packet
+
         this.sentAddShooterPacket = true;
     }
 
@@ -68,71 +71,66 @@ export default class EntityShoot {
         game.getNetwork.sendMessage(JSON.stringify(msg));
     }
 
-    //inputs are a screen position WITH rotation offset
-    setTarget(projectileType, delay, x, y) {
+    //inputs are a screen position -->>WITHOUT<-- rotation offset
+    setTarget(projectileType, attackDelay, x, y) {
         this.projectileType = projectileType;
-        this.delay = delay;
-        if (this.currentDelay === undefined)
-            this.currentDelay = this.delay;
+        this.attackDelay = attackDelay;
 
-        this.targetX = x;
-        this.targetY = y;
+        //this.targetX = x;
+        //this.targetY = y;
 
 
         //Send target update to server
         //We convert our mousevalue to a gameX&Y value to be converted back from the other clients online.
-        var targetX = (this.targetX + (game.getPlayer.getX - this.camera.position.x)) + 21;
-        var targetY = (this.targetY + (game.getPlayer.getY - this.camera.position.y)) + 21;
+        var targetX = (x + (game.getPlayer.getX - this.camera.position.x));
+        var targetY = (y + (game.getPlayer.getY - this.camera.position.y));
 
+        //Now we convert our rotation offset
+        var radians = (Math.PI / 180) * (this.camera.rotation);
+        var cos = Math.cos(radians);
+        var sin = Math.sin(radians);
 
+        //Mouse /w rotation offset.
+        var centerX = (this.entity.x + (this.entity.w / 2)) - 16;
+        var centerY = (this.entity.y + (this.entity.h / 2)) - 16;
+        var targetXMouseOffset = (cos * (targetX - centerX)) + (sin * (targetY - centerY)) + centerX;
+        var targetYMouseOffset = (cos * (targetY - centerY)) - (sin * (targetX - centerX)) + centerY;
+        this.targetX = targetXMouseOffset;
+        this.targetY = targetYMouseOffset;
+
+        //TODO: SYNC up with server just like monster projectiles
         if (this.shooting) {
             var msg = {
                 type: "ShooterUpdate",
                 entityType: "Player",
-                targetX: Math.round(targetX),
-                targetY: Math.round(targetY),
+                targetX: Math.round(this.targetX),
+                targetY: Math.round(this.targetY),
             };
             game.getNetwork.sendMessage(JSON.stringify(msg));
         }
     }
 
     //inputs are a gameScreen position WITH rotation already applied
-    recieveTarget(projectileType, delay, currentDelay, x, y) {
+    recieveTarget(projectileType, attackDelay, currentDelay, serverTime, x, y) {
         this.shooting = true;
         this.sentAddShooterPacket = true; //Already sent since this is a packet that was sent to us
 
         this.projectileType = projectileType;
-        this.delay = delay;
-        this.currentDelay = currentDelay;
-
+        this.attackDelay = attackDelay;
+        this.prevTime = serverTime;
+        //this.prevTime = new Date().getTime();
+        //console.log("Delay and current delay: " + this.delay + "," + this.currentDelay);
         //Need to convert target back to a mouse pos
 
         //Convert back to a screen position
         this.recieveTargetUpdate(x, y);
-
     }
 
     //(SERVERSIDE)
     //Recieved from serverside
     recieveTargetUpdate(x, y) {
-        //Use existing method to just update our reiceved target
-        var targetX = x;
-        var targetY = y;
-
-        var radians = (Math.PI / 180) * (this.camera.rotation);
-        var cos = Math.cos(radians);
-        var sin = Math.sin(radians);
-
-        targetX = (targetX - (game.getPlayer.getX - this.camera.position.x)) - 21;
-        targetY = (targetY - (game.getPlayer.getY - this.camera.position.y)) - 21;
-
-        //This is for when the client-side player rotates his camera, this offsets that back to normal.
-        //var targetXOffset = (cos * (targetX - this.camera.position.x)) - (sin * (targetY - this.camera.position.y)) + this.camera.position.x;
-        //var targetYOffset = (cos * (targetY - this.camera.position.y)) + (sin * (targetX - this.camera.position.x)) + this.camera.position.y;
-
-        this.targetX = targetX;
-        this.targetY = targetY;
-
+        this.targetX = x;
+        this.targetY = y;
     }
 
     removeTarget() {
@@ -141,21 +139,25 @@ export default class EntityShoot {
     }
 
     shoot() {
-        //console.log("shooting")
-        if (this.currentDelay >= this.delay) {
+        if (this.shooting)
+            if (this.targetX !== undefined && this.targetY !== undefined) {
+                //If we havent send a proper add shooter packet, do it now!
+                if (!this.sentAddShooterPacket)
+                    this.sendAddShooterPacket();
+                var currTime = new Date().getTime();
 
-            var originX = (this.entity.x + (this.entity.w / 2)) - 16;
-            var originY = (this.entity.y + (this.entity.h / 2)) - 16;
+                if ((currTime - this.prevTime) >= this.attackDelay) {
+                    this.prevTime = currTime;
+                    //console.log(currTime + "?");
+                    var originX = (this.entity.x + (this.entity.w / 2)) - 16;
+                    var originY = (this.entity.y + (this.entity.h / 2)) - 16;
 
-            game.getEntityMap.projectileManager2.shootProjectile(this.name, this.projectileType,
-                originX, originY,
-                this.targetX, this.targetY);
+                    game.getEntityMap.projectileManager.shootProjectile(this.name, this.projectileType,
+                        originX, originY,
+                        this.targetX, this.targetY);
+                }
 
-
-            if (!this.sentAddShooterPacket)
-                this.sendAddShooterPacket();
-            this.currentDelay = 0;
-        }
+            }
     }
 
     setClientsideDirection() {
@@ -184,11 +186,12 @@ export default class EntityShoot {
 
     }
 
-    update() {
-        if (this.shooting)
-            if (this.targetX !== undefined && this.targetY !== undefined)
-                this.shoot();
+    kill() {
+        //TODO: remove the repeating thread in this
+        clearInterval(this.shootInterval);
+    }
 
+    update() {
         if (this.currentDelay !== undefined)
             if (this.currentDelay < this.delay)
                 this.currentDelay++;

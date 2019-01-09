@@ -29,7 +29,7 @@ function initGame() {
     PIXI.settings.RENDER_OPTIONS.forceFXAA = true;
 
     //..
-    
+
     game = new PIXI.Application(window.innerWidth, window.innerHeight, { backgroundColor: 0x1099bb });
     document.body.appendChild(game.view);
 

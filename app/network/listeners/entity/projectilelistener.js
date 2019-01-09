@@ -8,7 +8,7 @@ export default class ProjectileListener {
         switch (json.type) {
 
             case "AddShooter":
-                this.handleAddShooter(json);
+                    this.handleAddShooter(json);
                 break;
 
             case "ShooterUpdate":
@@ -23,18 +23,18 @@ export default class ProjectileListener {
 
     handleAddShooter(json) {
         if (game.getPlayer.inGame)
-            game.getEntityMap.projectileManager2.recieveShooter(json);
+            game.getEntityMap.projectileManager.recieveShooter(json);
     }
 
     handleShooterUpdate(json) {
         if (game.getPlayer.inGame)
-            game.getEntityMap.projectileManager2.recieveShooterUpdate(json);
+            game.getEntityMap.projectileManager.recieveShooterUpdate(json);
     }
 
 
     handleRemoveShooter(json) {
         if (game.getPlayer.inGame)
-            game.getEntityMap.projectileManager2.removeShooter(json);
+            game.getEntityMap.projectileManager.removeShooter(json);
     }
 
 }

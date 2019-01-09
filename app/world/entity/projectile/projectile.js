@@ -6,11 +6,14 @@ import { setInterval, clearInterval } from "timers";
 import Monster from "../monster/monster";
 import { SystemRenderer } from "pixi.js";
 import Player from "../../../player/player";
+import AssetsEnum from "../../assets/assetsenum";
 
 export default class Projectile extends Entity {
 
     constructor(ownerName, projType, x, y, targetX, targetY) {
         super(projType, x, y, 32, 32);
+        //console.log("Starting: " + Math.round(x) + "," + Math.round(y));
+        //console.log("Target: " + Math.round(targetX) + "," + Math.round(targetY));
         this.ownerName = ownerName;
         this.addCollision(8, 5, 16, 22);
 
@@ -28,8 +31,8 @@ export default class Projectile extends Entity {
 
         //Creates an angle from our target & position
         //TODO: subtract targetX by 16-cos (angle from mouse below...?)
-        var deltaX = this.targetX - this.sprite.x;
-        var deltaY = this.targetY - this.sprite.y;
+        var deltaX = this.targetX - this.x;
+        var deltaY = this.targetY - this.y;
 
         this.angle = Math.atan2(deltaY, deltaX);
 
@@ -49,7 +52,7 @@ export default class Projectile extends Entity {
         //Move to target
         if (--this.duration > 0 && !this.collider.collided &&
             (game.getEntityMap.monsterManager.getMonsterFromLocation(this.x, this.y, this.w, this.h) === undefined || (this.ownerName === "Monster")) &&
-            (game.getEntityMap.getPlayerFromLocation(this.x, this.y) === undefined || this.ownerName === "Player")) {
+            (game.getEntityMap.getPlayerFromLocation(this.x, this.y, this.w, this.h) === undefined || this.ownerName === "Player")) {
             //console.log((this.angle * (180 / Math.PI)));
             if (!this.sprite.customSprite.visible)
                 this.sprite.customSprite.visible = true;
@@ -77,10 +80,12 @@ export default class Projectile extends Entity {
 
         } else {
 
-            var player = game.getEntityMap.getPlayerFromLocation(this.x, this.y);
+            var player = game.getEntityMap.getPlayerFromLocation(this.x, this.y, this.w, this.h);
             if (player !== undefined) {
-                //console.log("Hit: " + Math.round(player.getX) + "," + Math.round(player.getY));
+                //console.log("Hit: " + Math.round(this.x) + "," + Math.round(this.y));
             }
+
+            console.log("at: " + new Date().getTime());
 
             this.kill();
             if (game.getPlayer.inGame)

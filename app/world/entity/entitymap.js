@@ -8,7 +8,7 @@ export default class EntityMap {
     constructor() {
         this.entityMap = [];
 
-        this.projectileManager2 = new ProjectileManager();
+        this.projectileManager = new ProjectileManager();
         this.monsterManager = new MonsterManager();
     }
 
@@ -45,11 +45,12 @@ export default class EntityMap {
         }
     }
 
-    getPlayerFromLocation(x, y) {
+    getPlayerFromLocation(x, y, w, h) {
         for (var i = 0; i < this.getAllPlayers.length; i++) {
             var player = this.getAllPlayers[i];
-            if (Math.abs(x - player.getX) < player.getWidth && Math.abs(y - player.getY) < player.getHeight)
-                return player;
+            if (x < (player.getX + player.getWidth) && (x + w) > player.getX)
+                if (y < (player.getY + player.getHeight) && (y + h) > player.getY)
+                    return player;
         }
 
         return undefined;

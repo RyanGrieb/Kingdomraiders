@@ -243,6 +243,11 @@ export default class Entity {
         this.sprite.kill();
         this.removeLabel();
         this.collider = undefined;
+
+        if (this.entityShoot !== undefined) {
+            this.entityShoot.kill();
+            this.entityShoot = undefined;
+        }
     }
 
     update() {

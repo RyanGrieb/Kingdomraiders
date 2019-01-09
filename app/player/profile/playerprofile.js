@@ -8,7 +8,7 @@ export default class PlayerProfile {
 
         //Will be updated by server.
         this.stats = {
-            dex: 10,
+            attackDelay: 0,
             speed: 0,
             maxHealth: 0,
             health: 0,
@@ -21,7 +21,7 @@ export default class PlayerProfile {
     }
 
     recieveStats(json) {
-        this.stats.dex = json.dex;
+        this.stats.attackDelay = json.attackdelay;
         this.stats.speed = json.speed;
         this.stats.maxHealth = json.health;
         this.stats.health = json.health;

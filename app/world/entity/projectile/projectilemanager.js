@@ -11,19 +11,32 @@ export default class ProjectileManager2 {
         if (json.entityType === "Player")
             game.getEntityMap.getMPPlayerByID(json.id).entityShoot.recieveTarget(
                 ProjectileType.getProjectileFromID(json.projectileID),
-                game.getPlayer.playerProfile.convertDexToDelay(json.dex),
-                json.currentDelay,
+                json.attackdelay,
+                json.currentDelay, json.time,
+                json.targetX, json.targetY);
+
+        if (json.entityType === "Monster")
+            game.getEntityMap.getMonsterFromID(json.id).entityShoot.recieveTarget(
+                ProjectileType.getProjectileFromID(json.projectileID),
+                json.attackdelay,
+                json.currentDelay, json.time,
                 json.targetX, json.targetY);
     }
 
     recieveShooterUpdate(json) {
         if (json.entityType === "Player")
             game.getEntityMap.getMPPlayerByID(json.id).entityShoot.recieveTargetUpdate(json.targetX, json.targetY);
+
+        if (json.entityType === "Monster")
+            game.getEntityMap.getMonsterFromID(json.id).entityShoot.recieveTargetUpdate(json.targetX, json.targetY);
     }
 
     removeShooter(json) {
         if (json.entityType === "Player")
             game.getEntityMap.getMPPlayerByID(json.id).entityShoot.removeShooter();
+
+        if (json.entityType === "Monster")
+            game.getEntityMap.getMonsterFromID(json.id).entityShoot.removeShooter();
     }
 
     shootProjectile(entityName, projectileType, x, y, targetX, targetY) {
