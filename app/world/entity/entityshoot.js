@@ -1,7 +1,7 @@
 import game from "index";
 import ProjectileType from "./projectile/projectiletype";
 import AssetsEnum from "../assets/assetsenum";
-import { setInterval, clearInterval } from "timers";
+import { setInterval, clearInterval, setTimeout } from "timers";
 
 export default class EntityShoot {
 
@@ -30,7 +30,7 @@ export default class EntityShoot {
     //Called mouse mouseclick
     startShooting() {
         this.shooting = true;
-        this.prevTime = new Date().getTime();
+        this.prevTime = Date.now();
     }
 
     //Called when we haven't sent it yet & were ready to shoot
@@ -44,6 +44,7 @@ export default class EntityShoot {
         };
 
         game.getNetwork.sendMessage(JSON.stringify(msg));
+
         //Packet
 
         this.sentAddShooterPacket = true;
@@ -110,22 +111,6 @@ export default class EntityShoot {
         }
     }
 
-    //inputs are a gameScreen position WITH rotation already applied
-    recieveTarget(projectileType, attackDelay, currentDelay, serverTime, x, y) {
-        this.shooting = true;
-        this.sentAddShooterPacket = true; //Already sent since this is a packet that was sent to us
-
-        this.projectileType = projectileType;
-        this.attackDelay = attackDelay;
-        this.prevTime = serverTime;
-        //this.prevTime = new Date().getTime();
-        //console.log("Delay and current delay: " + this.delay + "," + this.currentDelay);
-        //Need to convert target back to a mouse pos
-
-        //Convert back to a screen position
-        this.recieveTargetUpdate(x, y);
-    }
-
     //(SERVERSIDE)
     //Recieved from serverside
     recieveTargetUpdate(x, y) {
@@ -144,14 +129,13 @@ export default class EntityShoot {
                 //If we havent send a proper add shooter packet, do it now!
                 if (!this.sentAddShooterPacket)
                     this.sendAddShooterPacket();
-                var currTime = new Date().getTime();
+                var currTime = Date.now();
 
                 if ((currTime - this.prevTime) >= this.attackDelay) {
                     this.prevTime = currTime;
                     //console.log(currTime + "?");
                     var originX = (this.entity.x + (this.entity.w / 2)) - 16;
                     var originY = (this.entity.y + (this.entity.h / 2)) - 16;
-
                     game.getEntityMap.projectileManager.shootProjectile(this.name, this.projectileType,
                         originX, originY,
                         this.targetX, this.targetY);

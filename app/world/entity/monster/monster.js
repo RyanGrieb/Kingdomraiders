@@ -100,7 +100,7 @@ export default class Monster extends Entity {
             this.healthbar.setVelocity(-velXOffset, velYOffset);
             this.healthbarBackground.setVelocity(-velXOffset, velYOffset);
         } else {
-            
+
         }
 
         //console.log(Math.round(this.x) + "," + Math.round(this.y));

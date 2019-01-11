@@ -17,7 +17,7 @@ export default class LoadingScreen extends Screen {
 
         this.renderProgressBar();
 
-        this.timeout = setTimeout(() => this.displayConnectionTimeout(), 7000);
+        this.timeout = setTimeout(() => this.displayConnectionTimeout(), 10000);
     }
 
     open() {
@@ -90,7 +90,7 @@ export default class LoadingScreen extends Screen {
     }
 
     displayConnectionTimeout() {
-        this.loadingtext.text = "Server is down, sorry. 🙁";
+        this.loadingtext.text = "Connection Failed.";
         this.loadingtext.x = (game.WIDTH / 2 - this.loadingtext.width / 2);
     }
 

@@ -85,8 +85,6 @@ export default class Projectile extends Entity {
                 //console.log("Hit: " + Math.round(this.x) + "," + Math.round(this.y));
             }
 
-            console.log("at: " + new Date().getTime());
-
             this.kill();
             if (game.getPlayer.inGame)
                 game.getEntityMap.removeObject(this);
