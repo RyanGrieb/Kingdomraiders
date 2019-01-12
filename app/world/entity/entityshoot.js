@@ -30,7 +30,7 @@ export default class EntityShoot {
     //Called mouse mouseclick
     startShooting() {
         this.shooting = true;
-        this.prevTime = Date.now();
+        this.prevTime = new Date().getTime();
     }
 
     //Called when we haven't sent it yet & were ready to shoot
@@ -40,11 +40,9 @@ export default class EntityShoot {
             entityType: "Player",
             targetX: Math.round(this.targetX),
             targetY: Math.round(this.targetY),
-            time: this.prevTime,
         };
 
         game.getNetwork.sendMessage(JSON.stringify(msg));
-
         //Packet
 
         this.sentAddShooterPacket = true;
@@ -129,7 +127,7 @@ export default class EntityShoot {
                 //If we havent send a proper add shooter packet, do it now!
                 if (!this.sentAddShooterPacket)
                     this.sendAddShooterPacket();
-                var currTime = Date.now();
+                var currTime = new Date().getTime();
 
                 if ((currTime - this.prevTime) >= this.attackDelay) {
                     this.prevTime = currTime;

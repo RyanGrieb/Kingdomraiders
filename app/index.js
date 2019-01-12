@@ -43,9 +43,9 @@ function initGame() {
 
 function initConfigurations() {
     //Our configurations..
-
-    PIXI.Application.prototype.WIDTH = $("body").innerWidth();
-    PIXI.Application.prototype.HEIGHT = $("body").innerHeight();
+    var renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight);
+    PIXI.Application.prototype.WIDTH = renderer.width;
+    PIXI.Application.prototype.HEIGHT = renderer.height;
 
     PIXI.Application.prototype.getUI = new UserInterface();
     PIXI.Application.prototype.getPlayer = new Player();

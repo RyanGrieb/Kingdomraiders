@@ -52,7 +52,7 @@ export default class Projectile extends Entity {
         //Move to target
         if (--this.duration > 0 && !this.collider.collided &&
             (game.getEntityMap.monsterManager.getMonsterFromLocation(this.x, this.y, this.w, this.h) === undefined || (this.ownerName === "Monster")) &&
-            (game.getEntityMap.getPlayerFromLocation(this.x, this.y, this.w, this.h) === undefined || this.ownerName === "Player")) {
+            (game.getEntityMap.getMPPlayerFromLocation(this.x, this.y, this.w, this.h) === undefined || this.ownerName === "Player")) {
             //console.log((this.angle * (180 / Math.PI)));
             if (!this.sprite.customSprite.visible)
                 this.sprite.customSprite.visible = true;
@@ -74,9 +74,9 @@ export default class Projectile extends Entity {
 
 
             //Same as projectile.js, make sure to keep gameX&Y not offsetted by rotation.
-            this.setGameVelocity(velocity.x, velocity.y);
+            this.setGameVelocity(velocity.x * game.ticker.deltaTime, velocity.y * game.ticker.deltaTime);
 
-            this.sprite.setVelocity(-velXOffset, velYOffset);
+            this.sprite.setVelocity(-velXOffset * game.ticker.deltaTime, velYOffset * game.ticker.deltaTime);
 
         } else {
 

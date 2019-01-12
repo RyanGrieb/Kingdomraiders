@@ -317,14 +317,7 @@ export default class PlayerMovement {
 
     interact() {
         if (this.previousCollision !== undefined)
-            if (this.previousCollision.type.name.includes("DUNGEON")) {
-                var msg = {
-                    type: "EnterDungeon",
-                    x: this.previousCollision.x,
-                    y: this.previousCollision.y,
-                };
-                game.getNetwork.sendMessage(JSON.stringify(msg));
-            }
+            game.getPlayer.input.handleInteraction(this.previousCollision);
         this.previousCollision = undefined;
     }
 

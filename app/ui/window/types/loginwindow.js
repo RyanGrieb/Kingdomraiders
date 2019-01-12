@@ -16,21 +16,22 @@ export default class LoginWindow extends CustomWindow {
     }
 
     open() {
-        this.addUI(new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (300 / 2), (game.HEIGHT / 3), 300, 300));
+        var background = new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (300 / 2), (game.HEIGHT / 3), 300, 300);
+        this.addUI(background);
 
-        this.addUI(new TextBox("txtEmail", (game.WIDTH / 2) - (200 / 2), game.HEIGHT / 2.25, 200, 35));
-        this.addUI(new TextBox("txtPassword", (game.WIDTH / 2) - (200 / 2), game.HEIGHT / 1.9, 200, 35));
+        this.addUI(new TextBox("txtEmail", background.x + (background.w / 2 - 200 / 2), background.y + 85, 200, 35));
+        this.addUI(new TextBox("txtPassword", background.x + (background.w / 2 - 200 / 2), background.y + 150, 200, 35));
 
-        this.addUI(new Button("btnSignIn", "Sign In", (game.WIDTH / 2) - (178 / 2), (game.HEIGHT / 2) + 75, 178, 35, 115, 35));
-        this.addUI(new Button("btnRegister", "Register Account", (game.WIDTH / 2) - (178 / 2), (game.HEIGHT / 2) + 125, 178, 35, 115, 35));
+        this.addUI(new Button("btnSignIn", "Sign In", background.x + (background.w / 2 - 178 / 2), background.y + 200, 178, 35, 115, 35));
+        this.addUI(new Button("btnRegister", "Register Account", background.x + (background.w / 2 - 178 / 2), background.y + 250, 178, 35, 115, 35));
 
 
-        this.addUI(new CustomText("txtInfoSignIn", "Sign In", "#ffffff", (game.WIDTH / 2) - 115, (game.HEIGHT / 2.80), 130, 35));
+        this.addUI(new CustomText("txtInfoSignIn", "Sign In", "#ffffff", background.x + 35, background.y + 15, 130, 35));
 
-        this.addUI(new CustomText("txtInfoUsername", "Email", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) - 53, 130, 35));
-        this.addUI(new CustomText("txtInfoUsername", "Password", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) + 10, 130, 35));
+        this.addUI(new CustomText("txtInfoUsername", "Email", "#ffffff", background.x + background.w / 2, background.y + 73, 130, 35));
+        this.addUI(new CustomText("txtInfoUsername", "Password", "#ffffff", background.x + background.w / 2, background.y + 137, 130, 35));
 
-        this.addUI(new CustomText("txtErrorMessage", "", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) - 80, 130, 35));
+        this.addUI(new CustomText("txtErrorMessage", "", "#ffffff", background.x + background.w / 2, background.y + 45, 130, 35));
 
         //Close other windows..
         //Close other windows..

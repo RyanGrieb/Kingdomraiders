@@ -14,23 +14,24 @@ export default class RegisterWindow extends CustomWindow {
     }
 
     open() {
-        this.addUI(new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (300 / 2), (game.HEIGHT / 3) - 25, 300, 425));
+        var background = new CustomSprite("GRAYMENU", (game.WIDTH / 2) - (300 / 2), (game.HEIGHT / 3) - 25, 300, 425);
+        this.addUI(background);
 
-        this.addUI(new TextBox("txtUsername", (game.WIDTH / 2) - (200 / 2), (game.HEIGHT / 2) - 57, 200, 35));
-        this.addUI(new TextBox("txtEmail", (game.WIDTH / 2) - (200 / 2), (game.HEIGHT / 2) + 10, 200, 35));
-        this.addUI(new TextBox("txtPassword", (game.WIDTH / 2) - (200 / 2), (game.HEIGHT / 2) + 75, 200, 35));
-        this.addUI(new TextBox("txtPasswordAgain", (game.WIDTH / 2) - (200 / 2), (game.HEIGHT / 2) + 140, 200, 35));
+        this.addUI(new TextBox("txtUsername", background.x + (background.w / 2 - 200 / 2), background.y + 95, 200, 35));
+        this.addUI(new TextBox("txtEmail", background.x + (background.w / 2 - 200 / 2), background.y + 162, 200, 35));
+        this.addUI(new TextBox("txtPassword", background.x + (background.w / 2 - 200 / 2), background.y + 228, 200, 35));
+        this.addUI(new TextBox("txtPasswordAgain", background.x + (background.w / 2 - 200 / 2), background.y + 293, 200, 35));
 
-        this.addUI(new Button("btnRegisterAccount", "Register Account", (game.WIDTH / 2) - (178 / 2), (game.HEIGHT / 2) + 215, 178, 35, 115, 35));
+        this.addUI(new Button("btnRegisterAccount", "Register Account", background.x + (background.w / 2 - 178 / 2), background.y + 360, 178, 35, 115, 35));
 
-        this.addUI(new CustomText("txtInfoSignIn", "Register Account", "#ffffff", (game.WIDTH / 2) - 78, (game.HEIGHT / 3.1), 123, 35));
+        this.addUI(new CustomText("txtInfoSignIn", "Register Account", "#ffffff", background.x + 70, background.y + 15, 123, 35));
 
-        this.addUI(new CustomText("txtInfoUsername", "Username", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) - 68, 130, 35));
-        this.addUI(new CustomText("txtInfoEmail", "Email", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) - 1, 130, 35));
-        this.addUI(new CustomText("txtInfoPassword", "Password", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) + 64, 130, 35));
-        this.addUI(new CustomText("txtInfoPasswordAgain", "Re-Enter Password", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) + 130, 130, 35));
+        this.addUI(new CustomText("txtInfoUsername", "Username", "#ffffff", background.x + background.w / 2, background.y + 82, 130, 35));
+        this.addUI(new CustomText("txtInfoEmail", "Email", "#ffffff", background.x + background.w / 2, background.y + 150, 130, 35));
+        this.addUI(new CustomText("txtInfoPassword", "Password", "#ffffff", background.x + background.w / 2, background.y + 217, 130, 35));
+        this.addUI(new CustomText("txtInfoPasswordAgain", "Re-Enter Password", "#ffffff", background.x + background.w / 2, background.y + 282, 130, 35));
 
-        var errorMessage = (new CustomText("txtErrorMessage", "", "#ffffff", (game.WIDTH / 2), (game.HEIGHT / 2) - 100, 130, 35));
+        var errorMessage = (new CustomText("txtErrorMessage", "", "#ffffff", background.x + background.w / 2, background.y + 50, 130, 35));
         this.addUI(errorMessage);
 
 

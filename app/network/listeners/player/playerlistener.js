@@ -38,6 +38,10 @@ export default class PlayerListener {
                 this.handlePlayerSetHealth(json);
                 break;
 
+            case "PlayerDeath":
+                this.handlePlayerDeath(json);
+                break;
+
             //MPPlayer based packets
             case "MPJoinGame":
                 this.handleMPJoinResponse(json);
@@ -91,7 +95,11 @@ export default class PlayerListener {
 
     handlePlayerSetHealth(json) {
         if (game.getPlayer.inGame)
-            game.getPlayer.playerProfile.setHealth(json.health);
+            game.getPlayer.playerProfile.setHealth(json);
+    }
+
+    handlePlayerDeath(json) {
+        game.getPlayer.showDeath();
     }
 
     //MPPlayer based response

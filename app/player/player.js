@@ -63,6 +63,11 @@ export default class Player {
         this.inGame = true;
     }
 
+
+    showDeath() {
+        console.log("You died!")
+    }
+
     //Maybe should be in mouse Input?
     updateShootTarget() {
         if (this.inventory.getWeapon !== undefined)    //If were holding a valid wepaon, lets start shooting!.
@@ -110,7 +115,6 @@ export default class Player {
 
     update() {
         this.input.update();
-
         if (game.getUI.getCurrentScreen.name === "GameScreen") {
             this.movement.update();
             this.buildMode.update();

@@ -33,13 +33,24 @@ export default class PlayerProfile {
         return delay - dex;
     }
 
-    setHealth(amount) {
-        this.stats.health = amount;
+    setHealth(json) {
+        this.stats.health = json.health;
         game.getPlayer.inventory.setHealthbar(this.stats.health);
 
-        var sound = PIXI.sound.Sound.from(AssetsEnum.list.SOUND_BUTTONCLICK.sound);
-        sound.volume = 0.3;
-        sound.play();
+        if (json.context === "Projectile") {
+            //Attempt to find projectile on player & remove it
+            var projectile = game.getEntityMap.getProjectileFromLocation(game.getPlayer.getX, game.getPlayer.getY,
+                game.getPlayer.getWidth, game.getPlayer.getHeight);
+
+            if (projectile !== undefined) {
+                game.getEntityMap.removeObject(projectile);
+                projectile.kill();
+            }
+
+            var sound = PIXI.sound.Sound.from(AssetsEnum.list.SOUND_BUTTONCLICK.sound);
+            sound.volume = 0.3;
+            sound.play();
+        }
     }
 
     requestToLogin() {
