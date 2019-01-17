@@ -37,5 +37,6 @@ export default class MapListener {
         game.getEntityMap.clearObjects();
 
         game.getTileGrid.initMap(game.getPlayer.getX + game.getPlayer.w / 2, game.getPlayer.getY + game.getPlayer.h / 2);
+        game.getTileGrid.worldType = json.worldtype;
     }
 }

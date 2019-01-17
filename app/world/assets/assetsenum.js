@@ -46,6 +46,7 @@ const AssetsEnum = {
         TILE_WOODFLOOR: { path: "assets/images/tile/woodfloor.png" },
         TILE_PATH: { path: "assets/images/tile/path.png" },
         TILE_LIGHTPATH: { path: "assets/images/tile/lightpath.png" },
+        TILE_DARKPATH: { path: "assets/images/tile/darkpath.png" },
         TILE_WATER: { path: "assets/images/tile/water.png" },
         TILE_SAND: { path: "assets/images/tile/sand.png" },
         TILE_VOID: { path: "assets/images/tile/void.png" },
@@ -59,7 +60,11 @@ const AssetsEnum = {
 
         TILE_CHAIR: { path: "assets/images/tile/chair.png" },
         TILE_TABLE: { path: "assets/images/tile/table.png" },
-        TILE_GRAVESTONE:{path:"assets/images/tile/gravestone.png" },
+        TILE_GRAVESTONE: { path: "assets/images/tile/gravestone.png" },
+
+        TILE_CHEST: { path: "assets/images/tile/chest.png" },
+        TILE_CHESTSILVER: { path: "assets/images/tile/chestsilver.png" },
+        TILE_CHESTGOLD: { path: "assets/images/tile/chestgold.png" },
 
         TILE_BIRDBATH1: { path: "assets/images/tile/birdbath1.png" },
         TILE_BIRDBATH2: { path: "assets/images/tile/birdbath2.png" },

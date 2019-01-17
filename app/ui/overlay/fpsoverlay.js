@@ -53,7 +53,7 @@ export default class FPSOverlay {
         this.positionDisplay.setText("X: " + parseInt(game.getPlayer.getX) + ", Y: " + parseInt(game.getPlayer.getY));
         this.loadedChunks.setText("Loaded Chunks: " + game.getTileGrid.tileMap.length);
         //this.loadedEntities.setText("Loaded Entities: " + game.getEntityMap.entityMap.length);
-        this.rotationInfo.setText("Rotation: " + game.getUI.getCurrentScreen.getCamera.rotation);
+        this.rotationInfo.setText("Rotation: " + Math.round(game.getUI.getCurrentScreen.getCamera.rotation));
         this.pingInfo.setText("Ping: " + game.getNetwork.latencey.ping + "ms");
     }
 

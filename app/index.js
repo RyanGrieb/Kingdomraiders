@@ -8,6 +8,7 @@ import "styles/index.scss";
 //Universal imports
 import * as $ from "jquery";
 import * as PIXI from "pixi.js";
+import Smoothie from "pixi-smoothie";
 import "pixi-sound";
 import "pixi-layers";
 import '@babel/polyfill';
@@ -17,8 +18,8 @@ import Player from "./player/player";
 import Network from "./network/network";
 import LoadingScreen from "./ui/scene/loadingscreen";
 
-var sceneManager;
 var game;
+var smoothie;
 
 function initGame() {
 
@@ -38,7 +39,21 @@ function initGame() {
     game.stage.group.enableSort = true;
     //..
 
+
+    //Smoothie for update threads.
+    smoothie = new Smoothie({
+        engine: PIXI,
+        renderer: game,
+        root: game.stage,
+        fps: 60,
+        update: update.bind(this)
+    });
+
     console.log("Welcome to Kingdomraiders!")
+}
+
+function update() {
+    //game.getUI.update();
 }
 
 function initConfigurations() {
@@ -52,6 +67,8 @@ function initConfigurations() {
     PIXI.Application.prototype.getNetwork = new Network();
 
     game.getUI.setScreen(new LoadingScreen());
+
+    smoothie.start();
 }
 
 initGame();

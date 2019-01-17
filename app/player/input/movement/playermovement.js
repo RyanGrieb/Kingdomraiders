@@ -297,6 +297,10 @@ export default class PlayerMovement {
         var playerCollider = game.getPlayer.entity.collider;
         //console.log(playerCollider.x);
 
+        //Apply game tick to velocity
+        offsetX *= game.ticker.deltaTime;
+        offsetY *= game.ticker.deltaTime;
+
         var velocity = game.getPlayer.entity.checkCollision(offsetX, offsetY);
 
         //Display labels for doungeons (TODO: move in a better spot)

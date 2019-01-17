@@ -29,10 +29,10 @@ export default class Camera {
 
     setRotation(left, right) {
         if (left)
-            this.rotation += this.baseRotation;
+            this.rotation += (this.baseRotation * game.ticker.deltaTime);
 
         if (right)
-            this.rotation -= this.baseRotation;
+            this.rotation -= (this.baseRotation * game.ticker.deltaTime);
     }
 
     resetRotation() {

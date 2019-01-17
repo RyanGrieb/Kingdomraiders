@@ -11,6 +11,7 @@ const TileType = {
 
         PATH: { name: "PATH", collision: false },
         LIGHTPATH: { name: "LIGHTPATH", collision: false },
+        DARKPATH: { name: "DARKPATH", collision: false },
 
         WATER: { name: "WATER", collision: undefined }, //An undefined collision means the player colliders but the projectile doesn't.
         SAND: { name: "SAND", collision: false },
@@ -24,6 +25,10 @@ const TileType = {
         TABLE: { name: "TABLE", replace: true, rotate: true, width: 32, height: 32, group: 6, collider: { x: 0, y: 0, w: 32, h: 32 }, },
         GRAVESTONE: { name: "GRAVESTONE", replace: true, rotate: true, width: 32, height: 32, group: 6, collider: { x: 0, y: 0, w: 32, h: 32 }, },
 
+        CHEST: { name: "CHEST", replace: true, rotate: true, width: 32, height: 32, group: 3, collider: { x: 0, y: 0, w: 32, h: 32 }, },
+        CHESTSILVER: { name: "CHESTSILVER", replace: true, rotate: true, width: 32, height: 32, group: 3, collider: { x: 0, y: 0, w: 32, h: 32 }, },
+        CHESTGOLD: { name: "CHESTGOLD", replace: true, rotate: true, width: 32, height: 32, group: 3, collider: { x: 0, y: 0, w: 32, h: 32 }, },
+
         BIRDBATH1: {
             name: "BIRDBATH1", replace: true, rotate: true, width: 32, height: 32, group: 6,
             collider: { x: 0, y: 0, w: 32, h: 32 },
@@ -34,6 +39,8 @@ const TileType = {
             collider: { x: 0, y: 0, w: 32, h: 32 },
             animation: { tick: 500, cycles: 2 },
         },
+
+
 
         BRUSH: { name: "BRUSH", replace: true, rotate: false, collision: false, width: 32, height: 32, group: 3 },
         YELLOWFLOWER: { name: "YELLOWFLOWER", replace: true, rotate: false, collision: false, width: 32, height: 32, group: 3 },
@@ -71,7 +78,13 @@ const TileType = {
     },
 
     getTileFromID(id) {
-        if (id == -1) return this.list.WATER;
+        if (id == -1) {
+            if (game.getTileGrid.worldType === "Homeworld")
+                return this.list.WATER;
+
+            if (game.getTileGrid.worldType === "Dungeon")
+                return this.list.VOID;
+        }
         return this.list[Object.keys(this.list)[id]];
     },
 

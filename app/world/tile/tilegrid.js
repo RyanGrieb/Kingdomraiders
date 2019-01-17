@@ -6,6 +6,7 @@ export default class TileGrid {
         this.container = new PIXI.Container();
         game.stage.addChild(this.container);
 
+        this.worldType = "Homeworld";
         this.tileMap = [];
 
         //Handling chunkpasses

@@ -48,7 +48,7 @@ export default class BuildMode {
         if (this.previousX === Math.floor(x / 32) && this.previousY === Math.floor(y / 32))
             if (this.previousID === id)
                 return;
-        console.log("sent")
+                
         this.previousID = id;
         this.previousX = Math.floor(x / 32);
         this.previousY = Math.floor(y / 32);

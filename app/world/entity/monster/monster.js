@@ -93,7 +93,10 @@ export default class Monster extends Entity {
             var velYOffset = (velY * cos) + (velX * sin);
 
             //Set set our gameX&Y without our rotate offset.
-            this.setGameVelocity(velX, velY);
+            this.setGameVelocity(velX * game.ticker.deltaTime, velY * game.ticker.deltaTime);
+
+            velXOffset *= game.ticker.deltaTime;
+            velYOffset *= game.ticker.deltaTime;
 
             //But for our screenX&Y, we apply our offset values.
             this.sprite.setVelocity(-velXOffset, velYOffset);
