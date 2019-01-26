@@ -7,7 +7,9 @@ The game doesn't really have and depth, I'm not really sure which direction I sh
 1. Clone/Downlaod repository & move the folder to a desired location
 2. Using **NodeJS command prompt** cd into the folders directory.
 3. Once in the directory, type **npm install** to install all required dependencies for the project.
-4. To run: type **npm run dev** To compile: type **npm run build**
+4. Using your IDE of choice, change the IP adress in **network.js** to the server adress you assigned.
+![alt text](https://i.gyazo.com/76c2f69089d2e39967658ec12ca887df.png)
+5. To run: type **npm run dev** To compile: type **npm run build**
 
 
 
