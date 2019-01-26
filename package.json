@@ -14,13 +14,13 @@
     "url": "https://cvgellhorn@github.com/cvgellhorn/webpack-boilerplate.git"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
+    "@babel/polyfill": "^7.2.5",
     "jquery": "^3.3.1",
     "lodash": "4.17.10",
     "pixi-layers": "^0.1.9",
     "pixi-smoothie": "^4.5.3",
-    "pixi-sound": "^2.0.4",
-    "pixi.js": "^4.8.1"
+    "pixi-sound": "^2.1.0",
+    "pixi.js": "^4.8.5"
   },
   "devDependencies": {
     "@orange-games/phaser-input": "^2.0.5",
