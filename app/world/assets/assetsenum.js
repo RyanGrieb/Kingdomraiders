@@ -8,6 +8,7 @@ const AssetsEnum = {
         GRAYMENU: { path: "assets/images/ui/graymenu.png" },
         CHATBOX: { path: "assets/images/ui/chatbox.png" },
         TEXTBOX_HIGHLIGHT: { path: "assets/images/ui/txtboxhighlight.png" },
+        DARKBACKGROUND: { path: "assets/images/ui/darkbackground.png" },
 
         INVENTORY_OVERLAY: { path: "assets/images/ui/inventoryOverlay.png" },
         INVENTORY_BACKGROUND: { path: "assets/images/ui/playerInventory.png" },

@@ -53,7 +53,7 @@ export default class Projectile extends Entity {
         //Move to target
         if (this.duration > 0 && !this.collider.collided &&
             (game.getEntityMap.monsterManager.getMonsterFromLocation(this.x, this.y, this.w, this.h) === undefined || (this.ownerName === "Monster")) &&
-            (game.getEntityMap.getMPPlayerFromLocation(this.x, this.y, this.w, this.h) === undefined || this.ownerName === "Player")) {
+            (game.getEntityMap.getPlayerFromLocation(this.x, this.y, this.w, this.h) === undefined || this.ownerName === "Player")) {
             //console.log((this.angle * (180 / Math.PI)));
             if (!this.sprite.customSprite.visible)
                 this.sprite.customSprite.visible = true;

@@ -41,6 +41,10 @@ export default class KeyboardInput {
 
     onKeyJustPressed(e) {
 
+        //We want no input when player is dead
+        if (game.getPlayer.dead)
+            return;
+
         //All screens
         this.onTextboxType(e);
 

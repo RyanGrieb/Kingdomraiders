@@ -10,10 +10,13 @@ export default class PlayerProfile {
         this.stats = {
             attackDelay: 0,
             speed: 0,
+            vitality: 0,
             maxHealth: 0,
             health: 0,
             mana: 0,
         }
+
+        this.prevRegenTime = new Date().getTime();
     }
 
     requestStats() {
@@ -23,6 +26,7 @@ export default class PlayerProfile {
     recieveStats(json) {
         this.stats.attackDelay = json.attackdelay;
         this.stats.speed = json.speed;
+        this.stats.vitality = json.vitality;
         this.stats.maxHealth = json.health;
         this.stats.health = json.health;
         this.stats.mana = json.mana;
@@ -43,14 +47,33 @@ export default class PlayerProfile {
                 game.getPlayer.getWidth, game.getPlayer.getHeight);
 
             if (projectile !== undefined) {
-                game.getEntityMap.removeObject(projectile);
-                projectile.kill();
+                //game.getEntityMap.removeObject(projectile);
+                // projectile.kill();
             }
 
             var sound = PIXI.sound.Sound.from(AssetsEnum.list.SOUND_BUTTONCLICK.sound);
             sound.volume = 0.3;
             sound.play();
+            setTimeout(() => { }, 100);
         }
+    }
+
+    regenHealth() {
+        var currentTime = new Date().getTime();
+        if (currentTime - this.prevRegenTime > 666) {
+
+            if (this.stats.health < this.stats.maxHealth) {
+
+                this.stats.health += this.stats.vitality;
+
+                if (this.stats.health > this.stats.maxHealth)
+                    this.stats.health = this.stats.maxHealth;
+
+                game.getPlayer.inventory.setHealthbar(this.stats.health);
+            }
+            this.prevRegenTime = currentTime;
+        }
+
     }
 
     requestToLogin() {
@@ -99,5 +122,9 @@ export default class PlayerProfile {
         };
 
         game.getNetwork.sendMessage(JSON.stringify(msg));
+    }
+
+    update() {
+        this.regenHealth();
     }
 }

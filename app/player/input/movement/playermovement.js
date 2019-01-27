@@ -319,6 +319,7 @@ export default class PlayerMovement {
         //game.getPlayer.entity.setVelocity(offsetX, offsetY);
     }
 
+    //TODO: just move this to input class
     interact() {
         if (this.previousCollision !== undefined)
             game.getPlayer.input.handleInteraction(this.previousCollision);

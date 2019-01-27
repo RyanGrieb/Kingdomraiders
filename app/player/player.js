@@ -10,6 +10,7 @@ import Entity from "../world/entity/entity";
 import PlayerSettings from "./profile/playersettings";
 import PlayerChat from "./chat/playerchat";
 import MPPlayer from "./mpplayer/mpplayer";
+import RespawnWindow from "../ui/window/types/respawnwindow";
 
 
 export default class Player {
@@ -61,11 +62,25 @@ export default class Player {
 
         this.joinRequested = false;
         this.inGame = true;
+        this.dead = false;
     }
 
 
-    showDeath() {
-        console.log("You died!")
+    handleDeath(json) {
+        if (json.id === this.id) {
+
+            this.dead = true;
+            this.movement.clearKeys();
+            this.movement.velocity.x = 0;
+            this.movement.velocity.y = 0;
+
+            if (!game.getUI.isWindowOpen("RespawnWindow"))
+                game.getUI.toggleWindow(new RespawnWindow());
+
+        } else { //If it's another player that died, remove him
+            if (game.getEntityMap.getMPPlayerByID(json.id) !== undefined)
+                game.getEntityMap.getMPPlayerByID(json.id).leaveGame();
+        }
     }
 
     //Maybe should be in mouse Input?
@@ -119,6 +134,7 @@ export default class Player {
             this.movement.update();
             this.buildMode.update();
             this.inventory.update();
+            this.playerProfile.update();
 
             this.updateShootTarget();
         }

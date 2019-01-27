@@ -8,8 +8,10 @@ const MonsterType = {
             name: "MONSTER_DEMON1", w: 128, h: 128,
             projectileType: ProjectileType.list.BASIC,
             animation: { tick: 500, cycles: 2 },
+            projAmount: 25,
+            projAngle: 3,
             stats: {
-                health: 100,
+                health: 300,
                 speed: 2,
             },
 
@@ -29,6 +31,8 @@ const MonsterType = {
         MOUSE: {
             name: "MONSTER_MOUSE", w: 32, h: 32,
             projectileType: ProjectileType.list.BASIC,
+            projAmount: 3,
+            projAngle: 30,
             stats: {
                 health: 100,
                 speed: 3,

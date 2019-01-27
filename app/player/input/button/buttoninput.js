@@ -130,6 +130,13 @@ export default class ButtonInput {
 
                         return true;
                     }
+                },
+
+                btnRespawn: {
+                    action: () => {
+                        game.getNetwork.sendMessage(JSON.stringify({ type: "Respawn", }));
+                        return true;
+                    }
                 }
             }
 

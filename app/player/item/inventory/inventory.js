@@ -262,7 +262,6 @@ export default class Inventory {
         var healthbar = this.overlayObjects[2];
         var newWidth = (healthbar.w * (amount / game.getPlayer.playerProfile.stats.maxHealth));
         healthbar.customSprite.width = newWidth;
-
         //Healthbar text
         var healthbarLabel = this.overlayObjects[4];
         healthbarLabel.setText(amount + "/" + game.getPlayer.playerProfile.stats.maxHealth);

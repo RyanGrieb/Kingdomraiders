@@ -2,6 +2,7 @@ import game from "index";
 
 import GameScreen from "../../../ui/scene/gamescreen";
 import MPPlayer from "../../../player/mpplayer/mpplayer";
+import RespawnWindow from "../../../ui/window/types/respawnwindow";
 
 export default class PlayerListener {
     constructor() {
@@ -40,6 +41,10 @@ export default class PlayerListener {
 
             case "PlayerDeath":
                 this.handlePlayerDeath(json);
+                break;
+
+            case "Respawn":
+                this.handleRepsawn(json);
                 break;
 
             //MPPlayer based packets
@@ -99,7 +104,12 @@ export default class PlayerListener {
     }
 
     handlePlayerDeath(json) {
-        game.getPlayer.showDeath();
+        game.getPlayer.handleDeath(json);
+    }
+
+    handleRepsawn() {
+        game.getPlayer.dead = false;
+        game.getUI.toggleWindow(new RespawnWindow());
     }
 
     //MPPlayer based response
