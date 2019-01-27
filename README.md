@@ -3,6 +3,12 @@
 A simple browser-based 2D rougelike with basic dungeons and monsters.
 The game doesn't really have and depth, I'm not really sure which direction I should go with it.
 
+Basic Keybinds: <br />
+-Inventory: C <br />
+-Escape Menu: ESC <br />
+-Movement: WASD <br />
+-Shoot weapon: Hold LeftClick<br />
+
 # Setup Instructions
 1. Clone/Downlaod repository & move the folder to a desired location
 2. Using **NodeJS command prompt** cd into the folders directory.
