@@ -51,10 +51,11 @@ export default class PlayerProfile {
                 // projectile.kill();
             }
 
+            //!!!!!!!!! MEMORY LEAK+
             var sound = PIXI.sound.Sound.from(AssetsEnum.list.SOUND_BUTTONCLICK.sound);
             sound.volume = 0.3;
             sound.play();
-            setTimeout(() => { }, 100);
+            //setTimeout(() => { sound.destroy() }, 100);
         }
     }
 

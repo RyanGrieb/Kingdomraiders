@@ -15,10 +15,6 @@ export default class TileGrid {
         this.stopChunkRenderer = false;
         //..
 
-        //Chunk loading variables for loadtime.
-        this.requestedChunkAmount = 0;
-        this.receivedChunkAmount = 0;
-
         this.initMap(game.getPlayer.getX + game.getPlayer.w / 2, game.getPlayer.getY + game.getPlayer.h / 2);
     }
 
@@ -36,8 +32,6 @@ export default class TileGrid {
             for (var targetY = ((y - game.HEIGHT / 2) - (this.getChunkSize * 2)); targetY <= y + (game.HEIGHT / 2)
                 + this.getChunkSize; targetY += this.getChunkSize) {
                 this.requestMapFromLocation(targetX, targetY);
-
-                this.requestedChunkAmount++;
             }
     }
 
@@ -154,20 +148,6 @@ export default class TileGrid {
             this.tileMap.push(tileChunk)
 
             //was 75 20
-
-
-            if (this.requestedChunkAmount != 0) {
-                this.receivedChunkAmount++;
-
-                if (this.requestedChunkAmount === this.receivedChunkAmount) {
-
-                    //Unlock player movement.
-                    game.getPlayer.movement.lockMovement = false;
-                    this.requestedChunkAmount = 0;
-                    this.receivedChunkAmount = 0;
-                }
-            }
-
         }, time);
     }
 

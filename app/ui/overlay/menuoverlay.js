@@ -7,118 +7,182 @@ export default class MenuOverlay {
 
     constructor() {
         this.tileMap = [];
-        this.container = new PIXI.Container();
-
-        this.lastTreeLocation = { x: 0, y: 0 };
 
         this.initChunks();
     }
 
     initChunks() {
-        var chunk = [1, 1, 1, 0];
 
+        var x = game.WIDTH / 2;
+        var y = game.HEIGHT / 2;
 
-        for (var y = 0; y < game.HEIGHT; y += 32)
-            for (var x = 0; x <= game.WIDTH + 32; x += 32) {
-                let tile = new Tile(this.container, TileType.getTileFromID(0), x, y);
-                tile.sprite.parentGroup = game.getUI.parentGroup.negative3;
-                this.tileMap.push(tile);
-                //Then push a toplayer tile ontop randomly.. //6-7
-
-                if (Math.floor((Math.random() * 100)) < 15) {
-                    this.tileMap.push(this.getRandomTopTile(x, y));
-                }
-
-
+        for (var y = -this.getChunkSize / 2; y < game.HEIGHT + this.getChunkSize * 2; y += 15 * 32)
+            for (var x = 0; x < game.WIDTH + this.getChunkSize * 2; x += 15 * 32) {
+                this.tileMap.push(new TileContainer(x, y));
             }
-
-        game.stage.addChild(this.container);
     }
 
     clearObjects() {
         for (var i = 0; i < this.tileMap.length; i++) {
-            this.tileMap[i].kill();
+            this.tileMap[i].combinedSprite.destroy();
+            this.tileMap[i].container.destroy();
+            this.tileMap[i].topContainer.destroy();
         }
-
-        this.tileMap[i] = [];
-        this.container.destroy();
+        this.tileMap = [];
     }
 
     update() {
+        //Move the chunks to the left
         for (var i = 0; i < this.tileMap.length; i++) {
-            this.tileMap[i].sprite.x -= 1;
-
-            //Remove out of bounds tiles
-            if (this.tileMap[i].sprite.x < -128) {
-                this.tileMap[i].kill();
-                this.tileMap.splice(i, 1);
-            }
+            this.tileMap[i].combinedSprite.x--;
+            this.tileMap[i].topContainer.x--;
+            this.tileMap[i].x--;
         }
 
-        //Add additional rows if missing
-        if (this.isNextRowEmpty) {
-            for (var y = 0; y < game.HEIGHT; y += 32) {
-                let tile = new Tile(this.container, TileType.getTileFromID(0), game.WIDTH + 32, y);
+        //Add sliding chunks at the far right
+        if (this.getTileContainerFromLocation(game.WIDTH + this.getChunkSize * 2, 0) === undefined)
+            for (var y = 0; y < game.HEIGHT + this.getChunkSize * 2; y += 15 * 32)
+                this.tileMap.push(new TileContainer(game.WIDTH + this.getChunkSize * 2, y));
+
+        //Remove the chunks at the far left
+        if (this.getTileContainerFromLocation(-this.getChunkSize * 2, 0) !== undefined) {
+
+            for (var y = 0; y < game.HEIGHT + this.getChunkSize * 2; y += 15 * 32) {
+                var tileContainer = this.getTileContainerFromLocation(-this.getChunkSize * 2, y);
+                tileContainer.combinedSprite.destroy();
+                for (var i = 0; i < this.tileMap.length; i++)
+                    if (this.tileMap[i] === tileContainer)
+                        this.tileMap.splice(i, 1);
+
+            }
+        }
+    }
+
+    getTileContainerFromLocation(x, y) {
+        for (var i = 0; i < this.tileMap.length; i++) {
+            var tileContainer = this.tileMap[i];
+            if (x < (tileContainer.x + tileContainer.w) && (x + 32) > tileContainer.x)
+                if (y < (tileContainer.y + tileContainer.h) && (y + 32) > tileContainer.y)
+                    return tileContainer;
+        }
+
+        return undefined;
+    }
+
+    get getScaledChunkSize() {
+        return 15;
+    }
+
+    get getChunkSize() {
+        return this.getScaledChunkSize * 32;
+    }
+}
+
+//Dumbed down Tilechunk class
+class TileContainer {
+    constructor(x, y) {
+        this.tiles = [];
+        this.topTiles = [];
+        this.container = new PIXI.Container();
+        this.topContainer = new PIXI.Container();
+
+        //Basic information variables
+        this.x = x;
+        this.y = y;
+        this.w = 15 * 32;
+        this.h = 15 * 32;
+        const treeAmount = 4;
+
+        //Tile initalization
+        this.initTiles();
+
+        //Add random brush
+        this.addBrush();
+
+        //Add trees
+        this.addTrees(treeAmount);
+
+        //Now merge everything into an individual sprite
+        var renderer = game.renderer;
+        var texture = renderer.generateTexture(this.container);
+
+        this.combinedSprite = new PIXI.Sprite(texture);
+        this.combinedSprite.parentGroup = game.getUI.parentGroup.negative3;
+        this.combinedSprite.x = x;
+        this.combinedSprite.y = y;
+        //this.combinedSprite.tint = Math.random() * 0xFFFFFF;
+        //this.combinedSprite.tint = 0xD9FFFFFF;
+
+        game.stage.addChild(this.combinedSprite);
+        game.stage.addChild(this.topContainer);
+    }
+
+    initTiles() {
+        for (var yOffset = 0; yOffset < 15; yOffset++)
+            for (var xOffset = 0; xOffset < 15; xOffset++) {
+                let tile = new Tile(this.container, TileType.list.GRASS, this.x + (xOffset * 32), this.y + (yOffset * 32));
                 tile.sprite.parentGroup = game.getUI.parentGroup.negative3;
-                this.tileMap.push(tile);
-                //Then push a toplayer tile ontop randomly.. //6-7
-
-                if (Math.floor((Math.random() * 100)) < 15) {
-                    this.tileMap.push(this.getRandomTopTile(game.WIDTH + 32, y));
-                }
-
+                this.tiles.push(tile);
             }
-            this.lastTreeLocation.x -= 32;
-        }
-
     }
 
-    getRandomTopTile(x, y) {
-        var randomNum = Math.floor((Math.random() * 10));
-        let tileType = TileType.list.GRASS;
-        let parentGroup = game.getUI.parentGroup.negative1;
+    addBrush() {
+        for (var yOffset = 0; yOffset < 15; yOffset++)
+            for (var xOffset = 0; xOffset < 15; xOffset++) {
 
+                var randomTileType = this.getRandomTileType;
+                if (randomTileType === undefined)
+                    continue;
 
-        if (randomNum < 2 && ((x - this.lastTreeLocation.x) > 162) || (y - this.lastTreeLocation.y) > 96) {
-            tileType = TileType.list.BIGTREE;
-            this.lastTreeLocation.x = x;
-            this.lastTreeLocation.y = y;
-        } else
+                let tile = new Tile(this.container, randomTileType, this.x + (xOffset * 32), this.y + (yOffset * 32));
+                tile.sprite.parentGroup = game.getUI.parentGroup.negative2;
+                this.tiles.push(tile);
+            }
+    }
 
-            if (randomNum >= 2 && randomNum < 5 && ((x - this.lastTreeLocation.x) > 162) || (y - this.lastTreeLocation.y) > 96) {
-                tileType = TileType.list.BIGTREEOTHER;
-                this.lastTreeLocation.x = x;
-                this.lastTreeLocation.y = y;
-            } else
+    addTrees(treeAmount) {
+        for (var i = 0; i < treeAmount; i++) {
+            this.recursiveAddTree();
+        }
+    }
 
-                if (randomNum >= 5 && randomNum < 6) {
-                    tileType = TileType.list.YELLOWFLOWER;
-                    parentGroup = game.getUI.parentGroup.negative2;
+    //Attemts to seperate the trees recursivly.
+    recursiveAddTree() {
+        var randNum = Math.floor((Math.random() * 2));
+        var tileType = randNum === 0 ? TileType.list.BIGTREE : TileType.list.BIGTREEOTHER;
+
+        var randomX = Math.floor(Math.random() * ((this.x + this.w - tileType.width) - this.x + 1) + this.x);
+        var randomY = Math.floor(Math.random() * ((this.y + this.h - tileType.height) - this.y + 1) + this.y);
+
+        //Checks if our random locations collides /w an existing tree, if it does, recursivley try again
+        for (var i = 0; i < this.topTiles.length; i++) {
+            var topTile = this.topTiles[i];
+            if (randomX < (topTile.x + topTile.tileType.width) && (randomX + tileType.width) > topTile.x)
+                if (randomY < (topTile.y + topTile.tileType.height) && (randomY + tileType.height) > topTile.y) {
+                    this.recursiveAddTree();
+                    return;
                 }
-                else
-                    if (randomNum >= 6 && randomNum < 7) {
-                        tileType = TileType.list.BLUEFLOWER;
-                        parentGroup = game.getUI.parentGroup.negative2;
-                    }
-
-                    else {
-                        tileType = TileType.list.BRUSH;
-                        parentGroup = game.getUI.parentGroup.negative2;
-                    }
-
-        let tile = new Tile(this.container, tileType, x, y);
-        tile.sprite.parentGroup = parentGroup;
-
-        this.oneTreePerLine = true;
-        return tile;
-    }
-
-    get isNextRowEmpty() {
-        for (var i = 0; i < this.tileMap.length; i++) {
-            if (this.tileMap[i].sprite.x > game.WIDTH)
-                return false;
         }
 
-        return true;
+        let tile = new Tile(this.topContainer, tileType, randomX, randomY);
+        tile.sprite.parentGroup = game.getUI.parentGroup.negative2;
+        this.topTiles.push(tile);
     }
+
+    get getRandomTileType() {
+        var randomNum = Math.floor((Math.random() * 100));
+        switch (true) {
+            case randomNum <= 2:
+                return TileType.list.YELLOWFLOWER;
+
+            case randomNum > 2 && randomNum <= 5:
+                return TileType.list.BLUEFLOWER;
+
+            case randomNum > 5 && randomNum <= 20:
+                return TileType.list.BRUSH;
+        }
+
+        return undefined;
+    }
+
 }

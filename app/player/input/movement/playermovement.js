@@ -29,9 +29,6 @@ export default class PlayerMovement {
             right: false
         }
 
-        //Locked movement
-        this.lockMovement = true;
-
         //setInterval(() => this.sendMovementUpdate(), 1); //Update movement every 100ms.
 
         //Animation tick
@@ -332,7 +329,6 @@ export default class PlayerMovement {
 
     update() {
         if (game.getPlayer.inGame) {
-            //if (!this.lockMovement)
             this.handleMovement();
 
             this.handleMovementAnimation();
