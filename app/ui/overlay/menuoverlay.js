@@ -50,6 +50,8 @@ export default class MenuOverlay {
             for (var y = 0; y < game.HEIGHT + this.getChunkSize * 2; y += 15 * 32) {
                 var tileContainer = this.getTileContainerFromLocation(-this.getChunkSize * 2, y);
                 tileContainer.combinedSprite.destroy();
+                tileContainer.container.destroy();
+                tileContainer.topContainer.destroy();
                 for (var i = 0; i < this.tileMap.length; i++)
                     if (this.tileMap[i] === tileContainer)
                         this.tileMap.splice(i, 1);
