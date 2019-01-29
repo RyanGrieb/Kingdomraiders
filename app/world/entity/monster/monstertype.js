@@ -21,7 +21,7 @@ const MonsterType = {
             name: "MONSTER_GOUL", w: 96, h: 96,
             projectileType: ProjectileType.list.FROZEN,
             projAmount: 3,
-            projAngle: 30,
+            projAngle: 2,
             stats: {
                 health: 100,
                 speed: 2,

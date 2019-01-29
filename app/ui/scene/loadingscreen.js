@@ -43,8 +43,11 @@ export default class LoadingScreen extends Screen {
             for (var name in AssetsEnum.list) {
                 if (!name.startsWith("SOUND_"))
                     AssetsEnum.list[name].texture = loader.resources[name].texture;
-                else
-                    AssetsEnum.list[name].sound = loader.resources[name];
+                else {
+                    var sound = PIXI.sound.Sound.from(loader.resources[name]);
+                    AssetsEnum.list[name].sound = sound;
+                }
+
             }
 
             game.getNetwork.connect();

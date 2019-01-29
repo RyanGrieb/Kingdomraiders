@@ -41,7 +41,7 @@ export default class Button extends UIObject {
     }
 
     playSound() {
-        const sound = PIXI.sound.Sound.from(AssetEnum.list.SOUND_BUTTONCLICK.sound);
+        var sound = AssetEnum.list.SOUND_BUTTONCLICK.sound;
         sound.volume = 0.3;
         sound.play();
     }
